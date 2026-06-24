@@ -1,34 +1,100 @@
+"use client"
+
+import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "@/components/ui/accordion"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AlertDialog, AlertDialogClose, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogPopup, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
+import { Autocomplete, AutocompleteEmpty, AutocompleteInput, AutocompleteItem, AutocompleteList, AutocompletePopup } from "@/components/ui/autocomplete"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { Card, CardDescription, CardHeader, CardPanel, CardTitle } from "@/components/ui/card"
+import { Checkbox } from "@/components/ui/checkbox"
+import { CheckboxGroup } from "@/components/ui/checkbox-group"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field"
+import { Fieldset, FieldsetLegend } from "@/components/ui/fieldset"
+import { Input } from "@/components/ui/input"
+import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group"
 import { Kbd } from "@/components/ui/kbd"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs"
-import { FormShowcase } from "@/components/form-showcase"
+import { Label } from "@/components/ui/label"
+import { NumberField, NumberFieldDecrement, NumberFieldGroup, NumberFieldIncrement, NumberFieldInput } from "@/components/ui/number-field"
+import { Radio, RadioGroup } from "@/components/ui/radio-group"
+import { Select, SelectItem, SelectPopup, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Separator } from "@/components/ui/separator"
+import { Slider, SliderValue } from "@/components/ui/slider"
+import { Switch } from "@/components/ui/switch"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Textarea } from "@/components/ui/textarea"
 import { ThemeSelector } from "@/components/theme-selector"
+import type { ReactNode } from "react"
+import { CheckCircleIcon, EnvelopeIcon, InfoIcon, MagnifyingGlassIcon, PlusCircleIcon, SlidersIcon, WarningCircleIcon, WarningIcon, XIcon } from "@phosphor-icons/react"
+
+const accordionItems = [
+  {
+    content:
+      "COSS UI is built on Base UI primitives and styled with Tailwind CSS v4.",
+    id: "what-is-coss",
+    title: "What is COSS UI?",
+  },
+  {
+    content:
+      "Browse particles at coss.com/ui/particles or add components with the CLI.",
+    id: "getting-started",
+    title: "How do I get started?",
+  },
+  {
+    content: "Yes — COSS UI is open source and free to use in your projects.",
+    id: "open-source",
+    title: "Can I use it commercially?",
+  },
+]
+
+const fruitItems = [
+  { label: "Apple", value: "apple" },
+  { label: "Banana", value: "banana" },
+  { label: "Orange", value: "orange" },
+  { label: "Grape", value: "grape" },
+  { label: "Strawberry", value: "strawberry" },
+  { label: "Mango", value: "mango" },
+  { label: "Pineapple", value: "pineapple" },
+  { label: "Kiwi", value: "kiwi" },
+]
+
+const frameworkItems = [
+  { label: "Next.js", value: "next" },
+  { label: "Vite", value: "vite" },
+  { label: "Astro", value: "astro" },
+  { label: "Remix", value: "remix" },
+]
+
+const timezoneItems = [
+  { label: "Pacific (PT)", value: "pt" },
+  { label: "Mountain (MT)", value: "mt" },
+  { label: "Central (CT)", value: "ct" },
+  { label: "Eastern (ET)", value: "et" },
+]
+
+const showcaseCard = ""
+const showcaseCardPanel = "flex flex-col gap-4"
+
+function ButtonSection({
+  label,
+  children,
+}: {
+  label: string
+  children: ReactNode
+}) {
+  return (
+    <div className="space-y-2">
+      <p className="font-medium text-muted-foreground text-xs">{label}</p>
+      <div className="flex flex-wrap gap-2">{children}</div>
+    </div>
+  )
+}
 
 export default function Page() {
   return (
-    <div className="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 p-8">
-      <header className="flex items-start justify-between gap-4">
+    <div className="min-h-svh p-4">
+      <header className="mb-4 flex items-start justify-between gap-4">
         <div className="space-y-2">
           <h1 className="font-heading text-3xl font-semibold tracking-tight">
             COSS UI Test App
@@ -37,72 +103,303 @@ export default function Page() {
             A minimal showcase to validate components, tokens, and fonts locally.
           </p>
           <p className="text-muted-foreground text-sm">
-            Use the theme selector or press <Kbd>d</Kbd> to switch modes.
+            Use the theme selector or press <Kbd>d</Kbd> to switch modes and{" "}
+            <Kbd>p</Kbd> for preset.
           </p>
         </div>
         <ThemeSelector />
       </header>
 
-      <Card>
+      <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <Card className={showcaseCard}>
         <CardHeader>
-          <CardTitle>Buttons</CardTitle>
-          <CardDescription>Default button variants.</CardDescription>
+          <CardTitle>Accordion</CardTitle>
+          <CardDescription>Expandable sections for FAQs and nested content.</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-wrap items-center gap-3">
-          <Button>Primary</Button>
-          <Button variant="primary-outline">Primary</Button>
-          {/* <Button variant="secondary">Secondary</Button> */}
-          <Button variant="outline">Neutral</Button>
-          <Button variant="destructive">Danger</Button>
-          <Button variant="destructive-outline">Danger</Button>
-        </CardContent>
+        <CardPanel className={showcaseCardPanel}>
+          <Accordion>
+            {accordionItems.map((item) => (
+              <AccordionItem key={item.id} value={item.id}>
+                <AccordionTrigger>{item.title}</AccordionTrigger>
+                <AccordionPanel>{item.content}</AccordionPanel>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </CardPanel>
       </Card>
 
-      <Card>
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Alert</CardTitle>
+          <CardDescription>Inline status messages with semantic variants.</CardDescription>
+        </CardHeader>
+        <CardPanel className={`${showcaseCardPanel} space-y-2`}>
+          <Alert variant="info">
+            <InfoIcon aria-hidden="true" />
+            <AlertTitle>Heads up</AlertTitle>
+            <AlertDescription>
+              A new component release is available.
+            </AlertDescription>
+          </Alert>
+          <Alert variant="success">
+            <CheckCircleIcon aria-hidden="true" />
+            <AlertTitle>Changes saved</AlertTitle>
+            <AlertDescription>
+              Your preferences were updated successfully.
+            </AlertDescription>
+          </Alert>
+          <Alert variant="warning">
+            <WarningIcon aria-hidden="true" />
+            <AlertTitle>Storage almost full</AlertTitle>
+            <AlertDescription>
+              Free up space or upgrade your plan to avoid interruptions.
+            </AlertDescription>
+          </Alert>
+          <Alert variant="error">
+            <WarningCircleIcon aria-hidden="true" />
+            <AlertTitle>Upload failed</AlertTitle>
+            <AlertDescription>
+              The file could not be uploaded. Try again in a few minutes.
+            </AlertDescription>
+          </Alert>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Alert dialog</CardTitle>
+          <CardDescription>Confirmation modal for destructive actions.</CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <AlertDialog>
+            <AlertDialogTrigger render={<Button variant="destructive-outline" />}>
+              Delete project
+            </AlertDialogTrigger>
+            <AlertDialogPopup>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete this project?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. All files and settings will be
+                  permanently removed.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogClose render={<Button variant="outline" />}>
+                  Cancel
+                </AlertDialogClose>
+                <AlertDialogClose render={<Button variant="destructive" />}>
+                  Delete
+                </AlertDialogClose>
+              </AlertDialogFooter>
+            </AlertDialogPopup>
+          </AlertDialog>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Autocomplete</CardTitle>
+          <CardDescription>Searchable combobox with filtered suggestions.</CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Autocomplete items={fruitItems}>
+            <AutocompleteInput
+              aria-label="Search fruits"
+              placeholder="Search fruits…"
+            />
+            <AutocompletePopup>
+              <AutocompleteEmpty>No fruits found.</AutocompleteEmpty>
+              <AutocompleteList>
+                {(item) => (
+                  <AutocompleteItem key={item.value} value={item}>
+                    {item.label}
+                  </AutocompleteItem>
+                )}
+              </AutocompleteList>
+            </AutocompletePopup>
+          </Autocomplete>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
         <CardHeader>
           <CardTitle>Badges</CardTitle>
           <CardDescription>
             Semantic color tokens (info, success, warning).
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-wrap items-center gap-3">
+        <CardPanel className="flex flex-wrap content-start gap-3">
           <Badge variant="info">Info</Badge>
           <Badge variant="success">Success</Badge>
           <Badge variant="warning">Warning</Badge>
-        </CardContent>
+        </CardPanel>
       </Card>
 
-      <Card>
+      <Card className={showcaseCard}>
         <CardHeader>
-          <CardTitle>Tabs</CardTitle>
-          <CardDescription>Interactive Base UI primitive.</CardDescription>
+          <CardTitle>Buttons</CardTitle>
+          <CardDescription>
+            Variants, sizes, icons, loading, and composition patterns.
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="overview">
-            <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="details">Details</TabsTrigger>
-            </TabsList>
-            <TabsContent value="overview" className="pt-4 text-sm">
-              COSS UI is built on Base UI and styled with Tailwind CSS v4.
-            </TabsContent>
-            <TabsContent value="details" className="pt-4 text-sm">
-              This tab confirms panel switching works correctly.
-            </TabsContent>
-          </Tabs>
-        </CardContent>
+        <CardPanel className={showcaseCardPanel}>
+          <ButtonSection label="Variants">
+            <Button>Primary</Button>
+            <Button variant="primary-outline">Primary</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="link">Link</Button>
+            <Button variant="destructive">Destructive</Button>
+            <Button variant="destructive-outline">Destructive</Button>
+          </ButtonSection>
+
+          <ButtonSection label="Sizes">
+            <Button variant="outline" size="xs">Extra small</Button>
+            <Button variant="outline" size="sm">Small</Button>
+            <Button variant="outline">Default</Button>
+            <Button variant="outline" size="lg">Large</Button>
+            <Button variant="outline" size="xl">Extra large</Button>
+          </ButtonSection>
+
+          <ButtonSection label="With icon">
+            <Button>
+              <PlusCircleIcon aria-hidden="true" />
+              Add item
+            </Button>
+            <Button variant="outline">
+              <SlidersIcon aria-hidden="true" />
+              Settings
+            </Button>
+          </ButtonSection>
+
+          <ButtonSection label="Icon only">
+            <Button aria-label="Settings" size="icon-xs" variant="ghost">
+              <SlidersIcon aria-hidden="true" />
+            </Button>
+            <Button aria-label="Settings" size="icon-sm" variant="outline">
+              <SlidersIcon aria-hidden="true" />
+            </Button>
+            <Button aria-label="Settings" size="icon" variant="outline">
+              <SlidersIcon aria-hidden="true" />
+            </Button>
+            <Button aria-label="Close" size="icon-lg" variant="ghost">
+              <XIcon aria-hidden="true" />
+            </Button>
+          </ButtonSection>
+
+          <ButtonSection label="States">
+            <Button loading>Loading</Button>
+            <Button disabled>Disabled</Button>
+            <Button variant="outline" disabled>
+              Disabled outline
+            </Button>
+          </ButtonSection>
+
+          <ButtonSection label="As link">
+            <Button
+              render={<a href="https://coss.com/ui" target="_blank" rel="noreferrer" />}
+              variant="link"
+            >
+              Visit docs
+            </Button>
+          </ButtonSection>
+        </CardPanel>
       </Card>
 
-      <FormShowcase />
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Choice controls</CardTitle>
+          <CardDescription>
+            Checkboxes, radio groups, and switches for boolean and single-choice
+            input.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Field name="interests">
+            <Fieldset>
+              <FieldsetLegend>Interests</FieldsetLegend>
+              <FieldDescription className="mb-3">
+                Select all topics that apply.
+              </FieldDescription>
+              <CheckboxGroup
+                aria-label="Interests"
+                defaultValue={["design", "a11y"]}
+              >
+                <Label className="flex items-center gap-2">
+                  <Checkbox value="design" />
+                  Design systems
+                </Label>
+                <Label className="flex items-center gap-2">
+                  <Checkbox value="a11y" />
+                  Accessibility
+                </Label>
+                <Label className="flex items-center gap-2">
+                  <Checkbox value="perf" />
+                  Performance
+                </Label>
+                <Label className="flex items-center gap-2 opacity-64">
+                  <Checkbox value="legacy" disabled />
+                  Legacy (disabled)
+                </Label>
+              </CheckboxGroup>
+            </Fieldset>
+          </Field>
 
-      <Card>
+          <Separator />
+
+          <Field name="plan">
+            <FieldLabel>Billing plan</FieldLabel>
+            <RadioGroup defaultValue="pro">
+              <Label className="flex items-center gap-2">
+                <Radio value="free" />
+                Free — $0/mo
+              </Label>
+              <Label className="flex items-center gap-2">
+                <Radio value="pro" />
+                Pro — $12/mo
+              </Label>
+              <Label className="flex items-center gap-2">
+                <Radio value="team" />
+                Team — $29/mo
+              </Label>
+            </RadioGroup>
+          </Field>
+
+          <Separator />
+
+          <div className="space-y-4">
+            <Label className="flex items-center gap-2">
+              <Switch defaultChecked />
+              Email notifications
+            </Label>
+
+            <div className="flex items-start gap-2">
+              <Checkbox id="accept-terms" />
+              <div className="flex flex-col gap-1">
+                <Label htmlFor="accept-terms">Accept terms and conditions</Label>
+                <p className="text-muted-foreground text-xs">
+                  Checkbox with linked label and description for screen reader
+                  testing.
+                </p>
+              </div>
+            </div>
+
+            <Label className="flex items-center gap-2 opacity-64">
+              <Switch disabled />
+              Disabled switch
+            </Label>
+          </div>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
         <CardHeader>
           <CardTitle>Dialog</CardTitle>
           <CardDescription>
             Modal with heading font (<code className="font-mono text-xs">--font-heading</code>).
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardPanel className={showcaseCardPanel}>
           <Dialog>
             <DialogTrigger render={<Button variant="outline" />}>
               Open dialog
@@ -116,8 +413,230 @@ export default function Page() {
               </DialogHeader>
             </DialogContent>
           </Dialog>
-        </CardContent>
+        </CardPanel>
       </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Input groups</CardTitle>
+          <CardDescription>
+            Inputs with inline addons for icons, prefixes, and suffixes.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Field name="email-group">
+            <FieldLabel>Email with icon</FieldLabel>
+            <InputGroup>
+              <InputGroupAddon>
+                <EnvelopeIcon />
+              </InputGroupAddon>
+              <InputGroupInput
+                type="email"
+                placeholder="name@company.com"
+              />
+            </InputGroup>
+          </Field>
+
+          <Field name="domain">
+            <FieldLabel>Website</FieldLabel>
+            <InputGroup>
+              <InputGroupAddon align="inline-start">
+                <InputGroupText>https://</InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput placeholder="example.com" />
+            </InputGroup>
+          </Field>
+
+          <Field name="search-group">
+            <FieldLabel>Search with suffix</FieldLabel>
+            <InputGroup>
+              <InputGroupAddon>
+                <MagnifyingGlassIcon />
+              </InputGroupAddon>
+              <InputGroupInput placeholder="Search…" type="search" />
+              <InputGroupAddon align="inline-end">
+                <InputGroupText>⌘K</InputGroupText>
+              </InputGroupAddon>
+            </InputGroup>
+          </Field>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Range &amp; numeric</CardTitle>
+          <CardDescription>
+            Sliders and number fields for continuous and stepped values.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Field name="volume">
+            <FieldLabel>Volume</FieldLabel>
+            <Slider defaultValue={40} max={100} step={1}>
+              <SliderValue className="mb-2 flex justify-end text-sm" />
+            </Slider>
+            <FieldDescription>
+              Use arrow keys to adjust when focused.
+            </FieldDescription>
+          </Field>
+
+          <Field name="quantity">
+            <FieldLabel>Quantity</FieldLabel>
+            <NumberField defaultValue={3} min={0} max={99}>
+              <NumberFieldGroup>
+                <NumberFieldDecrement />
+                <NumberFieldInput />
+                <NumberFieldIncrement />
+              </NumberFieldGroup>
+            </NumberField>
+          </Field>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Select &amp; textarea</CardTitle>
+          <CardDescription>
+            Popup selection and multi-line text entry.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Field name="framework">
+            <FieldLabel>Framework</FieldLabel>
+            <Select items={frameworkItems} defaultValue={frameworkItems[0]}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a framework" />
+              </SelectTrigger>
+              <SelectPopup>
+                {frameworkItems.map((item) => (
+                  <SelectItem
+                    key={item.value}
+                    value={item}
+                    disabled={item.value === "remix"}
+                  >
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectPopup>
+            </Select>
+            <FieldDescription>
+              Remix is disabled to test unavailable options.
+            </FieldDescription>
+          </Field>
+
+          <Field name="timezone">
+            <FieldLabel>Timezone</FieldLabel>
+            <Select items={timezoneItems}>
+              <SelectTrigger size="sm">
+                <SelectValue placeholder="Choose timezone" />
+              </SelectTrigger>
+              <SelectPopup>
+                {timezoneItems.map((item) => (
+                  <SelectItem key={item.value} value={item}>
+                    {item.label}
+                  </SelectItem>
+                ))}
+              </SelectPopup>
+            </Select>
+          </Field>
+
+          <Field name="bio">
+            <FieldLabel>Bio</FieldLabel>
+            <Textarea placeholder="Tell us about yourself…" />
+            <FieldDescription>Markdown is supported.</FieldDescription>
+          </Field>
+
+          <Field name="invalid-textarea">
+            <FieldLabel>Notes (required)</FieldLabel>
+            <Textarea aria-invalid placeholder="Add notes…" />
+            <FieldError>This field is required.</FieldError>
+          </Field>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Tabs</CardTitle>
+          <CardDescription>Interactive Base UI primitive.</CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Tabs defaultValue="overview">
+            <TabsList>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="details">Details</TabsTrigger>
+            </TabsList>
+            <TabsContent value="overview" className="pt-4 text-sm">
+              COSS UI is built on Base UI and styled with Tailwind CSS v4.
+            </TabsContent>
+            <TabsContent value="details" className="pt-4 text-sm">
+              This tab confirms panel switching works correctly.
+            </TabsContent>
+          </Tabs>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Text inputs</CardTitle>
+          <CardDescription>
+            Default, sized, disabled, and invalid states with labels and helper
+            text.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Field name="name">
+            <FieldLabel>Full name</FieldLabel>
+            <Input type="text" placeholder="Jane Doe" autoComplete="name" />
+            <FieldDescription>
+              Shown on your public profile.
+            </FieldDescription>
+          </Field>
+
+          <Field name="email-sm">
+            <FieldLabel>Small</FieldLabel>
+            <Input size="sm" type="email" placeholder="name@example.com" />
+          </Field>
+          <Field name="email-default">
+            <FieldLabel>Default</FieldLabel>
+            <Input type="email" placeholder="name@example.com" />
+          </Field>
+          <Field name="email-lg">
+            <FieldLabel>Large</FieldLabel>
+            <Input size="lg" type="email" placeholder="name@example.com" />
+          </Field>
+
+          <Field name="password">
+            <FieldLabel>Password</FieldLabel>
+            <Input
+              type="password"
+              placeholder="••••••••"
+              autoComplete="current-password"
+            />
+          </Field>
+          <Field name="search">
+            <FieldLabel>Search</FieldLabel>
+            <Input type="search" placeholder="Search components…" />
+          </Field>
+
+          <Field name="disabled-input">
+            <FieldLabel>Disabled</FieldLabel>
+            <Input disabled defaultValue="Cannot edit this field" />
+            <FieldDescription>
+              Disabled inputs should remain readable but not interactive.
+            </FieldDescription>
+          </Field>
+          <Field name="invalid-input">
+            <FieldLabel>Invalid</FieldLabel>
+            <Input
+              aria-invalid
+              defaultValue="not-an-email"
+              type="email"
+            />
+            <FieldError>Please enter a valid email address.</FieldError>
+          </Field>
+        </CardPanel>
+      </Card>
+      </div>
     </div>
   )
 }

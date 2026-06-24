@@ -1,14 +1,9 @@
-import { Geist, Geist_Mono, Inter } from "next/font/google"
-
 import "./globals.css"
+import "./coss-default-preset.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
-
-const interHeading = Inter({subsets:['latin'],variable:'--font-heading'});
-
-const inter = Inter({subsets:['latin'],variable:'--font-sans'})
-
-const geistMono = Geist_Mono({subsets:['latin'],variable:'--font-mono'})
+import { UiPresetProvider } from "@/components/ui-preset-provider"
+import { firaCode, sourceSans } from "@/app/fonts"
+import { cn } from "@/lib/utils"
 
 export default function RootLayout({
   children,
@@ -19,10 +14,24 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", "font-sans", inter.variable, interHeading.variable, geistMono.variable)}
+      className={cn(
+        "antialiased",
+        "font-sans",
+        sourceSans.variable,
+        firaCode.variable,
+      )}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var p=localStorage.getItem("coss-ui-preset");if(p==="coss-default"){document.documentElement.dataset.uiPreset="coss-default"}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <UiPresetProvider>{children}</UiPresetProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

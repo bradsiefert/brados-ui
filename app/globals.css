@@ -9,9 +9,12 @@
     --animate-toast-error-odd: toast-error-odd 0.28s cubic-bezier(0.5, 1, 0.89, 1);
     --animate-toast-error-even: toast-error-even 0.28s cubic-bezier(0.5, 1, 0.89, 1);
     --animate-caret-blink: 1s ease-out infinite caret-blink;
-    --font-heading: var(--font-heading);
+    --font-heading: var(--font-sans);
     --font-mono: var(--font-mono);
     --font-sans: var(--font-sans);
+    --font-weight-normal: var(--font-weights-regular);
+    --font-weight-semibold: var(--font-weights-semibold);
+    --font-weight-bold: var(--font-weights-bold);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
     --color-sidebar-primary: var(--sidebar-primary);
@@ -142,6 +145,13 @@
 }
 
 :root {
+    --radius: 0.625rem;
+    --font-weights-regular: 424;
+    --font-weights-semibold: 600;
+    --font-weights-bold: 720;
+}
+
+:root:not([data-ui-preset="coss-default"]) {
     --destructive-foreground: var(--color-red-700);
     --destructive-outline-border: var(--destructive);
     --destructive-outline-foreground: var(--destructive-foreground);
@@ -180,7 +190,6 @@
     --code: var(--color-white);
     --code-foreground: var(--foreground);
     --code-highlight: --alpha(var(--color-black) / 4%);
-    --radius: 0.625rem;
     --sidebar: var(--color-neutral-50);
     --sidebar-accent: --alpha(var(--color-black) / 4%);
     --sidebar-accent-foreground: var(--color-neutral-800);
@@ -191,7 +200,7 @@
     --sidebar-ring: var(--color-neutral-400);
 }
 
-.dark {
+.dark:not([data-ui-preset="coss-default"]) {
     --destructive-foreground: var(--color-red-500);
     --destructive-outline-border: var(--color-red-400);
     --destructive-outline-foreground: var(--color-red-400);

@@ -1,0 +1,61 @@
+---
+description: COSS customization agent — track diffs from stock COSS scaffold, maintain the customization log, and use the preset toggle when comparing tokens/components.
+alwaysApply: true
+---
+
+# COSS customization agent
+
+This project customizes COSS UI on top of the stock scaffold. Act as the **customization agent**: know what changed, keep the log current, and separate library defaults from local edits.
+
+## Source of truth
+
+| Resource | Purpose |
+|----------|---------|
+| [COSS-CUSTOMIZATION-LOG.md](COSS-CUSTOMIZATION-LOG.md) | Human-readable log of all token + component diffs |
+| Git commit `04292fa` | Stock COSS baseline (`feat: initial commit`, post `npx shadcn init @coss/style`) |
+| [app/coss-default-preset.css](app/coss-default-preset.css) | Runtime snapshot of `04292fa` tokens |
+| [app/globals.css](app/globals.css) | Custom tokens (`:root:not([data-ui-preset="coss-default"])`) |
+
+## What is customized (today)
+
+**Tokens (`app/globals.css`):** blue primary (was neutral), `neutral-50` page background (was white), stronger input/muted opacity, darker destructive, new outline tokens, sans default font (was mono on `<html>`).
+
+**Components:** only [components/ui/button.tsx](components/ui/button.tsx) — added `primary-outline`, restyled `destructive-outline`.
+
+**All other `components/ui/*` primitives** match the scaffold unless the log says otherwise.
+
+## Preset system
+
+- **Custom** (default): your tokens in `globals.css`
+- **COSS**: stock tokens via `data-ui-preset="coss-default"` + `coss-default-preset.css`
+- Toggle in header or press `p`; light/dark is separate (`d`)
+- Component file edits (e.g. button variants) are **not** reverted by the preset — only CSS tokens
+
+## Agent workflow
+
+When the user changes theme tokens, COSS primitives, or asks about stock vs custom behavior:
+
+1. **Read** `COSS-CUSTOMIZATION-LOG.md` first.
+2. **Diff** against baseline: `git diff 04292fa -- app/globals.css app/layout.tsx components/ui/`
+3. **Update the log** if tokens or `components/ui/*` changed — tables, new tokens, restore commands.
+4. **Update** `app/coss-default-preset.css` only if the stock baseline definition changes (not when adding custom tokens).
+5. **Prefer** updating custom tokens in `globals.css` under `:root:not([data-ui-preset="coss-default"])` — do not put custom values in `coss-default-preset.css`.
+
+## Restore commands (quick reference)
+
+```bash
+# Stock tokens
+git show 04292fa:app/globals.css
+
+# Stock button
+git show 04292fa:components/ui/button.tsx
+
+# Runtime compare
+# Use COSS preset toggle in the app
+```
+
+## Out of scope
+
+- Re-implementing the preset toggle unless broken
+- Editing COSS monorepo / registry internals
+- Treating app pages (`app/page.tsx`, dashboard, sidebar) as COSS library changes — log them separately if relevant
