@@ -1,12 +1,12 @@
 "use client"
 
 import {
-  BarChart3,
-  FileText,
-  LayoutDashboard,
-  Settings,
-  Users,
-} from "lucide-react"
+  ChartBarIcon,
+  FileTextIcon,
+  GearIcon,
+  SquaresFourIcon,
+  UsersIcon,
+} from "@phosphor-icons/react"
 
 import {
   Sidebar,
@@ -26,25 +26,25 @@ const navItems = [
   {
     title: "Dashboard",
     href: "/dashboard",
-    icon: LayoutDashboard,
+    icon: SquaresFourIcon,
     isActive: true,
   },
   {
     title: "Analytics",
     href: "#",
-    icon: BarChart3,
+    icon: ChartBarIcon,
     isActive: false,
   },
   {
     title: "Customers",
     href: "#",
-    icon: Users,
+    icon: UsersIcon,
     isActive: false,
   },
   {
     title: "Reports",
     href: "#",
-    icon: FileText,
+    icon: FileTextIcon,
     isActive: false,
   },
 ] as const
@@ -87,7 +87,7 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton tooltip="Settings" render={<a href="#" />}>
-              <Settings />
+              <GearIcon />
               <span>Settings</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
