@@ -4,11 +4,17 @@ import { Accordion, AccordionItem, AccordionPanel, AccordionTrigger } from "@/co
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertDialog, AlertDialogClose, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogPopup, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { Autocomplete, AutocompleteEmpty, AutocompleteInput, AutocompleteItem, AutocompleteList, AutocompletePopup } from "@/components/ui/autocomplete"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
-import { Card, CardDescription, CardHeader, CardPanel, CardTitle } from "@/components/ui/card"
+import { Calendar } from "@/components/ui/calendar"
+import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardPanel, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { CheckboxGroup } from "@/components/ui/checkbox-group"
+import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Combobox, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList, ComboboxPopup } from "@/components/ui/combobox"
+import { Command, CommandDialog, CommandDialogPopup, CommandDialogTrigger, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field"
 import { Fieldset, FieldsetLegend } from "@/components/ui/fieldset"
@@ -16,6 +22,7 @@ import { Input } from "@/components/ui/input"
 import { InputGroup, InputGroupAddon, InputGroupInput, InputGroupText } from "@/components/ui/input-group"
 import { Kbd } from "@/components/ui/kbd"
 import { Label } from "@/components/ui/label"
+import { Menu, MenuItem, MenuPopup, MenuTrigger } from "@/components/ui/menu"
 import { NumberField, NumberFieldDecrement, NumberFieldGroup, NumberFieldIncrement, NumberFieldInput } from "@/components/ui/number-field"
 import { Radio, RadioGroup } from "@/components/ui/radio-group"
 import { Select, SelectItem, SelectPopup, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -25,8 +32,9 @@ import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { ThemeSelector } from "@/components/theme-selector"
-import type { ReactNode } from "react"
-import { CheckCircleIcon, EnvelopeIcon, InfoIcon, MagnifyingGlassIcon, PlusCircleIcon, SlidersIcon, WarningCircleIcon, WarningIcon, XIcon } from "@phosphor-icons/react"
+import Link from "next/link"
+import { useState, type ReactNode } from "react"
+import { CheckCircleIcon, EnvelopeIcon, HouseIcon, InfoIcon, MagnifyingGlassIcon, PlusCircleIcon, SlidersIcon, WarningCircleIcon, WarningIcon, XIcon } from "@phosphor-icons/react"
 
 const accordionItems = [
   {
@@ -73,8 +81,14 @@ const timezoneItems = [
   { label: "Eastern (ET)", value: "et" },
 ]
 
-const showcaseCard = ""
-const showcaseCardPanel = "flex flex-col gap-4"
+const commandItems = [
+  { label: "Documentation", value: "docs" },
+  { label: "Settings", value: "settings" },
+  { label: "Profile", value: "profile" },
+]
+
+const showcaseCard = "h-full"
+const showcaseCardPanel = "flex flex-1 flex-col gap-4"
 
 function ButtonSection({
   label,
@@ -92,6 +106,8 @@ function ButtonSection({
 }
 
 export default function Page() {
+  const [calendarDate, setCalendarDate] = useState<Date | undefined>(new Date())
+
   return (
     <div className="min-h-svh p-4">
       <header className="mb-4 flex items-start justify-between gap-4">
@@ -110,7 +126,7 @@ export default function Page() {
         <ThemeSelector />
       </header>
 
-      <div className="grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
       <Card className={showcaseCard}>
         <CardHeader>
           <CardTitle>Accordion</CardTitle>
@@ -223,15 +239,189 @@ export default function Page() {
 
       <Card className={showcaseCard}>
         <CardHeader>
-          <CardTitle>Badges</CardTitle>
+          <CardTitle>Avatar</CardTitle>
           <CardDescription>
-            Semantic color tokens (info, success, warning).
+            Image with fallback initials, sizes, and stacked groups.
           </CardDescription>
         </CardHeader>
-        <CardPanel className="flex flex-wrap content-start gap-3">
-          <Badge variant="info">Info</Badge>
-          <Badge variant="success">Success</Badge>
-          <Badge variant="warning">Warning</Badge>
+        <CardPanel className={showcaseCardPanel}>
+          <ButtonSection label="Default">
+            <Avatar>
+              <AvatarImage
+                alt="COSS UI"
+                src="https://github.com/cosscom.png"
+              />
+              <AvatarFallback>CO</AvatarFallback>
+            </Avatar>
+            <Avatar>
+              <AvatarFallback>BS</AvatarFallback>
+            </Avatar>
+          </ButtonSection>
+
+          <ButtonSection label="Sizes">
+            <Avatar className="size-6">
+              <AvatarFallback className="text-[10px]">SM</AvatarFallback>
+            </Avatar>
+            <Avatar>
+              <AvatarFallback>MD</AvatarFallback>
+            </Avatar>
+            <Avatar className="size-12">
+              <AvatarFallback>LG</AvatarFallback>
+            </Avatar>
+          </ButtonSection>
+
+          <ButtonSection label="Group">
+            <div className="flex -space-x-2">
+              <Avatar className="ring-2 ring-background">
+                <AvatarFallback>A</AvatarFallback>
+              </Avatar>
+              <Avatar className="ring-2 ring-background">
+                <AvatarFallback>B</AvatarFallback>
+              </Avatar>
+              <Avatar className="ring-2 ring-background">
+                <AvatarFallback>C</AvatarFallback>
+              </Avatar>
+            </div>
+          </ButtonSection>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Badges</CardTitle>
+          <CardDescription>
+            Variants, sizes, icons, and composition patterns.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <ButtonSection label="Variants">
+            <Badge>Default</Badge>
+            <Badge variant="outline">Outline</Badge>
+            <Badge variant="secondary">Secondary</Badge>
+            <Badge variant="destructive">Destructive</Badge>
+            <Badge variant="info">Info</Badge>
+            <Badge variant="success">Success</Badge>
+            <Badge variant="warning">Warning</Badge>
+            <Badge variant="error">Error</Badge>
+          </ButtonSection>
+
+          <ButtonSection label="Sizes">
+            <Badge size="sm" variant="outline">Small</Badge>
+            <Badge variant="outline">Default</Badge>
+            <Badge size="lg" variant="outline">Large</Badge>
+          </ButtonSection>
+
+          <ButtonSection label="With icon">
+            <Badge variant="outline">
+              <CheckCircleIcon aria-hidden="true" />
+              Verified
+            </Badge>
+            <Badge variant="success">
+              <CheckCircleIcon aria-hidden="true" />
+              Paid
+            </Badge>
+          </ButtonSection>
+
+          <ButtonSection label="Composition">
+            <Badge className="rounded-full" variant="secondary">
+              Pill
+            </Badge>
+            <Badge render={<a href="#" />} variant="outline">
+              Link
+            </Badge>
+            <Button variant="outline">
+              Messages
+              <Badge className="-me-1" variant="outline">
+                18
+              </Badge>
+            </Button>
+          </ButtonSection>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Breadcrumb</CardTitle>
+          <CardDescription>
+            Hierarchy trails with ellipsis, icons, and custom separators.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <ButtonSection label="Default">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink render={<Link href="#" />}>Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <Menu>
+                    <MenuTrigger
+                      render={
+                        <Button
+                          className="-m-1.5 text-muted-foreground"
+                          size="icon-sm"
+                          variant="ghost"
+                        />
+                      }
+                    >
+                      <BreadcrumbEllipsis />
+                    </MenuTrigger>
+                    <MenuPopup align="start">
+                      <MenuItem render={<Link href="#" />}>Docs</MenuItem>
+                      <MenuItem render={<Link href="#" />}>Particles</MenuItem>
+                    </MenuPopup>
+                  </Menu>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink render={<Link href="#" />}>Components</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </ButtonSection>
+
+          <ButtonSection label="Icon home">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink aria-label="Home" href="#">
+                    <HouseIcon aria-hidden="true" className="size-4" />
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="#">Components</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </ButtonSection>
+
+          <ButtonSection label="Custom separator">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="#">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="#">Components</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </ButtonSection>
         </CardPanel>
       </Card>
 
@@ -308,10 +498,78 @@ export default function Page() {
 
       <Card className={showcaseCard}>
         <CardHeader>
-          <CardTitle>Choice controls</CardTitle>
+          <CardTitle>Calendar</CardTitle>
+          <CardDescription>Date picker grid built on react-day-picker.</CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Calendar
+            mode="single"
+            selected={calendarDate}
+            onSelect={setCalendarDate}
+          />
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Card</CardTitle>
           <CardDescription>
-            Checkboxes, radio groups, and switches for boolean and single-choice
-            input.
+            Structured surface with header, panel, footer, and action slots.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Card>
+            <CardHeader>
+              <CardTitle>Project status</CardTitle>
+              <CardDescription>
+                Deployments and activity for your workspace.
+              </CardDescription>
+              <CardAction>
+                <Button size="sm" variant="outline">
+                  View all
+                </Button>
+              </CardAction>
+            </CardHeader>
+            <CardPanel className="text-sm">
+              Last deploy completed 2 hours ago. All checks passed.
+            </CardPanel>
+            <CardFooter className="text-muted-foreground text-xs">
+              Updated just now
+            </CardFooter>
+          </Card>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Checkbox</CardTitle>
+          <CardDescription>
+            Single boolean controls with linked labels and disabled state.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <div className="flex items-start gap-2">
+            <Checkbox defaultChecked id="accept-terms" />
+            <div className="flex flex-col gap-1">
+              <Label htmlFor="accept-terms">Accept terms and conditions</Label>
+              <p className="text-muted-foreground text-xs">
+                Checkbox with linked label for screen reader testing.
+              </p>
+            </div>
+          </div>
+
+          <Label className="flex items-center gap-2 opacity-64">
+            <Checkbox disabled />
+            Disabled checkbox
+          </Label>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Checkbox group</CardTitle>
+          <CardDescription>
+            Multi-select options grouped inside a fieldset.
           </CardDescription>
         </CardHeader>
         <CardPanel className={showcaseCardPanel}>
@@ -344,9 +602,114 @@ export default function Page() {
               </CheckboxGroup>
             </Fieldset>
           </Field>
+        </CardPanel>
+      </Card>
 
-          <Separator />
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Collapsible</CardTitle>
+          <CardDescription>Progressive disclosure for optional content.</CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Collapsible defaultOpen>
+            <CollapsibleTrigger render={<Button variant="outline" className="w-full justify-between" />}>
+              Billing details
+              <PlusCircleIcon aria-hidden="true" className="size-4" />
+            </CollapsibleTrigger>
+            <CollapsiblePanel className="pt-3 text-muted-foreground text-sm">
+              Your next invoice will be issued on the 1st of each month. Payment
+              methods can be updated in account settings.
+            </CollapsiblePanel>
+          </Collapsible>
+        </CardPanel>
+      </Card>
 
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Combobox</CardTitle>
+          <CardDescription>Searchable selection with filtered suggestions.</CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Combobox items={fruitItems}>
+            <ComboboxInput
+              aria-label="Search fruits"
+              placeholder="Select a fruit…"
+            />
+            <ComboboxPopup>
+              <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+              <ComboboxList>
+                {(item) => (
+                  <ComboboxItem key={item.value} value={item}>
+                    {item.label}
+                  </ComboboxItem>
+                )}
+              </ComboboxList>
+            </ComboboxPopup>
+          </Combobox>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Command</CardTitle>
+          <CardDescription>
+            Keyboard-navigable command palette in a dialog overlay.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <CommandDialog>
+            <CommandDialogTrigger render={<Button variant="outline" />}>
+              Open command palette
+            </CommandDialogTrigger>
+            <CommandDialogPopup>
+              <Command items={commandItems}>
+                <CommandInput placeholder="Search commands…" />
+                <CommandEmpty>No results found.</CommandEmpty>
+                <CommandList>
+                  {(item) => (
+                    <CommandItem key={item.value} value={item.value}>
+                      {item.label}
+                    </CommandItem>
+                  )}
+                </CommandList>
+              </Command>
+            </CommandDialogPopup>
+          </CommandDialog>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Dialog</CardTitle>
+          <CardDescription>
+            Modal with heading font (<code className="font-mono text-xs">--font-heading</code>).
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
+          <Dialog>
+            <DialogTrigger render={<Button variant="outline" />}>
+              Open dialog
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>COSS UI Dialog</DialogTitle>
+                <DialogDescription>
+                  If you can read this, the dialog primitive is working.
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        </CardPanel>
+      </Card>
+
+      <Card className={showcaseCard}>
+        <CardHeader>
+          <CardTitle>Radio &amp; switch</CardTitle>
+          <CardDescription>
+            Radio groups and switches for single-choice and boolean input.
+          </CardDescription>
+        </CardHeader>
+        <CardPanel className={showcaseCardPanel}>
           <Field name="plan">
             <FieldLabel>Billing plan</FieldLabel>
             <RadioGroup defaultValue="pro">
@@ -373,46 +736,11 @@ export default function Page() {
               Email notifications
             </Label>
 
-            <div className="flex items-start gap-2">
-              <Checkbox id="accept-terms" />
-              <div className="flex flex-col gap-1">
-                <Label htmlFor="accept-terms">Accept terms and conditions</Label>
-                <p className="text-muted-foreground text-xs">
-                  Checkbox with linked label and description for screen reader
-                  testing.
-                </p>
-              </div>
-            </div>
-
             <Label className="flex items-center gap-2 opacity-64">
               <Switch disabled />
               Disabled switch
             </Label>
           </div>
-        </CardPanel>
-      </Card>
-
-      <Card className={showcaseCard}>
-        <CardHeader>
-          <CardTitle>Dialog</CardTitle>
-          <CardDescription>
-            Modal with heading font (<code className="font-mono text-xs">--font-heading</code>).
-          </CardDescription>
-        </CardHeader>
-        <CardPanel className={showcaseCardPanel}>
-          <Dialog>
-            <DialogTrigger render={<Button variant="outline" />}>
-              Open dialog
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>COSS UI Dialog</DialogTitle>
-                <DialogDescription>
-                  If you can read this, the dialog primitive is working.
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
         </CardPanel>
       </Card>
 
