@@ -4,7 +4,7 @@ Reference for every change made to the default COSS UI scaffold in this project.
 
 **Baseline:** git commit `04292fa` (`feat: initial commit`) — state after `npx shadcn init @coss/style`.
 
-**Last reviewed:** 2026-06-23 (Phosphor icons + Source Sans 3 / Fira Code migration).
+**Last reviewed:** 2026-09-02 (`--alpha()` COSS preset import-path fix).
 
 ---
 
@@ -25,7 +25,7 @@ All other files under `components/ui/` match the scaffold except `button.tsx` an
 
 ## Token changes (`app/globals.css`)
 
-Custom values live in `:root:not([data-ui-preset="coss-default"])` and `.dark:not([data-ui-preset="coss-default"])`. Stock values are preserved in `app/coss-default-preset.css`.
+Custom values live in `:root:not([data-ui-preset="coss-default"])` and `.dark:not([data-ui-preset="coss-default"])`. Stock values live in `app/coss-default-preset.css` (`:root[data-ui-preset="coss-default"]` / `.dark[data-ui-preset="coss-default"]`). That snapshot **must** be `@import`ed from `app/globals.css` (after `@import "tailwindcss"`) so Tailwind compiles `--alpha()` at build time. Do not import it from `layout.tsx` as a sibling CSS file — `--alpha()` is not valid CSS in the browser, so border/input/muted/secondary/accent tokens get dropped and the COSS preset looks broken.
 
 ### Light mode (`:root`)
 
@@ -190,7 +190,7 @@ These were added for local development and do not change COSS primitives:
 
 | File | Purpose |
 |------|---------|
-| `app/coss-default-preset.css` | Snapshot of `04292fa` tokens; applied when `data-ui-preset="coss-default"` |
+| `app/coss-default-preset.css` | Snapshot of `04292fa` tokens; applied when `data-ui-preset="coss-default"`. Imported from `globals.css` so `--alpha()` compiles. |
 | `components/ui-preset-provider.tsx` | Custom / COSS preset toggle + `p` hotkey |
 | `components/theme-selector.tsx` | Light/dark + preset UI; Phosphor icons (`MoonIcon`, `SunIcon`, `PaletteIcon`) |
 | `components/app-sidebar.tsx` | App sidebar; Phosphor nav icons |
@@ -203,7 +203,7 @@ These were added for local development and do not change COSS primitives:
 
 ### Tokens only (runtime)
 
-Use the **COSS** preset in the header toggle, or press `p`. This applies `app/coss-default-preset.css` without editing files.
+Use the **COSS** preset in the header toggle, or press `p`. This applies `app/coss-default-preset.css` (imported from `globals.css`) without editing files.
 
 ### Tokens (permanent revert)
 
@@ -252,12 +252,13 @@ git show 04292fa:app/layout.tsx > app/layout.tsx
 When something looks wrong compared to stock COSS:
 
 1. **Toggle COSS preset** — if it fixes the issue, a token in the tables above is the cause.
-2. **Check button variants** — `primary-outline` and customized `destructive-outline` only exist in your `button.tsx`.
-3. **Check page background** — custom `--background: neutral-50` makes white cards pop; scaffold uses white-on-white (border/shadow only).
-4. **Check input/muted opacity** — custom uses 24% / 8%; scaffold uses 10% / 4% (light) and 8% / 4% (dark).
-5. **Confirm primitive** — run `git diff 04292fa -- components/ui/<name>.tsx`; expect diffs in `button.tsx` and the 17 icon-swapped files.
-6. **Icon appearance** — Phosphor stroke/style differs from Lucide; not a token issue.
-7. **Font weights** — custom preset uses 424 / 600 / 720 for normal / semibold / bold; COSS preset does not change fonts.
+2. **COSS preset missing borders/washes** — inspect computed `--border` / `--input` / `--muted` on `<html>`. If they are empty or still `--alpha(...)`, the snapshot is not going through Tailwind. Keep `@import "./coss-default-preset.css"` in `globals.css` after `@import "tailwindcss"`.
+3. **Check button variants** — `primary-outline` and customized `destructive-outline` only exist in your `button.tsx`.
+4. **Check page background** — custom `--background: neutral-50` makes white cards pop; scaffold uses white-on-white (border/shadow only).
+5. **Check input/muted opacity** — custom uses 24% / 8%; scaffold uses 10% / 4% (light) and 8% / 4% (dark).
+6. **Confirm primitive** — run `git diff 04292fa -- components/ui/<name>.tsx`; expect diffs in `button.tsx` and the 17 icon-swapped files.
+7. **Icon appearance** — Phosphor stroke/style differs from Lucide; not a token issue.
+8. **Font weights** — custom preset uses 424 / 600 / 720 for normal / semibold / bold; COSS preset does not change fonts.
 
 ---
 
