@@ -90,11 +90,11 @@ function HeightSample({
 
     const target =
       wrapper.querySelector<HTMLElement>("[data-height-target]") ??
-      wrapper.querySelector<HTMLElement>("[data-slot='input-control']") ??
       wrapper.querySelector<HTMLElement>("[data-slot='input-group']") ??
       wrapper.querySelector<HTMLElement>("[data-slot='number-field-group']") ??
       wrapper.querySelector<HTMLElement>("[data-slot='select-trigger']") ??
       wrapper.querySelector<HTMLElement>("[data-slot='tabs-list']") ??
+      wrapper.querySelector<HTMLElement>("[data-slot='input-control']") ??
       (wrapper.firstElementChild as HTMLElement | null)
 
     if (target) {
@@ -167,7 +167,7 @@ export function InlineHeights() {
             </HeightSample>
 
             <HeightSample deps={deps} label="InputGroup">
-              <InputGroup>
+              <InputGroup data-height-target>
                 <InputGroupAddon>
                   <MagnifyingGlassIcon />
                 </InputGroupAddon>
