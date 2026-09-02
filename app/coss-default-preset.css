@@ -49,7 +49,7 @@
   --sidebar-ring: var(--color-neutral-400);
 }
 
-:root.dark[data-ui-preset="coss-default"] {
+.dark[data-ui-preset="coss-default"] {
   --destructive-foreground: var(--color-red-400);
   --destructive-outline-border: var(--input);
   --destructive-outline-foreground: var(--destructive-foreground);

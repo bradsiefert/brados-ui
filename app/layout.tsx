@@ -1,5 +1,4 @@
 import "./globals.css"
-import "./coss-default-preset.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { UiPresetProvider } from "@/components/ui-preset-provider"
 import { firaCode, sourceSans } from "@/app/fonts"
