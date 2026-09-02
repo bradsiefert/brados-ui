@@ -15,7 +15,7 @@ import { CheckboxGroup } from "@/components/ui/checkbox-group"
 import { Collapsible, CollapsiblePanel, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Combobox, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList, ComboboxPopup } from "@/components/ui/combobox"
 import { Command, CommandDialog, CommandDialogPopup, CommandDialogTrigger, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field"
 import { Fieldset, FieldsetLegend } from "@/components/ui/fieldset"
 import { Input } from "@/components/ui/input"
@@ -26,7 +26,6 @@ import { Menu, MenuItem, MenuPopup, MenuTrigger } from "@/components/ui/menu"
 import { NumberField, NumberFieldDecrement, NumberFieldGroup, NumberFieldIncrement, NumberFieldInput } from "@/components/ui/number-field"
 import { Radio, RadioGroup } from "@/components/ui/radio-group"
 import { Select, SelectItem, SelectPopup, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { Slider, SliderValue } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
@@ -34,6 +33,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 import { ColorScale } from "@/components/color-scale"
 import { LibrarySidebar } from "@/components/library-sidebar"
+import { InlineHeights } from "@/components/showcase/inline-heights"
 import { ThemeSelector } from "@/components/theme-selector"
 import Link from "next/link"
 import { useState, type ReactNode } from "react"
@@ -158,6 +158,19 @@ export default function Page() {
             <ColorScale />
           </section>
 
+          <section id="inline-heights" className="scroll-mt-24 space-y-4">
+            <div className="space-y-1">
+              <h2 className="font-heading text-2xl font-semibold tracking-tight">
+                Inline heights
+              </h2>
+              <p className="text-muted-foreground text-sm">
+                Default-size controls that can sit on the same row. Measured
+                height is shown under each sample.
+              </p>
+            </div>
+            <InlineHeights />
+          </section>
+
           <section className="space-y-4">
             <div className="space-y-1">
               <h2 className="font-heading text-2xl font-semibold tracking-tight">
@@ -169,7 +182,7 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div className="flex flex-col gap-4">
               <ShowcaseSection id="accordion">
                 <Card className={showcaseCard}>
                   <CardHeader>
@@ -268,22 +281,89 @@ export default function Page() {
                     <CardDescription>Searchable combobox with filtered suggestions.</CardDescription>
                   </CardHeader>
                   <CardPanel className={showcaseCardPanel}>
-                    <Autocomplete items={fruitItems}>
-                      <AutocompleteInput
-                        aria-label="Search fruits"
-                        placeholder="Search fruits…"
-                      />
-                      <AutocompletePopup>
-                        <AutocompleteEmpty>No fruits found.</AutocompleteEmpty>
-                        <AutocompleteList>
-                          {(item) => (
-                            <AutocompleteItem key={item.value} value={item}>
-                              {item.label}
-                            </AutocompleteItem>
-                          )}
-                        </AutocompleteList>
-                      </AutocompletePopup>
-                    </Autocomplete>
+                    <ButtonSection label="Default">
+                      <div className="w-64">
+                      <Autocomplete items={fruitItems}>
+                        <AutocompleteInput
+                          aria-label="Search fruits"
+                          placeholder="Search fruits…"
+                        />
+                        <AutocompletePopup>
+                          <AutocompleteEmpty>No fruits found.</AutocompleteEmpty>
+                          <AutocompleteList>
+                            {(item) => (
+                              <AutocompleteItem key={item.value} value={item}>
+                                {item.label}
+                              </AutocompleteItem>
+                            )}
+                          </AutocompleteList>
+                        </AutocompletePopup>
+                      </Autocomplete>
+                    </div>
+                    </ButtonSection>
+
+                    <ButtonSection label="Sizes">
+                      <div className="w-64">
+                      <Autocomplete items={fruitItems}>
+                        <AutocompleteInput
+                          aria-label="Small fruit search"
+                          placeholder="Small"
+                          size="sm"
+                        />
+                        <AutocompletePopup>
+                          <AutocompleteEmpty>No fruits found.</AutocompleteEmpty>
+                          <AutocompleteList>
+                            {(item) => (
+                              <AutocompleteItem key={item.value} value={item}>
+                                {item.label}
+                              </AutocompleteItem>
+                            )}
+                          </AutocompleteList>
+                        </AutocompletePopup>
+                      </Autocomplete>
+                    </div>
+                      <div className="w-64">
+                      <Autocomplete items={fruitItems}>
+                        <AutocompleteInput
+                          aria-label="Large fruit search"
+                          placeholder="Large"
+                          size="lg"
+                        />
+                        <AutocompletePopup>
+                          <AutocompleteEmpty>No fruits found.</AutocompleteEmpty>
+                          <AutocompleteList>
+                            {(item) => (
+                              <AutocompleteItem key={item.value} value={item}>
+                                {item.label}
+                              </AutocompleteItem>
+                            )}
+                          </AutocompleteList>
+                        </AutocompletePopup>
+                      </Autocomplete>
+                    </div>
+                    </ButtonSection>
+
+                    <ButtonSection label="States">
+                      <div className="w-64">
+                      <Autocomplete items={fruitItems}>
+                        <AutocompleteInput
+                          aria-label="Disabled fruit search"
+                          disabled
+                          placeholder="Disabled"
+                        />
+                        <AutocompletePopup>
+                          <AutocompleteEmpty>No fruits found.</AutocompleteEmpty>
+                          <AutocompleteList>
+                            {(item) => (
+                              <AutocompleteItem key={item.value} value={item}>
+                                {item.label}
+                              </AutocompleteItem>
+                            )}
+                          </AutocompleteList>
+                        </AutocompletePopup>
+                      </Autocomplete>
+                    </div>
+                    </ButtonSection>
                   </CardPanel>
                 </Card>
               </ShowcaseSection>
@@ -700,22 +780,89 @@ export default function Page() {
                     <CardDescription>Searchable selection with filtered suggestions.</CardDescription>
                   </CardHeader>
                   <CardPanel className={showcaseCardPanel}>
-                    <Combobox items={fruitItems}>
-                      <ComboboxInput
-                        aria-label="Search fruits"
-                        placeholder="Select a fruit…"
-                      />
-                      <ComboboxPopup>
-                        <ComboboxEmpty>No fruits found.</ComboboxEmpty>
-                        <ComboboxList>
-                          {(item) => (
-                            <ComboboxItem key={item.value} value={item}>
-                              {item.label}
-                            </ComboboxItem>
-                          )}
-                        </ComboboxList>
-                      </ComboboxPopup>
-                    </Combobox>
+                    <ButtonSection label="Default">
+                      <div className="w-64">
+                      <Combobox items={fruitItems}>
+                        <ComboboxInput
+                          aria-label="Search fruits"
+                          placeholder="Select a fruit…"
+                        />
+                        <ComboboxPopup>
+                          <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+                          <ComboboxList>
+                            {(item) => (
+                              <ComboboxItem key={item.value} value={item}>
+                                {item.label}
+                              </ComboboxItem>
+                            )}
+                          </ComboboxList>
+                        </ComboboxPopup>
+                      </Combobox>
+                    </div>
+                    </ButtonSection>
+
+                    <ButtonSection label="Sizes">
+                      <div className="w-64">
+                      <Combobox items={fruitItems}>
+                        <ComboboxInput
+                          aria-label="Small fruit select"
+                          placeholder="Small"
+                          size="sm"
+                        />
+                        <ComboboxPopup>
+                          <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+                          <ComboboxList>
+                            {(item) => (
+                              <ComboboxItem key={item.value} value={item}>
+                                {item.label}
+                              </ComboboxItem>
+                            )}
+                          </ComboboxList>
+                        </ComboboxPopup>
+                      </Combobox>
+                    </div>
+                      <div className="w-64">
+                      <Combobox items={fruitItems}>
+                        <ComboboxInput
+                          aria-label="Large fruit select"
+                          placeholder="Large"
+                          size="lg"
+                        />
+                        <ComboboxPopup>
+                          <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+                          <ComboboxList>
+                            {(item) => (
+                              <ComboboxItem key={item.value} value={item}>
+                                {item.label}
+                              </ComboboxItem>
+                            )}
+                          </ComboboxList>
+                        </ComboboxPopup>
+                      </Combobox>
+                    </div>
+                    </ButtonSection>
+
+                    <ButtonSection label="States">
+                      <div className="w-64">
+                      <Combobox items={fruitItems}>
+                        <ComboboxInput
+                          aria-label="Disabled fruit select"
+                          disabled
+                          placeholder="Disabled"
+                        />
+                        <ComboboxPopup>
+                          <ComboboxEmpty>No fruits found.</ComboboxEmpty>
+                          <ComboboxList>
+                            {(item) => (
+                              <ComboboxItem key={item.value} value={item}>
+                                {item.label}
+                              </ComboboxItem>
+                            )}
+                          </ComboboxList>
+                        </ComboboxPopup>
+                      </Combobox>
+                    </div>
+                    </ButtonSection>
                   </CardPanel>
                 </Card>
               </ShowcaseSection>
@@ -760,63 +907,124 @@ export default function Page() {
                     </CardDescription>
                   </CardHeader>
                   <CardPanel className={showcaseCardPanel}>
-                    <Dialog>
-                      <DialogTrigger render={<Button variant="outline" />}>
-                        Open dialog
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>COSS UI Dialog</DialogTitle>
-                          <DialogDescription>
-                            If you can read this, the dialog primitive is working.
-                          </DialogDescription>
-                        </DialogHeader>
-                      </DialogContent>
-                    </Dialog>
+                    <ButtonSection label="Default">
+                      <Dialog>
+                        <DialogTrigger render={<Button variant="outline" />}>
+                          Open dialog
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>COSS UI Dialog</DialogTitle>
+                            <DialogDescription>
+                              If you can read this, the dialog primitive is working.
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                    </ButtonSection>
+
+                    <ButtonSection label="With footer">
+                      <Dialog>
+                        <DialogTrigger render={<Button />}>
+                          Confirm changes
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Save changes?</DialogTitle>
+                            <DialogDescription>
+                              This will update your workspace settings.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <DialogFooter>
+                            <DialogClose render={<Button variant="outline" />}>
+                              Cancel
+                            </DialogClose>
+                            <DialogClose render={<Button />}>
+                              Save
+                            </DialogClose>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    </ButtonSection>
                   </CardPanel>
                 </Card>
               </ShowcaseSection>
 
-              <ShowcaseSection id="radio-switch">
+              <ShowcaseSection id="radio">
                 <Card className={showcaseCard}>
                   <CardHeader>
-                    <CardTitle>Radio &amp; switch</CardTitle>
+                    <CardTitle>Radio</CardTitle>
                     <CardDescription>
-                      Radio groups and switches for single-choice and boolean input.
+                      Single-choice groups with linked labels and disabled options.
                     </CardDescription>
                   </CardHeader>
                   <CardPanel className={showcaseCardPanel}>
-                    <Field name="plan">
-                      <FieldLabel>Billing plan</FieldLabel>
-                      <RadioGroup defaultValue="pro">
+                    <ButtonSection label="Default">
+                      <Field name="plan">
+                        <FieldLabel>Billing plan</FieldLabel>
+                        <RadioGroup defaultValue="pro">
+                          <Label className="flex items-center gap-2">
+                            <Radio value="free" />
+                            Free — $0/mo
+                          </Label>
+                          <Label className="flex items-center gap-2">
+                            <Radio value="pro" />
+                            Pro — $12/mo
+                          </Label>
+                          <Label className="flex items-center gap-2">
+                            <Radio value="team" />
+                            Team — $29/mo
+                          </Label>
+                        </RadioGroup>
+                      </Field>
+                    </ButtonSection>
+
+                    <ButtonSection label="States">
+                      <RadioGroup defaultValue="on" className="flex-row gap-4">
                         <Label className="flex items-center gap-2">
-                          <Radio value="free" />
-                          Free — $0/mo
+                          <Radio value="on" />
+                          Enabled
                         </Label>
-                        <Label className="flex items-center gap-2">
-                          <Radio value="pro" />
-                          Pro — $12/mo
-                        </Label>
-                        <Label className="flex items-center gap-2">
-                          <Radio value="team" />
-                          Team — $29/mo
+                        <Label className="flex items-center gap-2 opacity-64">
+                          <Radio value="off" disabled />
+                          Disabled
                         </Label>
                       </RadioGroup>
-                    </Field>
+                    </ButtonSection>
+                  </CardPanel>
+                </Card>
+              </ShowcaseSection>
 
-                    <Separator />
-
-                    <div className="space-y-4">
+              <ShowcaseSection id="switch">
+                <Card className={showcaseCard}>
+                  <CardHeader>
+                    <CardTitle>Switch</CardTitle>
+                    <CardDescription>
+                      Immediate on/off preferences with default and disabled states.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardPanel className={showcaseCardPanel}>
+                    <ButtonSection label="Default">
                       <Label className="flex items-center gap-2">
                         <Switch defaultChecked />
                         Email notifications
                       </Label>
+                      <Label className="flex items-center gap-2">
+                        <Switch />
+                        Weekly digest
+                      </Label>
+                    </ButtonSection>
 
+                    <ButtonSection label="States">
                       <Label className="flex items-center gap-2 opacity-64">
                         <Switch disabled />
-                        Disabled switch
+                        Disabled
                       </Label>
-                    </div>
+                      <Label className="flex items-center gap-2 opacity-64">
+                        <Switch disabled defaultChecked />
+                        Disabled on
+                      </Label>
+                    </ButtonSection>
                   </CardPanel>
                 </Card>
               </ShowcaseSection>
@@ -830,91 +1038,145 @@ export default function Page() {
                     </CardDescription>
                   </CardHeader>
                   <CardPanel className={showcaseCardPanel}>
-                    <Field name="email-group">
-                      <FieldLabel>Email with icon</FieldLabel>
-                      <InputGroup>
-                        <InputGroupAddon>
-                          <EnvelopeIcon />
-                        </InputGroupAddon>
-                        <InputGroupInput
-                          type="email"
-                          placeholder="name@company.com"
-                        />
-                      </InputGroup>
-                    </Field>
+                    <ButtonSection label="Icon">
+                      <Field name="email-group" className="w-72">
+                        <FieldLabel>Email with icon</FieldLabel>
+                        <InputGroup>
+                          <InputGroupAddon>
+                            <EnvelopeIcon />
+                          </InputGroupAddon>
+                          <InputGroupInput
+                            type="email"
+                            placeholder="name@company.com"
+                          />
+                        </InputGroup>
+                      </Field>
+                    </ButtonSection>
 
-                    <Field name="domain">
-                      <FieldLabel>Website</FieldLabel>
-                      <InputGroup>
-                        <InputGroupAddon align="inline-start">
-                          <InputGroupText>https://</InputGroupText>
-                        </InputGroupAddon>
-                        <InputGroupInput placeholder="example.com" />
-                      </InputGroup>
-                    </Field>
+                    <ButtonSection label="Prefix">
+                      <Field name="domain" className="w-72">
+                        <FieldLabel>Website</FieldLabel>
+                        <InputGroup>
+                          <InputGroupAddon align="inline-start">
+                            <InputGroupText>https://</InputGroupText>
+                          </InputGroupAddon>
+                          <InputGroupInput placeholder="example.com" />
+                        </InputGroup>
+                      </Field>
+                    </ButtonSection>
 
-                    <Field name="search-group">
-                      <FieldLabel>Search with suffix</FieldLabel>
-                      <InputGroup>
-                        <InputGroupAddon>
-                          <MagnifyingGlassIcon />
-                        </InputGroupAddon>
-                        <InputGroupInput placeholder="Search…" type="search" />
-                        <InputGroupAddon align="inline-end">
-                          <InputGroupText>⌘K</InputGroupText>
-                        </InputGroupAddon>
-                      </InputGroup>
-                    </Field>
+                    <ButtonSection label="Suffix">
+                      <Field name="search-group" className="w-72">
+                        <FieldLabel>Search with suffix</FieldLabel>
+                        <InputGroup>
+                          <InputGroupAddon>
+                            <MagnifyingGlassIcon />
+                          </InputGroupAddon>
+                          <InputGroupInput placeholder="Search…" type="search" />
+                          <InputGroupAddon align="inline-end">
+                            <InputGroupText>⌘K</InputGroupText>
+                          </InputGroupAddon>
+                        </InputGroup>
+                      </Field>
+                    </ButtonSection>
                   </CardPanel>
                 </Card>
               </ShowcaseSection>
 
-              <ShowcaseSection id="range-numeric">
+              <ShowcaseSection id="slider">
                 <Card className={showcaseCard}>
                   <CardHeader>
-                    <CardTitle>Range &amp; numeric</CardTitle>
+                    <CardTitle>Slider</CardTitle>
                     <CardDescription>
-                      Sliders and number fields for continuous and stepped values.
+                      Continuous values with a value readout and disabled state.
                     </CardDescription>
                   </CardHeader>
                   <CardPanel className={showcaseCardPanel}>
-                    <Field name="volume">
-                      <FieldLabel>Volume</FieldLabel>
-                      <Slider defaultValue={40} max={100} step={1}>
-                        <SliderValue className="mb-2 flex justify-end text-sm" />
-                      </Slider>
-                      <FieldDescription>
-                        Use arrow keys to adjust when focused.
-                      </FieldDescription>
-                    </Field>
+                    <ButtonSection label="Default">
+                      <Field name="volume" className="w-64">
+                        <FieldLabel>Volume</FieldLabel>
+                        <Slider defaultValue={40} max={100} step={1}>
+                          <SliderValue className="mb-2 flex justify-end text-sm" />
+                        </Slider>
+                        <FieldDescription>
+                          Use arrow keys to adjust when focused.
+                        </FieldDescription>
+                      </Field>
+                    </ButtonSection>
 
-                    <Field name="quantity">
-                      <FieldLabel>Quantity</FieldLabel>
-                      <NumberField defaultValue={3} min={0} max={99}>
+                    <ButtonSection label="States">
+                      <Field name="volume-disabled" className="w-64">
+                        <FieldLabel>Disabled</FieldLabel>
+                        <Slider defaultValue={20} disabled max={100} step={1}>
+                          <SliderValue className="mb-2 flex justify-end text-sm" />
+                        </Slider>
+                      </Field>
+                    </ButtonSection>
+                  </CardPanel>
+                </Card>
+              </ShowcaseSection>
+
+              <ShowcaseSection id="number-field">
+                <Card className={showcaseCard}>
+                  <CardHeader>
+                    <CardTitle>Number field</CardTitle>
+                    <CardDescription>
+                      Stepped numeric input with increment controls and sizes.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardPanel className={showcaseCardPanel}>
+                    <ButtonSection label="Default">
+                      <NumberField defaultValue={3} min={0} max={99} className="w-40">
                         <NumberFieldGroup>
                           <NumberFieldDecrement />
                           <NumberFieldInput />
                           <NumberFieldIncrement />
                         </NumberFieldGroup>
                       </NumberField>
-                    </Field>
+                    </ButtonSection>
+
+                    <ButtonSection label="Sizes">
+                      <NumberField defaultValue={3} min={0} max={99} size="sm" className="w-40">
+                        <NumberFieldGroup>
+                          <NumberFieldDecrement />
+                          <NumberFieldInput />
+                          <NumberFieldIncrement />
+                        </NumberFieldGroup>
+                      </NumberField>
+                      <NumberField defaultValue={3} min={0} max={99} size="lg" className="w-40">
+                        <NumberFieldGroup>
+                          <NumberFieldDecrement />
+                          <NumberFieldInput />
+                          <NumberFieldIncrement />
+                        </NumberFieldGroup>
+                      </NumberField>
+                    </ButtonSection>
+
+                    <ButtonSection label="States">
+                      <NumberField defaultValue={3} min={0} max={99} disabled className="w-40">
+                        <NumberFieldGroup>
+                          <NumberFieldDecrement />
+                          <NumberFieldInput />
+                          <NumberFieldIncrement />
+                        </NumberFieldGroup>
+                      </NumberField>
+                    </ButtonSection>
                   </CardPanel>
                 </Card>
               </ShowcaseSection>
 
-              <ShowcaseSection id="select-textarea">
+              <ShowcaseSection id="select">
                 <Card className={showcaseCard}>
                   <CardHeader>
-                    <CardTitle>Select &amp; textarea</CardTitle>
+                    <CardTitle>Select</CardTitle>
                     <CardDescription>
-                      Popup selection and multi-line text entry.
+                      Popup selection with sizes, disabled items, and disabled trigger.
                     </CardDescription>
                   </CardHeader>
                   <CardPanel className={showcaseCardPanel}>
-                    <Field name="framework">
-                      <FieldLabel>Framework</FieldLabel>
+                    <ButtonSection label="Default">
                       <Select items={frameworkItems} defaultValue={frameworkItems[0]}>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-56">
                           <SelectValue placeholder="Select a framework" />
                         </SelectTrigger>
                         <SelectPopup>
@@ -929,16 +1191,12 @@ export default function Page() {
                           ))}
                         </SelectPopup>
                       </Select>
-                      <FieldDescription>
-                        Remix is disabled to test unavailable options.
-                      </FieldDescription>
-                    </Field>
+                    </ButtonSection>
 
-                    <Field name="timezone">
-                      <FieldLabel>Timezone</FieldLabel>
+                    <ButtonSection label="Sizes">
                       <Select items={timezoneItems}>
-                        <SelectTrigger size="sm">
-                          <SelectValue placeholder="Choose timezone" />
+                        <SelectTrigger size="sm" className="w-44">
+                          <SelectValue placeholder="Small" />
                         </SelectTrigger>
                         <SelectPopup>
                           {timezoneItems.map((item) => (
@@ -948,19 +1206,66 @@ export default function Page() {
                           ))}
                         </SelectPopup>
                       </Select>
-                    </Field>
+                      <Select items={timezoneItems}>
+                        <SelectTrigger size="lg" className="w-44">
+                          <SelectValue placeholder="Large" />
+                        </SelectTrigger>
+                        <SelectPopup>
+                          {timezoneItems.map((item) => (
+                            <SelectItem key={item.value} value={item}>
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                        </SelectPopup>
+                      </Select>
+                    </ButtonSection>
 
-                    <Field name="bio">
-                      <FieldLabel>Bio</FieldLabel>
-                      <Textarea placeholder="Tell us about yourself…" />
-                      <FieldDescription>Markdown is supported.</FieldDescription>
-                    </Field>
+                    <ButtonSection label="States">
+                      <Select items={frameworkItems} disabled>
+                        <SelectTrigger className="w-56">
+                          <SelectValue placeholder="Disabled" />
+                        </SelectTrigger>
+                        <SelectPopup>
+                          {frameworkItems.map((item) => (
+                            <SelectItem key={item.value} value={item}>
+                              {item.label}
+                            </SelectItem>
+                          ))}
+                        </SelectPopup>
+                      </Select>
+                    </ButtonSection>
+                  </CardPanel>
+                </Card>
+              </ShowcaseSection>
 
-                    <Field name="invalid-textarea">
-                      <FieldLabel>Notes (required)</FieldLabel>
-                      <Textarea aria-invalid placeholder="Add notes…" />
-                      <FieldError>This field is required.</FieldError>
-                    </Field>
+              <ShowcaseSection id="textarea">
+                <Card className={showcaseCard}>
+                  <CardHeader>
+                    <CardTitle>Textarea</CardTitle>
+                    <CardDescription>
+                      Multi-line text entry with helper text and invalid state.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardPanel className={showcaseCardPanel}>
+                    <ButtonSection label="Default">
+                      <Field name="bio" className="w-80">
+                        <FieldLabel>Bio</FieldLabel>
+                        <Textarea placeholder="Tell us about yourself…" />
+                        <FieldDescription>Markdown is supported.</FieldDescription>
+                      </Field>
+                    </ButtonSection>
+
+                    <ButtonSection label="States">
+                      <Field name="invalid-textarea" className="w-80">
+                        <FieldLabel>Notes (required)</FieldLabel>
+                        <Textarea aria-invalid placeholder="Add notes…" />
+                        <FieldError>This field is required.</FieldError>
+                      </Field>
+                      <Field name="disabled-textarea" className="w-80">
+                        <FieldLabel>Disabled</FieldLabel>
+                        <Textarea disabled defaultValue="Cannot edit this field" />
+                      </Field>
+                    </ButtonSection>
                   </CardPanel>
                 </Card>
               </ShowcaseSection>
@@ -972,18 +1277,35 @@ export default function Page() {
                     <CardDescription>Interactive Base UI primitive.</CardDescription>
                   </CardHeader>
                   <CardPanel className={showcaseCardPanel}>
-                    <Tabs defaultValue="overview">
-                      <TabsList>
-                        <TabsTrigger value="overview">Overview</TabsTrigger>
-                        <TabsTrigger value="details">Details</TabsTrigger>
-                      </TabsList>
-                      <TabsContent value="overview" className="pt-4 text-sm">
-                        COSS UI is built on Base UI and styled with Tailwind CSS v4.
-                      </TabsContent>
-                      <TabsContent value="details" className="pt-4 text-sm">
-                        This tab confirms panel switching works correctly.
-                      </TabsContent>
-                    </Tabs>
+                    <ButtonSection label="Default">
+                      <Tabs defaultValue="overview">
+                        <TabsList>
+                          <TabsTrigger value="overview">Overview</TabsTrigger>
+                          <TabsTrigger value="details">Details</TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="overview" className="pt-4 text-sm">
+                          COSS UI is built on Base UI and styled with Tailwind CSS v4.
+                        </TabsContent>
+                        <TabsContent value="details" className="pt-4 text-sm">
+                          This tab confirms panel switching works correctly.
+                        </TabsContent>
+                      </Tabs>
+                    </ButtonSection>
+
+                    <ButtonSection label="Underline">
+                      <Tabs defaultValue="overview">
+                        <TabsList variant="underline">
+                          <TabsTrigger value="overview">Overview</TabsTrigger>
+                          <TabsTrigger value="details">Details</TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="overview" className="pt-4 text-sm">
+                          Underline tabs use a primary indicator instead of a pill.
+                        </TabsContent>
+                        <TabsContent value="details" className="pt-4 text-sm">
+                          Panel switching works the same as the default variant.
+                        </TabsContent>
+                      </Tabs>
+                    </ButtonSection>
                   </CardPanel>
                 </Card>
               </ShowcaseSection>
@@ -1006,18 +1328,20 @@ export default function Page() {
                       </FieldDescription>
                     </Field>
 
-                    <Field name="email-sm">
-                      <FieldLabel>Small</FieldLabel>
-                      <Input size="sm" type="email" placeholder="name@example.com" />
-                    </Field>
-                    <Field name="email-default">
-                      <FieldLabel>Default</FieldLabel>
-                      <Input type="email" placeholder="name@example.com" />
-                    </Field>
-                    <Field name="email-lg">
-                      <FieldLabel>Large</FieldLabel>
-                      <Input size="lg" type="email" placeholder="name@example.com" />
-                    </Field>
+                    <ButtonSection label="Sizes">
+                      <Field name="email-sm" className="w-56">
+                        <FieldLabel>Small</FieldLabel>
+                        <Input size="sm" type="email" placeholder="name@example.com" />
+                      </Field>
+                      <Field name="email-default" className="w-56">
+                        <FieldLabel>Default</FieldLabel>
+                        <Input type="email" placeholder="name@example.com" />
+                      </Field>
+                      <Field name="email-lg" className="w-56">
+                        <FieldLabel>Large</FieldLabel>
+                        <Input size="lg" type="email" placeholder="name@example.com" />
+                      </Field>
+                    </ButtonSection>
 
                     <Field name="password">
                       <FieldLabel>Password</FieldLabel>
