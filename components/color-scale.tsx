@@ -6,11 +6,14 @@ import { useTheme } from "next-themes"
 import { useUiPreset } from "@/components/ui-preset-provider"
 import {
   Card,
+  CardAction,
   CardDescription,
   CardHeader,
   CardPanel,
   CardTitle,
 } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 
 const paletteFamilies = [
@@ -58,6 +61,8 @@ const semanticGroups: TokenGroup[] = [
       "accent-foreground",
       "muted",
       "muted-foreground",
+      "primary-outline-border",
+      "primary-outline-foreground",
     ],
   },
   {
@@ -65,6 +70,8 @@ const semanticGroups: TokenGroup[] = [
     tokens: [
       "destructive",
       "destructive-foreground",
+      "destructive-outline-border",
+      "destructive-outline-foreground",
       "info",
       "info-foreground",
       "success",
@@ -99,13 +106,8 @@ const semanticGroups: TokenGroup[] = [
 function useResolvedDeps(): string {
   const { resolvedTheme } = useTheme()
   const { preset } = useUiPreset()
-  const [mounted, setMounted] = React.useState(false)
 
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  return `${preset}:${resolvedTheme ?? "light"}:${mounted}`
+  return `${preset}:${resolvedTheme ?? "light"}`
 }
 
 function useComputedColor(cssVar: string, deps: string) {
@@ -163,8 +165,15 @@ function TokenSwatch({ token, deps }: { token: string; deps: string }) {
   )
 }
 
+const CHART_GROUP_LABEL = "Charts"
+
 export function ColorScale() {
   const deps = useResolvedDeps()
+  const [showChartColors, setShowChartColors] = React.useState(false)
+
+  const visibleGroups = semanticGroups.filter(
+    (group) => group.label !== CHART_GROUP_LABEL || showChartColors,
+  )
 
   return (
     <div className="space-y-4">
@@ -213,9 +222,18 @@ export function ColorScale() {
             Role-based tokens that components consume. Values update with the
             active preset and light/dark mode.
           </CardDescription>
+          <CardAction>
+            <Label className="flex items-center gap-2">
+              Chart colors
+              <Switch
+                checked={showChartColors}
+                onCheckedChange={setShowChartColors}
+              />
+            </Label>
+          </CardAction>
         </CardHeader>
         <CardPanel className="space-y-6">
-          {semanticGroups.map((group) => (
+          {visibleGroups.map((group) => (
             <div key={group.label} className="space-y-3">
               <p className="font-medium text-muted-foreground text-xs">
                 {group.label}

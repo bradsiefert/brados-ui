@@ -1,6 +1,6 @@
 "use client"
 
-import { PaletteIcon } from "@phosphor-icons/react"
+import { ArrowsVerticalIcon, PaletteIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
 import { componentSections } from "@/lib/component-sections"
@@ -18,7 +18,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-const foundations = [{ id: "colors", title: "Colors", icon: PaletteIcon }]
+const foundations = [
+  { id: "colors", title: "Colors", icon: PaletteIcon },
+  { id: "inline-heights", title: "Inline heights", icon: ArrowsVerticalIcon },
+]
 
 function useActiveSection(ids: string[]) {
   const [active, setActive] = React.useState(ids[0] ?? "")
