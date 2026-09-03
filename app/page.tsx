@@ -34,6 +34,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { ColorScale } from "@/components/color-scale"
 import { LibrarySidebar } from "@/components/library-sidebar"
 import { InlineHeights } from "@/components/showcase/inline-heights"
+import { InlineSizes } from "@/components/showcase/inline-sizes"
 import { ThemeSelector } from "@/components/theme-selector"
 import Link from "next/link"
 import { useState, type ReactNode } from "react"
@@ -169,6 +170,19 @@ export default function Page() {
               </p>
             </div>
             <InlineHeights />
+          </section>
+
+          <section id="sizes" className="scroll-mt-24 space-y-4">
+            <div className="space-y-1">
+              <h2 className="font-heading text-2xl font-semibold tracking-tight">
+                Sizes
+              </h2>
+              <p className="text-muted-foreground text-sm">
+                Compare inline controls by desktop height. Token names are
+                captions under each sample.
+              </p>
+            </div>
+            <InlineSizes />
           </section>
 
           <section className="space-y-4">

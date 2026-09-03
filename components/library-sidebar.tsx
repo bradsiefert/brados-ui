@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowsVerticalIcon, PaletteIcon } from "@phosphor-icons/react"
+import { ArrowsVerticalIcon, PaletteIcon, TableIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
 import { componentSections } from "@/lib/component-sections"
@@ -21,6 +21,7 @@ import {
 const foundations = [
   { id: "colors", title: "Colors", icon: PaletteIcon },
   { id: "inline-heights", title: "Inline heights", icon: ArrowsVerticalIcon },
+  { id: "sizes", title: "Sizes", icon: TableIcon },
 ]
 
 function useActiveSection(ids: string[]) {
