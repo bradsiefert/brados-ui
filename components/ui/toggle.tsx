@@ -15,7 +15,7 @@ export const toggleVariants = cva(
     variants: {
       size: {
         default: "h-9 min-w-9 px-[calc(--spacing(2)-1px)] sm:h-8 sm:min-w-8",
-        lg: "h-10 min-w-10 px-[calc(--spacing(2.5)-1px)] sm:h-9 sm:min-w-9",
+        lg: "h-13 min-w-13 px-[calc(--spacing(3)-1px)] sm:h-12 sm:min-w-12 [&_svg:not([class*='size-'])]:size-5 sm:[&_svg:not([class*='size-'])]:size-4.5",
         sm: "h-8 min-w-8 px-[calc(--spacing(1.5)-1px)] sm:h-7 sm:min-w-7",
       },
       variant: {

@@ -23,7 +23,7 @@ export const selectTriggerVariants = cva(
     variants: {
       size: {
         default: "",
-        lg: "min-h-10 sm:min-h-9",
+        lg: "min-h-13 px-[calc(--spacing(3.5)-1px)] sm:min-h-12 [&_svg:not([class*='size-'])]:size-5 sm:[&_svg:not([class*='size-'])]:size-4.5",
         sm: "min-h-8 gap-1.5 px-[calc(--spacing(2.5)-1px)] sm:min-h-7",
       },
     },

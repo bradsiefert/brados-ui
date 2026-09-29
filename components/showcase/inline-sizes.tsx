@@ -67,7 +67,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Toggle } from "@/components/ui/toggle"
 
-const HEIGHTS = [16, 18, 20, 22, 24, 28, 32, 36, 40] as const
+const HEIGHTS = [16, 18, 20, 22, 24, 28, 32, 36, 48, 56] as const
 
 type Height = (typeof HEIGHTS)[number]
 
@@ -362,8 +362,8 @@ function getSizeRows(): SizeRow[] {
         24: button("xs"),
         28: button("sm"),
         32: button("default"),
-        36: button("lg"),
-        40: button("xl"),
+        48: button("lg"),
+        56: button("xl"),
       },
     },
     {
@@ -372,8 +372,8 @@ function getSizeRows(): SizeRow[] {
         24: icon("icon-xs"),
         28: icon("icon-sm"),
         32: icon("icon"),
-        36: icon("icon-lg"),
-        40: icon("icon-xl"),
+        48: icon("icon-lg"),
+        56: icon("icon-xl"),
       },
     },
     {
@@ -381,7 +381,7 @@ function getSizeRows(): SizeRow[] {
       samples: {
         28: input("sm"),
         32: input("default"),
-        36: input("lg"),
+        48: input("lg"),
       },
     },
     {
@@ -389,7 +389,7 @@ function getSizeRows(): SizeRow[] {
       samples: {
         28: inputGroup("sm"),
         32: inputGroup("default"),
-        36: inputGroup("lg"),
+        48: inputGroup("lg"),
       },
     },
     {
@@ -397,7 +397,7 @@ function getSizeRows(): SizeRow[] {
       samples: {
         28: select("sm"),
         32: select("default"),
-        36: select("lg"),
+        48: select("lg"),
       },
     },
     {
@@ -405,7 +405,7 @@ function getSizeRows(): SizeRow[] {
       samples: {
         28: combobox("sm"),
         32: combobox("default"),
-        36: combobox("lg"),
+        48: combobox("lg"),
       },
     },
     {
@@ -413,7 +413,7 @@ function getSizeRows(): SizeRow[] {
       samples: {
         28: autocomplete("sm"),
         32: autocomplete("default"),
-        36: autocomplete("lg"),
+        48: autocomplete("lg"),
       },
     },
     {
@@ -421,7 +421,7 @@ function getSizeRows(): SizeRow[] {
       samples: {
         28: numberField("sm"),
         32: numberField("default"),
-        36: numberField("lg"),
+        48: numberField("lg"),
       },
     },
     {
@@ -429,14 +429,14 @@ function getSizeRows(): SizeRow[] {
       samples: {
         28: toggle("sm"),
         32: toggle("default"),
-        36: toggle("lg"),
+        48: toggle("lg"),
       },
     },
     {
       name: "OTPField",
       samples: {
         32: { token: "default", node: <SizedOtpField size="default" /> },
-        36: { token: "lg", node: <SizedOtpField size="lg" /> },
+        48: { token: "lg", node: <SizedOtpField size="lg" /> },
       },
     },
     {
