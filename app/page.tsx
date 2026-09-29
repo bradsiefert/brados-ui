@@ -142,7 +142,12 @@ export default function Page() {
               </p>
             </div>
           </div>
-          <ThemeSelector />
+          <div className="flex items-center gap-2">
+            <Button variant="outline" render={<Link href="/todo" />}>
+              Tasks
+            </Button>
+            <ThemeSelector />
+          </div>
         </header>
 
         <div className="flex flex-1 flex-col gap-10 p-4 md:p-6">
