@@ -20,7 +20,9 @@ This project customizes COSS UI on top of the stock scaffold. Act as the **custo
 
 **Tokens (`app/globals.css`):** blue primary (was neutral), `neutral-50` page background (was white), stronger input/muted opacity, darker destructive, new outline tokens, sans default font (was mono on `<html>`).
 
-**Components:** only [components/ui/button.tsx](components/ui/button.tsx) — added `primary-outline`, restyled `destructive-outline`.
+**Components:**
+- [components/ui/button.tsx](components/ui/button.tsx) — `primary-outline`, restyled `destructive-outline`, height scale
+- Height scale on form controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`): desktop `sm`/`default`/`lg`/`xl` = 28 / 32 / **48** / **56** (stock `lg` was 36, Button `xl` was 40)
 
 **All other `components/ui/*` primitives** match the scaffold unless the log says otherwise.
 

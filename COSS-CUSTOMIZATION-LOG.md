@@ -4,7 +4,7 @@ Reference for every change made to the default COSS UI scaffold in this project.
 
 **Baseline:** git commit `04292fa` (`feat: initial commit`) — state after `npx shadcn init @coss/style`.
 
-**Last reviewed:** 2026-09-02 (`--alpha()` COSS preset import-path fix).
+**Last reviewed:** 2026-09-29 (control height scale: default 32 / lg 48).
 
 ---
 
@@ -15,11 +15,12 @@ Reference for every change made to the default COSS UI scaffold in this project.
 | Design tokens | `app/globals.css` | 20+ semantic token overrides (light + dark); font weight tokens |
 | Typography | `app/fonts.ts`, `app/layout.tsx`, `app/globals.css` | Source Sans 3 (sans + heading), Fira Code (mono), custom weights |
 | Dependencies | `package.json` | `lucide-react` → `@phosphor-icons/react` |
-| UI primitives | `components/ui/button.tsx` | Custom variants (unchanged from prior) |
+| UI primitives | `components/ui/button.tsx` | Custom variants + control height scale |
+| UI primitives | height scale (see below) | `sm`/`default`/`lg`/`xl` desktop heights: 28 / 32 / 48 / 56 |
 | UI primitives | 17 icon-swapped files (see below) | `lucide-react` → `@phosphor-icons/react` imports only |
 | Preset tooling | `app/coss-default-preset.css`, `components/ui-preset-provider.tsx`, `components/theme-selector.tsx` | Restores baseline tokens at runtime (not part of COSS library) |
 
-All other files under `components/ui/` match the scaffold except `button.tsx` and the icon-swapped primitives listed below.
+All other files under `components/ui/` match the scaffold except `button.tsx`, the height-scaled controls listed below, and the icon-swapped primitives.
 
 ---
 
@@ -128,6 +129,21 @@ One `Source_Sans_3()` call only (not two) — avoids duplicate hosted font insta
 
 ## Component changes
 
+### Control height scale (desktop `sm:`)
+
+Aligned form/toolbar control sizes. Compact controls (Badge, Checkbox, Radio, Switch, Kbd) unchanged. Textarea min-heights unchanged.
+
+| Token | COSS default (desktop) | Your custom (desktop) |
+|-------|------------------------|------------------------|
+| `sm` | 28 | 28 (unchanged) |
+| `default` | 32 | 32 (unchanged) |
+| `lg` | 36 | **48** |
+| `xl` (Button only) | 40 | **56** (kept above `lg`) |
+
+Mobile stays ~4px taller than desktop (`h-13`/`sm:h-12` for `lg`, etc.). Input / NumberField use half-step inner heights so the bordered wrapper measures the target outer px.
+
+**Files:** `button.tsx`, `toggle.tsx`, `input.tsx`, `select.tsx`, `number-field.tsx`, `otp-field.tsx`, `combobox.tsx` (chips). Combobox / Autocomplete single-line inputs inherit via `Input`. Showcase `#sizes` columns updated to 48 / 56.
+
 ### `components/ui/button.tsx` (variant customizations)
 
 #### New variant: `primary-outline`
@@ -176,9 +192,9 @@ Import and icon component names only — no styling or behavior changes. Reinsta
 
 ### Unmodified primitives
 
-Identical to commit `04292fa` except `button.tsx` and the icon-swapped files above:
+Identical to commit `04292fa` except `button.tsx`, the height-scaled controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`), and the icon-swapped files above:
 
-`alert`, `alert-dialog`, `avatar`, `badge`, `card`, `checkbox`, `checkbox-group`, `collapsible`, `empty`, `field`, `fieldset`, `form`, `frame`, `group`, `input`, `input-group`, `kbd`, `label`, `meter`, `otp-field`, `popover`, `preview-card`, `progress`, `radio-group`, `scroll-area`, `separator`, `skeleton`, `slider`, `switch`, `table`, `tabs`, `textarea`, `toggle`, `toggle-group`, `toolbar`, `tooltip`.
+`alert`, `alert-dialog`, `avatar`, `badge`, `card`, `checkbox`, `checkbox-group`, `collapsible`, `empty`, `field`, `fieldset`, `form`, `frame`, `group`, `input-group`, `kbd`, `label`, `meter`, `popover`, `preview-card`, `progress`, `radio-group`, `scroll-area`, `separator`, `skeleton`, `slider`, `switch`, `table`, `tabs`, `textarea`, `toggle-group`, `toolbar`, `tooltip`.
 
 The showcase page uses stock `Card`, `CardHeader`, `CardTitle`, `CardDescription`, and `CardPanel` with no component-level edits.
 
@@ -256,9 +272,10 @@ When something looks wrong compared to stock COSS:
 3. **Check button variants** — `primary-outline` and customized `destructive-outline` only exist in your `button.tsx`.
 4. **Check page background** — custom `--background: neutral-50` makes white cards pop; scaffold uses white-on-white (border/shadow only).
 5. **Check input/muted opacity** — custom uses 24% / 8%; scaffold uses 10% / 4% (light) and 8% / 4% (dark).
-6. **Confirm primitive** — run `git diff 04292fa -- components/ui/<name>.tsx`; expect diffs in `button.tsx` and the 17 icon-swapped files.
-7. **Icon appearance** — Phosphor stroke/style differs from Lucide; not a token issue.
-8. **Font weights** — custom preset uses 424 / 600 / 720 for normal / semibold / bold; COSS preset does not change fonts.
+6. **Confirm primitive** — run `git diff 04292fa -- components/ui/<name>.tsx`; expect diffs in `button.tsx`, height-scaled controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`), and the 17 icon-swapped files.
+7. **Control heights** — desktop `lg` is 48px (stock 36); Button `xl` is 56px (stock 40). Use `#sizes` on the home showcase to verify.
+8. **Icon appearance** — Phosphor stroke/style differs from Lucide; not a token issue.
+9. **Font weights** — custom preset uses 424 / 600 / 720 for normal / semibold / bold; COSS preset does not change fonts.
 
 ---
 
