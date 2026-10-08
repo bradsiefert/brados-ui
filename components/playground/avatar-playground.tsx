@@ -61,6 +61,8 @@ const people = [
   { initials: "DR", fill: "#5c4d7a", name: "Drew Ross" },
 ]
 
+const brokenSrc = "data:image/png;base64,aaaa"
+
 function portrait(fill: string): string {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="${fill}"/><circle cx="32" cy="26" r="10" fill="#f7f4ef"/><ellipse cx="32" cy="54" rx="16" ry="12" fill="#f7f4ef"/></svg>`
   return `data:image/svg+xml,${encodeURIComponent(svg)}`
@@ -91,12 +93,9 @@ function PersonAvatar({
 
   return (
     <span className="relative inline-flex">
-      <Avatar className={cn(size, shape, className)}>
+      <Avatar className={cn(size, shape, className)} key={image ? "image" : "fallback"}>
         {image ? (
-          <AvatarImage
-            alt={name}
-            src={broken || !fill ? "/missing-avatar.png" : portrait(fill)}
-          />
+          <AvatarImage alt={name} src={broken || !fill ? brokenSrc : portrait(fill)} />
         ) : null}
         <AvatarFallback className={shape}>{initials}</AvatarFallback>
       </Avatar>
