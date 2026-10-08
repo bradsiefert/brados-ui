@@ -1,6 +1,7 @@
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { UiPresetProvider } from "@/components/ui-preset-provider"
+import { AnchoredToastProvider, ToastProvider } from "@/components/ui/toast"
 import { firaCode, sourceSans } from "@/app/fonts"
 import { cn } from "@/lib/utils"
 
@@ -29,7 +30,11 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
-          <UiPresetProvider>{children}</UiPresetProvider>
+          <UiPresetProvider>
+            <ToastProvider>
+              <AnchoredToastProvider>{children}</AnchoredToastProvider>
+            </ToastProvider>
+          </UiPresetProvider>
         </ThemeProvider>
       </body>
     </html>

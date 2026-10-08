@@ -3,26 +3,27 @@
 import { PlusCircleIcon, SlidersIcon, XIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
+import {
+  CanvasModeToggle,
+  ChoiceField,
+  CompositionNote,
+  Gallery,
+  GalleryGroup,
+  PropsList,
+  SwitchField,
+  type CanvasMode,
+  type Choice,
+} from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { Button, type ButtonProps } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectItem,
-  SelectPopup,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { Switch } from "@/components/ui/switch"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 type ButtonVariant = NonNullable<ButtonProps["variant"]>
 type ButtonSize = NonNullable<ButtonProps["size"]>
-type CanvasMode = "gallery" | "specimen"
 type IconMode = "none" | "leading" | "icon-only"
-type Choice<T extends string> = { label: string; value: T }
 
 const variants: Choice<ButtonVariant>[] = [
   { label: "Default", value: "default" },
@@ -104,66 +105,9 @@ function toTextSize(size: ButtonSize): ButtonSize {
   }
 }
 
-function GalleryGroup({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}): React.ReactElement {
-  return (
-    <div className="space-y-2">
-      <p className="font-medium text-muted-foreground text-xs">{label}</p>
-      <div className="flex flex-wrap items-center gap-2">{children}</div>
-    </div>
-  )
-}
-
-function ChoiceField<T extends string>({
-  id,
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  id: string
-  label: string
-  value: T
-  options: Choice<T>[]
-  onChange: (value: T) => void
-}): React.ReactElement {
-  const selected = options.find((option) => option.value === value) ?? null
-
-  return (
-    <div className="flex flex-col gap-2">
-      <Label htmlFor={id}>{label}</Label>
-      <Select
-        items={options}
-        onValueChange={(next) => {
-          if (next) {
-            onChange(next.value)
-          }
-        }}
-        value={selected}
-      >
-        <SelectTrigger className="w-full" id={id}>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectPopup>
-          {options.map((option) => (
-            <SelectItem key={option.value} value={option}>
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectPopup>
-      </Select>
-    </div>
-  )
-}
-
 function ButtonGallery(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <Gallery>
       <GalleryGroup label="Variants">
         <Button>Primary</Button>
         <Button variant="primary-outline">Primary</Button>
@@ -230,7 +174,7 @@ function ButtonGallery(): React.ReactElement {
           Visit docs
         </Button>
       </GalleryGroup>
-    </div>
+    </Gallery>
   )
 }
 
@@ -300,41 +244,25 @@ export function ButtonPlayground(): React.ReactElement {
               value={label}
             />
           </div>
-          <div className="flex items-center justify-between gap-3">
-            <Label htmlFor="button-disabled">Disabled</Label>
-            <Switch
-              checked={disabled}
-              id="button-disabled"
-              onCheckedChange={setDisabled}
-            />
-          </div>
-          <div className="flex items-center justify-between gap-3">
-            <Label htmlFor="button-loading">Loading</Label>
-            <Switch checked={loading} id="button-loading" onCheckedChange={setLoading} />
-          </div>
+          <SwitchField
+            checked={disabled}
+            id="button-disabled"
+            label="Disabled"
+            onCheckedChange={setDisabled}
+          />
+          <SwitchField
+            checked={loading}
+            id="button-loading"
+            label="Loading"
+            onCheckedChange={setLoading}
+          />
           <Separator />
-          <div className="space-y-3">
-            <h3 className="font-medium text-sm">Props</h3>
-            <dl className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-2 text-xs">
-              {buttonProps.map((prop) => (
-                <React.Fragment key={prop.name}>
-                  <dt className="font-mono text-foreground">{prop.name}</dt>
-                  <dd className="text-end text-muted-foreground">
-                    {prop.type}
-                    <span className="text-foreground"> · {prop.defaultValue}</span>
-                  </dd>
-                </React.Fragment>
-              ))}
-            </dl>
-          </div>
-          <div className="space-y-2">
-            <h3 className="font-medium text-sm">Composition</h3>
-            <p className="text-muted-foreground text-xs leading-5">
-              Pass <span className="font-mono text-foreground">render</span> to turn the
-              button into another element, such as a link. An icon-only button needs an
-              accessible name.
-            </p>
-          </div>
+          <PropsList props={buttonProps} />
+          <CompositionNote>
+            Pass <span className="font-mono text-foreground">render</span> to turn the
+            button into another element, such as a link. An icon-only button needs an
+            accessible name.
+          </CompositionNote>
         </div>
       }
     >
@@ -342,21 +270,7 @@ export function ButtonPlayground(): React.ReactElement {
         description="Variants, sizes, icons, loading, and composition patterns."
         title="Button"
       >
-        <ToggleGroup
-          aria-label="Canvas mode"
-          onValueChange={(value) => {
-            const next = value[0]
-            if (next === "gallery" || next === "specimen") {
-              setMode(next)
-            }
-          }}
-          size="sm"
-          value={[mode]}
-          variant="outline"
-        >
-          <ToggleGroupItem value="gallery">Gallery</ToggleGroupItem>
-          <ToggleGroupItem value="specimen">Specimen</ToggleGroupItem>
-        </ToggleGroup>
+        <CanvasModeToggle mode={mode} onModeChange={setMode} />
       </CanvasIntro>
       {mode === "gallery" ? (
         <ButtonGallery />
