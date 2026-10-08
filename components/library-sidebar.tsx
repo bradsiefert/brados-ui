@@ -1,9 +1,19 @@
 "use client"
 
-import { ArrowsVerticalIcon, PaletteIcon, TableIcon } from "@phosphor-icons/react"
-import * as React from "react"
+import {
+  ArrowsVerticalIcon,
+  CornersOutIcon,
+  PaletteIcon,
+  TableIcon,
+} from "@phosphor-icons/react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import type * as React from "react"
 
-import { componentSections } from "@/lib/component-sections"
+import {
+  componentEntries,
+  foundationEntries,
+} from "@/lib/component-sections"
 import {
   Sidebar,
   SidebarContent,
@@ -18,55 +28,16 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-const foundations = [
-  { id: "colors", title: "Colors", icon: PaletteIcon },
-  { id: "inline-heights", title: "Inline heights", icon: ArrowsVerticalIcon },
-  { id: "sizes", title: "Sizes", icon: TableIcon },
-]
+const foundationIcons = {
+  colors: PaletteIcon,
+  "inline-heights": ArrowsVerticalIcon,
+  "border-radii": CornersOutIcon,
+  sizes: TableIcon,
+} as const
 
-function useActiveSection(ids: string[]) {
-  const [active, setActive] = React.useState(ids[0] ?? "")
-
-  React.useEffect(() => {
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null)
-
-    if (elements.length === 0) {
-      return
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (a, b) => a.boundingClientRect.top - b.boundingClientRect.top,
-          )
-
-        if (visible[0]) {
-          setActive(visible[0].target.id)
-        }
-      },
-      { rootMargin: "-88px 0px -60% 0px", threshold: 0 },
-    )
-
-    elements.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [ids])
-
-  return active
-}
-
-export function LibrarySidebar() {
+export function LibrarySidebar(): React.ReactElement {
+  const pathname = usePathname()
   const { isMobile, setOpenMobile } = useSidebar()
-
-  const ids = React.useMemo(
-    () => [...foundations.map((f) => f.id), ...componentSections.map((s) => s.id)],
-    [],
-  )
-  const active = useActiveSection(ids)
 
   function handleNavigate() {
     if (isMobile) {
@@ -77,7 +48,11 @@ export function LibrarySidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <div className="flex items-center gap-2 px-2 py-1">
+        <Link
+          href="/"
+          className="flex items-center gap-2 rounded-lg px-2 py-1 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          onClick={handleNavigate}
+        >
           <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary font-semibold text-sidebar-primary-foreground text-sm">
             b
           </div>
@@ -87,24 +62,27 @@ export function LibrarySidebar() {
               Design system
             </span>
           </div>
-        </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Foundations</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {foundations.map((item) => (
-                <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton
-                    isActive={active === item.id}
-                    render={<a href={`#${item.id}`} onClick={handleNavigate} />}
-                  >
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {foundationEntries.map((item) => {
+                const Icon = foundationIcons[item.slug as keyof typeof foundationIcons]
+                return (
+                  <SidebarMenuItem key={item.slug}>
+                    <SidebarMenuButton
+                      isActive={pathname === item.href}
+                      render={<Link href={item.href} onClick={handleNavigate} />}
+                    >
+                      {Icon ? <Icon /> : null}
+                      <span>{item.title}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -112,11 +90,11 @@ export function LibrarySidebar() {
           <SidebarGroupLabel>Components</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {componentSections.map((item) => (
-                <SidebarMenuItem key={item.id}>
+              {componentEntries.map((item) => (
+                <SidebarMenuItem key={item.slug}>
                   <SidebarMenuButton
-                    isActive={active === item.id}
-                    render={<a href={`#${item.id}`} onClick={handleNavigate} />}
+                    isActive={pathname === item.href}
+                    render={<Link href={item.href} onClick={handleNavigate} />}
                   >
                     <span>{item.title}</span>
                   </SidebarMenuButton>
