@@ -16,6 +16,18 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 export type CanvasMode = "gallery" | "specimen"
 export type Choice<T extends string> = { label: string; value: T }
 
+export function Gallery({
+  children,
+}: {
+  children: React.ReactNode
+}): React.ReactElement {
+  return (
+    <div className="flex min-h-80 flex-1 flex-col">
+      <div className="m-auto flex w-full flex-col items-center gap-8 p-8">{children}</div>
+    </div>
+  )
+}
+
 export function GalleryGroup({
   label,
   layout = "row",
@@ -26,13 +38,13 @@ export function GalleryGroup({
   children: React.ReactNode
 }): React.ReactElement {
   return (
-    <div className="space-y-2">
-      <p className="font-medium text-muted-foreground text-xs">{label}</p>
+    <div className="w-full space-y-2">
+      <p className="text-center font-medium text-muted-foreground text-xs">{label}</p>
       <div
         className={
           layout === "stack"
-            ? "flex flex-col items-stretch gap-3"
-            : "flex flex-wrap items-center gap-2"
+            ? "flex w-full flex-col items-center gap-3"
+            : "flex flex-wrap items-center justify-center gap-2"
         }
       >
         {children}

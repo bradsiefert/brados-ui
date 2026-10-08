@@ -6,6 +6,7 @@ import {
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
+  Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
@@ -113,7 +114,7 @@ function PersonAvatar({
 
 function AvatarGallery(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <Gallery>
       <GalleryGroup label="Sizes">
         {sizes.map((size) => (
           <PersonAvatar
@@ -187,7 +188,7 @@ function AvatarGallery(): React.ReactElement {
           ))}
         </div>
       </GalleryGroup>
-    </div>
+    </Gallery>
   )
 }
 

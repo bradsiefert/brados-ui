@@ -6,6 +6,7 @@ import {
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
+  Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
@@ -94,7 +95,7 @@ function FaqAccordion({
 
 function AccordionGallery(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <Gallery>
       <GalleryGroup label="Single open" layout="stack">
         <FaqAccordion defaultValue={["shipping"]} />
       </GalleryGroup>
@@ -104,7 +105,7 @@ function AccordionGallery(): React.ReactElement {
       <GalleryGroup label="Disabled item" layout="stack">
         <FaqAccordion defaultValue={["shipping"]} disabledValue="billing" />
       </GalleryGroup>
-    </div>
+    </Gallery>
   )
 }
 

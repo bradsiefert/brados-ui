@@ -7,6 +7,7 @@ import {
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
+  Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
@@ -106,7 +107,7 @@ function toTextSize(size: ButtonSize): ButtonSize {
 
 function ButtonGallery(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <Gallery>
       <GalleryGroup label="Variants">
         <Button>Primary</Button>
         <Button variant="primary-outline">Primary</Button>
@@ -173,7 +174,7 @@ function ButtonGallery(): React.ReactElement {
           Visit docs
         </Button>
       </GalleryGroup>
-    </div>
+    </Gallery>
   )
 }
 

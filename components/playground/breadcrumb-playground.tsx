@@ -7,6 +7,7 @@ import {
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
+  Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
@@ -122,7 +123,7 @@ function Trail({
 
 function BreadcrumbGallery(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <Gallery>
       <GalleryGroup label="Default" layout="stack">
         <Trail />
       </GalleryGroup>
@@ -141,7 +142,7 @@ function BreadcrumbGallery(): React.ReactElement {
       <GalleryGroup label="Icons" layout="stack">
         <Trail itemIcons />
       </GalleryGroup>
-    </div>
+    </Gallery>
   )
 }
 

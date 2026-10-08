@@ -6,6 +6,7 @@ import {
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
+  Gallery,
   GalleryGroup,
   PropsList,
   type CanvasMode,
@@ -87,7 +88,7 @@ function ConfirmDialog({
 
 function AlertDialogGallery(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <Gallery>
       <GalleryGroup label="Footer and tone">
         <ConfirmDialog
           description="This permanently removes the account and its invoices."
@@ -111,7 +112,7 @@ function AlertDialogGallery(): React.ReactElement {
           trigger="Publish"
         />
       </GalleryGroup>
-    </div>
+    </Gallery>
   )
 }
 

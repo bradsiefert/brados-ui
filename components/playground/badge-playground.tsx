@@ -7,6 +7,7 @@ import {
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
+  Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
@@ -77,7 +78,7 @@ function SampleBadge({
 
 function BadgeGallery(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <Gallery>
       <GalleryGroup label="Variants">
         {variants.map((variant) => (
           <SampleBadge key={variant.value} label={variant.label} variant={variant.value} />
@@ -103,7 +104,7 @@ function BadgeGallery(): React.ReactElement {
           Docs
         </Badge>
       </GalleryGroup>
-    </div>
+    </Gallery>
   )
 }
 

@@ -12,6 +12,7 @@ import {
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
+  Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
@@ -95,7 +96,7 @@ function StatusAlert({
   action?: boolean
 }): React.ReactElement {
   return (
-    <Alert variant={variant}>
+    <Alert className="max-w-lg" variant={variant}>
       {icon ? <StatusIcon variant={variant} /> : null}
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>{description}</AlertDescription>
@@ -115,7 +116,7 @@ function StatusAlert({
 
 function AlertGallery(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <Gallery>
       <GalleryGroup label="Variants" layout="stack">
         {variants.map((variant) => (
           <StatusAlert
@@ -143,7 +144,7 @@ function AlertGallery(): React.ReactElement {
           variant="warning"
         />
       </GalleryGroup>
-    </div>
+    </Gallery>
   )
 }
 

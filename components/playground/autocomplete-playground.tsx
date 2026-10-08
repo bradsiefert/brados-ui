@@ -7,6 +7,7 @@ import {
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
+  Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
@@ -179,7 +180,7 @@ function ProduceField({
 
 function AutocompleteGallery(): React.ReactElement {
   return (
-    <div className="flex flex-col gap-6 p-4 md:p-6">
+    <Gallery>
       <GalleryGroup label="Sizes">
         <ProduceField size="sm" />
         <ProduceField />
@@ -197,7 +198,7 @@ function AutocompleteGallery(): React.ReactElement {
       <GalleryGroup label="Grouped">
         <ProduceField grouped showTrigger />
       </GalleryGroup>
-    </div>
+    </Gallery>
   )
 }
 
