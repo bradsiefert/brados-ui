@@ -145,7 +145,7 @@ export function InlineHeights() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Inline heights</CardTitle>
+        <CardTitle>Inline Heights</CardTitle>
         <CardDescription>
           Default-size controls that sit on a form or toolbar line. Heights are
           measured live from the rendered control.

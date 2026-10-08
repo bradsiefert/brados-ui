@@ -111,7 +111,8 @@ export default function DashboardPage() {
                       </TableCell>
                       <TableCell>
                         <Badge variant={statusVariant(order.status)}>
-                          {order.status}
+                          {order.status.charAt(0).toUpperCase() +
+                            order.status.slice(1)}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-muted-foreground">

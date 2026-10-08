@@ -61,7 +61,7 @@ export default function RelationshipsPage() {
         </CardHeader>
         <CardContent className="space-y-6">
           <Field name="people">
-            <FieldLabel>Number of people</FieldLabel>
+            <FieldLabel>Number of People</FieldLabel>
             <FieldDescription>
               Each person can pair with everyone else in the group.
             </FieldDescription>
@@ -83,7 +83,7 @@ export default function RelationshipsPage() {
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <p className="text-muted-foreground text-sm">
-                Total unique relationships
+                Total Unique Relationships
               </p>
               <Badge variant="info">N</Badge>
             </div>
@@ -101,7 +101,7 @@ export default function RelationshipsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>How it works</CardTitle>
+          <CardTitle>How It Works</CardTitle>
           <CardDescription>
             The handshake problem from combinatorics.
           </CardDescription>
@@ -109,7 +109,7 @@ export default function RelationshipsPage() {
         <CardContent>
           <Accordion>
             <AccordionItem value="formula">
-              <AccordionTrigger>The formula</AccordionTrigger>
+              <AccordionTrigger>The Formula</AccordionTrigger>
               <AccordionContent>
                 <p>
                   The formula{" "}
@@ -133,7 +133,7 @@ export default function RelationshipsPage() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="why-divide">
-              <AccordionTrigger>Why divide by 2?</AccordionTrigger>
+              <AccordionTrigger>Why Divide by 2?</AccordionTrigger>
               <AccordionContent>
                 <p>
                   Every individual in a group of{" "}

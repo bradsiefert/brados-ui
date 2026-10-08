@@ -51,7 +51,7 @@ const semanticGroups: TokenGroup[] = [
     ],
   },
   {
-    label: "Brand & accents",
+    label: "Brand & Accents",
     tokens: [
       "primary",
       "primary-foreground",
@@ -81,7 +81,7 @@ const semanticGroups: TokenGroup[] = [
     ],
   },
   {
-    label: "Borders & rings",
+    label: "Borders & Rings",
     tokens: ["border", "input", "ring"],
   },
   {
@@ -217,14 +217,14 @@ export function ColorScale() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Semantic tokens</CardTitle>
+          <CardTitle>Semantic Tokens</CardTitle>
           <CardDescription>
             Role-based tokens that components consume. Values update with the
             active preset and light/dark mode.
           </CardDescription>
           <CardAction>
             <Label className="flex items-center gap-2">
-              Chart colors
+              Chart Colors
               <Switch
                 checked={showChartColors}
                 onCheckedChange={setShowChartColors}

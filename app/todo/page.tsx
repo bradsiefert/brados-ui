@@ -202,7 +202,7 @@ export default function TodoPage(): ReactElement {
         <CardPanel className="flex flex-col gap-4">
           <form className="flex items-start gap-2" onSubmit={addTask}>
             <Field className="min-w-0 flex-1" invalid={addError !== null}>
-              <FieldLabel className="sr-only">New task</FieldLabel>
+              <FieldLabel className="sr-only">New Task</FieldLabel>
               <Input
                 type="text"
                 value={draft}
@@ -348,7 +348,7 @@ export default function TodoPage(): ReactElement {
       >
         <DialogPopup>
           <DialogHeader>
-            <DialogTitle>Edit task</DialogTitle>
+            <DialogTitle>Edit Task</DialogTitle>
             <DialogDescription>
               Update the title, then save it back to the list.
             </DialogDescription>
@@ -392,7 +392,7 @@ export default function TodoPage(): ReactElement {
       >
         <AlertDialogPopup>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete this task?</AlertDialogTitle>
+            <AlertDialogTitle>Delete This Task?</AlertDialogTitle>
             <AlertDialogDescription>
               {pendingDelete
                 ? `"${pendingDelete.title}" will be removed from the list.`
