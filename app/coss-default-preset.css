@@ -5,9 +5,9 @@
 
 :root[data-ui-preset="coss-default"],
 [data-ui-preset="coss-default"] {
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-coss-sans);
+  --font-heading: var(--font-coss-sans);
+  --font-mono: var(--font-coss-mono);
   --font-weights-regular: 400;
   --font-weights-bold: 700;
   --destructive-foreground: var(--color-red-700);

@@ -13,7 +13,7 @@ Reference for every change made to the default COSS UI scaffold in this project.
 | Area | Files changed | Notes |
 |------|---------------|-------|
 | Design tokens | `app/globals.css` | 20+ semantic token overrides (light + dark); font weight tokens |
-| Typography | `app/fonts.ts`, `app/layout.tsx`, `app/globals.css`, `app/coss-default-preset.css` | Custom: Source Sans 3, Fira Code, weights 424 / 600 / 720. COSS preset restores Inter, Geist Mono, and weights 400 / 700. |
+| Typography | `app/fonts.ts`, `app/layout.tsx`, `app/globals.css`, `app/coss-default-preset.css` | Custom: Source Sans 3, Fira Code, weights 424 / 600 / 720. COSS preset uses Cal Sans and Paper Mono (the faces coss.com ships) and weights 400 / 700. |
 | Dependencies | `package.json` | Custom primitives use `@phosphor-icons/react`. `lucide-react` is installed again for `components/coss-stock` only. |
 | UI primitives | `components/ui/button.tsx` | Custom variants + control height scale |
 | UI primitives | height scale (see below) | `sm`/`default`/`lg`/`xl` desktop heights: 28 / 32 / 48 / 56 |
@@ -76,7 +76,7 @@ These do not exist in the default COSS theme. Components or utilities may depend
 | `--font-weights-semibold` | `600` | Tailwind `font-semibold` |
 | `--font-weights-bold` | `720` | Tailwind `font-bold` |
 
-Defined on shared `:root` for the custom preset. The COSS preset overrides `--font-weights-regular` to `400` and `--font-weights-bold` to `700`, and points `--font-sans`, `--font-heading`, and `--font-mono` at Inter and Geist Mono. `font-medium` (500) and `font-semibold` (600) stay the same in both presets.
+Defined on shared `:root` for the custom preset. The COSS preset overrides `--font-weights-regular` to `400` and `--font-weights-bold` to `700`, and points `--font-sans`, `--font-heading`, and `--font-mono` at Cal Sans and Paper Mono. `font-medium` (500) and `font-semibold` (600) stay the same in both presets.
 
 ### `@theme inline` font mappings
 
@@ -116,10 +116,10 @@ Tailwind color aliases wired to the new outline tokens:
 | Heading font | Inter (`--font-heading`, second instance) | Same Source Sans 3 instance; `--font-heading: var(--font-sans)` in `@theme` |
 | Mono font | Geist Mono (`--font-mono`) | Fira Code (`preload: false`) |
 | Font definitions | Inline in `layout.tsx` | Centralized in `app/fonts.ts` |
-| `<html className>` | `"antialiased", "font-mono", …` then `"font-sans", …` | `"antialiased", "font-sans"` plus Source Sans 3, Fira Code, Inter, and Geist Mono variables |
+| `<html className>` | `"antialiased", "font-mono", …` then `"font-sans", …` | `"antialiased", "font-sans"` plus Source Sans 3, Fira Code, Cal Sans, and Paper Mono variables |
 | Display | (default) | `display: "swap"` on all four fonts |
 
-One `Source_Sans_3()` call only (not two) — avoids duplicate hosted font instances per Next.js docs. Inter and Geist Mono stay loaded so the COSS preset can point `--font-sans`, `--font-heading`, and `--font-mono` at them. Those overrides sit on the same `data-ui-preset="coss-default"` selectors as the stock color tokens, including a subtree.
+One `Source_Sans_3()` call only (not two) — avoids duplicate hosted font instances per Next.js docs. The `04292fa` scaffold loaded Inter and Geist Mono. The COSS preset instead loads the faces coss.com ships, Cal Sans and Paper Mono, from `app/coss-fonts`. Those overrides sit on the same `data-ui-preset="coss-default"` selectors as the stock color tokens, including a subtree.
 
 ---
 
@@ -358,7 +358,7 @@ When something looks wrong compared to stock COSS:
 6. **Confirm primitive** — run `git diff 04292fa -- components/ui/<name>.tsx`; expect diffs in `button.tsx`, height-scaled controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`), and the 17 icon-swapped files.
 7. **Control heights** — desktop `lg` is 48px (stock 36); Button `xl` is 56px (stock 40). Use `#sizes` on the home showcase to verify.
 8. **Icon appearance** — Phosphor stroke/style differs from Lucide; not a token issue.
-9. **Fonts** — custom preset uses Source Sans 3, Fira Code, and weights 424 / 600 / 720. COSS preset restores Inter, Geist Mono, and weights 400 / 600 / 700.
+9. **Fonts** — custom preset uses Source Sans 3, Fira Code, and weights 424 / 600 / 720. COSS preset uses Cal Sans, Paper Mono, and weights 400 / 700.
 
 ---
 
