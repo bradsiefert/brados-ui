@@ -18,6 +18,14 @@ export const foundationEntries: PlaygroundEntry[] = [
     status: "ready",
   },
   {
+    slug: "typography",
+    title: "Typography",
+    description:
+      "Desktop type COSS primitives use, smallest to biggest. Stock COSS faces and weights sit beside the rendered sample.",
+    href: "/foundations/typography",
+    status: "ready",
+  },
+  {
     slug: "inline-heights",
     title: "Inline heights",
     description:

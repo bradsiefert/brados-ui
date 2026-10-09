@@ -20,6 +20,10 @@ _Avoid_: Detail page, specimen page
 A page devoted to one foundation, such as color or size.
 _Avoid_: Token page
 
+**Type role**:
+A named way text is set, such as dialog title or caption.
+_Avoid_: Specimen, style
+
 **Canvas**:
 The center pane of the playground.
 _Avoid_: Preview, stage
