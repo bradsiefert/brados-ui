@@ -84,9 +84,17 @@ export function TogglePlayground(): React.ReactElement {
       </CanvasIntro>
       {mode === "gallery" ? (
         <Gallery>
+          <GalleryGroup label="Sizes">
+            <Toggle size="sm" variant="outline">
+              Small
+            </Toggle>
+            <Toggle variant="outline">Default</Toggle>
+            <Toggle size="lg" variant="outline">
+              Large
+            </Toggle>
+          </GalleryGroup>
           <GalleryGroup label="Variants">
             <Toggle>Default</Toggle>
-            <Toggle variant="outline">Outline</Toggle>
             <Toggle defaultPressed variant="outline">
               Pressed
             </Toggle>

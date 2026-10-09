@@ -17,6 +17,9 @@ import {
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import {
   Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
   ComboboxCollection,
   ComboboxEmpty,
   ComboboxGroup,
@@ -25,6 +28,7 @@ import {
   ComboboxItem,
   ComboboxList,
   ComboboxPopup,
+  ComboboxValue,
 } from "@/components/ui/combobox"
 import { Separator } from "@/components/ui/separator"
 
@@ -74,6 +78,7 @@ function ProduceCombobox({
   startAddon = false,
   disabled = false,
   grouped = false,
+  defaultValue,
 }: {
   size?: FieldSize
   showClear?: boolean
@@ -81,6 +86,7 @@ function ProduceCombobox({
   startAddon?: boolean
   disabled?: boolean
   grouped?: boolean
+  defaultValue?: Produce
 }): React.ReactElement {
   const input = (
     <ComboboxInput
@@ -119,8 +125,44 @@ function ProduceCombobox({
 
   return (
     <div className="w-56">
-      <Combobox disabled={disabled} items={produce}>
+      <Combobox defaultValue={defaultValue} disabled={disabled} items={produce}>
         {input}
+        <ComboboxPopup>
+          <ComboboxEmpty>No matches.</ComboboxEmpty>
+          <ComboboxList>
+            {(item: Produce) => <ProduceItem item={item} key={item.value} />}
+          </ComboboxList>
+        </ComboboxPopup>
+      </Combobox>
+    </div>
+  )
+}
+
+function MultipleProduce(): React.ReactElement {
+  return (
+    <div className="w-64">
+      <Combobox defaultValue={[produce[0], produce[1]]} items={produce} multiple>
+        <ComboboxChips>
+          <ComboboxValue>
+            {(value: Produce[] | undefined) => {
+              const selected = value ?? []
+
+              return (
+                <>
+                  {selected.map((item) => (
+                    <ComboboxChip aria-label={item.label} key={item.value}>
+                      {item.label}
+                    </ComboboxChip>
+                  ))}
+                  <ComboboxChipsInput
+                    aria-label="Produce"
+                    placeholder={selected.length > 0 ? undefined : "Select produce…"}
+                  />
+                </>
+              )
+            }}
+          </ComboboxValue>
+        </ComboboxChips>
         <ComboboxPopup>
           <ComboboxEmpty>No matches.</ComboboxEmpty>
           <ComboboxList>
@@ -140,15 +182,17 @@ function ComboboxGallery(): React.ReactElement {
         <ProduceCombobox />
         <ProduceCombobox size="lg" />
       </GalleryGroup>
-      <GalleryGroup label="Affordances">
-        <ProduceCombobox showClear />
-        <ProduceCombobox showTrigger={false} startAddon />
+      <GalleryGroup label="Clear">
+        <ProduceCombobox defaultValue={produce[0]} showClear />
       </GalleryGroup>
       <GalleryGroup label="Disabled">
         <ProduceCombobox disabled />
       </GalleryGroup>
       <GalleryGroup label="Grouped">
         <ProduceCombobox grouped />
+      </GalleryGroup>
+      <GalleryGroup label="Multiple">
+        <MultipleProduce />
       </GalleryGroup>
     </Gallery>
   )
@@ -208,7 +252,7 @@ export function ComboboxPlayground(): React.ReactElement {
       }
     >
       <CanvasIntro
-        description="Sizes, clear and trigger buttons, and grouped items."
+        description="Sizes, a clear button, grouped items, and multiple selection."
         title="Combobox"
       >
         <CanvasModeToggle mode={mode} onModeChange={setMode} />

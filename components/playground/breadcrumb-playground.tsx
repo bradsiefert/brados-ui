@@ -127,12 +127,6 @@ function BreadcrumbGallery(): React.ReactElement {
       <GalleryGroup label="Default" layout="stack">
         <Trail />
       </GalleryGroup>
-      <GalleryGroup label="Slash" layout="stack">
-        <Trail separator="slash" />
-      </GalleryGroup>
-      <GalleryGroup label="Dot" layout="stack">
-        <Trail separator="dot" />
-      </GalleryGroup>
       <GalleryGroup label="Home icon" layout="stack">
         <Trail homeIcon />
       </GalleryGroup>
@@ -188,7 +182,7 @@ export function BreadcrumbPlayground(): React.ReactElement {
       }
     >
       <CanvasIntro
-        description="Separators, a home icon, a collapsed middle, and item icons."
+        description="A trail, a home icon, a collapsed middle, and item icons."
         title="Breadcrumb"
       >
         <CanvasModeToggle mode={mode} onModeChange={setMode} />
