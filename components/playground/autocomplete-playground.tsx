@@ -186,17 +186,14 @@ function AutocompleteGallery(): React.ReactElement {
         <ProduceField />
         <ProduceField size="lg" />
       </GalleryGroup>
-      <GalleryGroup label="Affordances">
-        <ProduceField />
-        <ProduceField showClear />
-        <ProduceField showTrigger />
+      <GalleryGroup label="Search icon">
         <ProduceField startAddon />
       </GalleryGroup>
       <GalleryGroup label="Disabled">
         <ProduceField disabled />
       </GalleryGroup>
       <GalleryGroup label="Grouped">
-        <ProduceField grouped showTrigger />
+        <ProduceField grouped />
       </GalleryGroup>
     </Gallery>
   )
@@ -267,7 +264,7 @@ export function AutocompletePlayground(): React.ReactElement {
       }
     >
       <CanvasIntro
-        description="Sizes, clear and trigger buttons, and grouped suggestions."
+        description="Sizes, a search icon, and grouped suggestions."
         title="Autocomplete"
       >
         <CanvasModeToggle mode={mode} onModeChange={setMode} />

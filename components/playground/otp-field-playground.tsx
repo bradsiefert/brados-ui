@@ -14,6 +14,7 @@ import {
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
+import { Label } from "@/components/ui/label"
 import { OTPField, OTPFieldInput, OTPFieldSeparator } from "@/components/ui/otp-field"
 import { Separator } from "@/components/ui/separator"
 
@@ -34,13 +35,21 @@ function Code({
   size = "default",
   disabled = false,
   separated = true,
+  labelledBy,
 }: {
   size?: FieldSize
   disabled?: boolean
   separated?: boolean
+  labelledBy?: string
 }): React.ReactElement {
   return (
-    <OTPField aria-label="Verification code" disabled={disabled} length={separated ? 6 : 4} size={size}>
+    <OTPField
+      aria-label={labelledBy ? undefined : "Verification code"}
+      aria-labelledby={labelledBy}
+      disabled={disabled}
+      length={separated ? 6 : 4}
+      size={size}
+    >
       <OTPFieldInput aria-label="Digit 1" />
       <OTPFieldInput aria-label="Digit 2" />
       <OTPFieldInput aria-label="Digit 3" />
@@ -53,6 +62,17 @@ function Code({
         </>
       ) : null}
     </OTPField>
+  )
+}
+
+function LabeledCode(): React.ReactElement {
+  const labelId = React.useId()
+
+  return (
+    <div className="grid gap-2">
+      <Label id={labelId}>Verification code</Label>
+      <Code labelledBy={labelId} />
+    </div>
   )
 }
 
@@ -89,19 +109,20 @@ export function OtpFieldPlayground(): React.ReactElement {
         </div>
       }
     >
-      <CanvasIntro description="A six-digit code, a short code, and sizes." title="OTP field">
+      <CanvasIntro description="Sizes, a label, and a short code." title="OTP field">
         <CanvasModeToggle mode={mode} onModeChange={setMode} />
       </CanvasIntro>
       {mode === "gallery" ? (
         <Gallery>
-          <GalleryGroup label="Separated">
+          <GalleryGroup label="Sizes">
             <Code />
+            <Code size="lg" />
+          </GalleryGroup>
+          <GalleryGroup label="Label">
+            <LabeledCode />
           </GalleryGroup>
           <GalleryGroup label="Four digits">
             <Code separated={false} />
-          </GalleryGroup>
-          <GalleryGroup label="Large">
-            <Code size="lg" />
           </GalleryGroup>
         </Gallery>
       ) : (

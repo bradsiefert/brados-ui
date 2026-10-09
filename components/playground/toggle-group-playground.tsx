@@ -41,17 +41,22 @@ function AlignGroup({
   variant,
   orientation,
   multiple,
+  size = "default",
+  defaultValue = ["left"],
 }: {
   variant: GroupVariant
   orientation: Orientation
   multiple: boolean
+  size?: "sm" | "default" | "lg"
+  defaultValue?: string[]
 }): React.ReactElement {
   return (
     <ToggleGroup
       aria-label="Alignment"
-      defaultValue={["left"]}
+      defaultValue={defaultValue}
       multiple={multiple}
       orientation={orientation}
+      size={size}
       variant={variant}
     >
       <ToggleGroupItem aria-label="Align left" value="left">
@@ -107,21 +112,31 @@ export function ToggleGroupPlayground(): React.ReactElement {
       }
     >
       <CanvasIntro
-        description="Outline, default, vertical, and multiple."
+        description="Sizes, default and outline, vertical, and multiple."
         title="Toggle group"
       >
         <CanvasModeToggle mode={mode} onModeChange={setMode} />
       </CanvasIntro>
       {mode === "gallery" ? (
         <Gallery>
-          <GalleryGroup label="Outline">
+          <GalleryGroup label="Sizes">
+            <AlignGroup multiple={false} orientation="horizontal" size="sm" variant="outline" />
             <AlignGroup multiple={false} orientation="horizontal" variant="outline" />
+            <AlignGroup multiple={false} orientation="horizontal" size="lg" variant="outline" />
           </GalleryGroup>
           <GalleryGroup label="Default">
             <AlignGroup multiple={false} orientation="horizontal" variant="default" />
           </GalleryGroup>
           <GalleryGroup label="Vertical">
             <AlignGroup multiple={false} orientation="vertical" variant="outline" />
+          </GalleryGroup>
+          <GalleryGroup label="Multiple">
+            <AlignGroup
+              defaultValue={["left", "center"]}
+              multiple
+              orientation="horizontal"
+              variant="outline"
+            />
           </GalleryGroup>
         </Gallery>
       ) : (

@@ -1,7 +1,7 @@
 "use client"
 
-import { PlusCircleIcon, SlidersIcon, XIcon } from "@phosphor-icons/react"
-import { PlusIcon, SlidersHorizontalIcon, XIcon as LucideXIcon } from "lucide-react"
+import { PlusCircleIcon, SlidersIcon } from "@phosphor-icons/react"
+import { PlusIcon, SlidersHorizontalIcon } from "lucide-react"
 import * as React from "react"
 
 import {
@@ -85,20 +85,17 @@ function asStockVariant(variant: CustomButtonProps["variant"]): StockVariant {
 function galleryIcons(preset: UiPreset): {
   Plus: GalleryIcon
   Sliders: GalleryIcon
-  Close: GalleryIcon
 } {
   if (preset === "coss-default") {
     return {
       Plus: PlusIcon,
       Sliders: SlidersHorizontalIcon,
-      Close: LucideXIcon,
     }
   }
 
   return {
     Plus: PlusCircleIcon,
     Sliders: SlidersIcon,
-    Close: XIcon,
   }
 }
 
@@ -205,13 +202,9 @@ function ButtonGallery({ preset }: { preset: UiPreset }): React.ReactElement {
           <icons.Plus aria-hidden="true" />
           Add item
         </PlaygroundButton>
-        <PlaygroundButton preset={preset} variant="outline">
-          <icons.Sliders aria-hidden="true" />
-          Settings
-        </PlaygroundButton>
       </GalleryGroup>
       <GalleryGroup label="Icon only">
-        <PlaygroundButton aria-label="Settings" preset={preset} size="icon-xs" variant="ghost">
+        <PlaygroundButton aria-label="Settings" preset={preset} size="icon-xs" variant="outline">
           <icons.Sliders aria-hidden="true" />
         </PlaygroundButton>
         <PlaygroundButton aria-label="Settings" preset={preset} size="icon-sm" variant="outline">
@@ -220,8 +213,11 @@ function ButtonGallery({ preset }: { preset: UiPreset }): React.ReactElement {
         <PlaygroundButton aria-label="Settings" preset={preset} size="icon" variant="outline">
           <icons.Sliders aria-hidden="true" />
         </PlaygroundButton>
-        <PlaygroundButton aria-label="Close" preset={preset} size="icon-lg" variant="ghost">
-          <icons.Close aria-hidden="true" />
+        <PlaygroundButton aria-label="Settings" preset={preset} size="icon-lg" variant="outline">
+          <icons.Sliders aria-hidden="true" />
+        </PlaygroundButton>
+        <PlaygroundButton aria-label="Settings" preset={preset} size="icon-xl" variant="outline">
+          <icons.Sliders aria-hidden="true" />
         </PlaygroundButton>
       </GalleryGroup>
       <GalleryGroup label="States">
@@ -230,9 +226,6 @@ function ButtonGallery({ preset }: { preset: UiPreset }): React.ReactElement {
         </PlaygroundButton>
         <PlaygroundButton disabled preset={preset}>
           Disabled
-        </PlaygroundButton>
-        <PlaygroundButton disabled preset={preset} variant="outline">
-          Disabled outline
         </PlaygroundButton>
       </GalleryGroup>
       <GalleryGroup label="As link">

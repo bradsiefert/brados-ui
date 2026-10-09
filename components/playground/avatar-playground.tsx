@@ -156,13 +156,6 @@ function AvatarGallery(): React.ReactElement {
           size="size-10"
           status="online"
         />
-        <PersonAvatar
-          fill={people[3]?.fill}
-          initials="DR"
-          name="Drew Ross"
-          size="size-10"
-          status="offline"
-        />
         <span className="relative inline-flex">
           <PersonAvatar
             fill={people[0]?.fill}
