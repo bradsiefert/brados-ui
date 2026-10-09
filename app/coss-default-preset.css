@@ -1,6 +1,11 @@
 /* COSS scaffold defaults from commit 04292fa — applied when data-ui-preset="coss-default" */
 
 :root[data-ui-preset="coss-default"] {
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+  --font-weights-regular: 400;
+  --font-weights-bold: 700;
   --destructive-foreground: var(--color-red-700);
   --destructive-outline-border: var(--input);
   --destructive-outline-foreground: var(--destructive-foreground);
