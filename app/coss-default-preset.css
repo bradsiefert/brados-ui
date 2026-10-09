@@ -1,9 +1,13 @@
-/* COSS scaffold defaults from commit 04292fa — applied when data-ui-preset="coss-default" */
+/* COSS scaffold defaults from commit 04292fa.
+   Matches <html data-ui-preset="coss-default"> (header toggle) and any subtree
+   with the same attribute. Values are set on that element so they win over
+   inherited custom properties. Dark tokens also match a subtree inside html.dark. */
 
-:root[data-ui-preset="coss-default"] {
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
+:root[data-ui-preset="coss-default"],
+[data-ui-preset="coss-default"] {
+  --font-sans: var(--font-coss-sans);
+  --font-heading: var(--font-coss-sans);
+  --font-mono: var(--font-coss-mono);
   --font-weights-regular: 400;
   --font-weights-bold: 700;
   --destructive-foreground: var(--color-red-700);
@@ -54,7 +58,8 @@
   --sidebar-ring: var(--color-neutral-400);
 }
 
-.dark[data-ui-preset="coss-default"] {
+.dark[data-ui-preset="coss-default"],
+.dark [data-ui-preset="coss-default"] {
   --destructive-foreground: var(--color-red-400);
   --destructive-outline-border: var(--input);
   --destructive-outline-foreground: var(--destructive-foreground);

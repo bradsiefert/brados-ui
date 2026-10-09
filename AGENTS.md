@@ -10,5 +10,7 @@ This repo tracks local changes on top of stock COSS UI. See [COSS-CUSTOMIZATION-
 
 - **Baseline:** git `04292fa`
 - **Custom tokens:** `app/globals.css`
-- **Stock snapshot:** `app/coss-default-preset.css` (COSS preset toggle)
+- **Stock snapshot:** `app/coss-default-preset.css` (COSS preset toggle, also a subtree via `data-ui-preset`)
+- **Custom primitives:** `components/ui` (`@/components/ui`). The app imports these.
+- **Frozen original:** `components/coss-stock` (`@/coss-stock/*`). Refresh with `node scripts/refresh-coss-stock.mjs`. Do not retarget the `ui` alias.
 - **Only modified primitives (beyond icons):** `components/ui/button.tsx` (+ height scale on toggle/input/select/number-field/otp-field/combobox)

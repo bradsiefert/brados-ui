@@ -1,4 +1,5 @@
-import { Fira_Code, Geist_Mono, Inter, Source_Sans_3 } from "next/font/google"
+import localFont from "next/font/local"
+import { Fira_Code, Source_Sans_3 } from "next/font/google"
 
 export const sourceSans = Source_Sans_3({
   subsets: ["latin"],
@@ -13,16 +14,20 @@ export const firaCode = Fira_Code({
   preload: false,
 })
 
-export const inter = Inter({
-  subsets: ["latin"],
+/** Faces shipped by coss.com (`@coss/ui/fonts`). Loaded for the COSS preset. */
+export const calSans = localFont({
   display: "swap",
-  variable: "--font-inter",
+  src: [
+    { path: "./coss-fonts/CalSansVF.woff2", style: "normal", weight: "400 700" },
+    { path: "./coss-fonts/CalSansVF-Italic.woff2", style: "italic", weight: "400 700" },
+  ],
+  variable: "--font-coss-sans",
   preload: false,
 })
 
-export const geistMono = Geist_Mono({
-  subsets: ["latin"],
+export const paperMono = localFont({
   display: "swap",
-  variable: "--font-geist-mono",
+  src: "./coss-fonts/PaperMono-Regular.woff2",
+  variable: "--font-coss-mono",
   preload: false,
 })

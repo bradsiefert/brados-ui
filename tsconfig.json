@@ -19,6 +19,7 @@
       }
     ],
     "paths": {
+      "@/coss-stock/*": ["./components/coss-stock/*"],
       "@/*": ["./*"]
     }
   },
