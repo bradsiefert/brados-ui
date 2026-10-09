@@ -2,7 +2,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { UiPresetProvider } from "@/components/ui-preset-provider"
 import { AnchoredToastProvider, ToastProvider } from "@/components/ui/toast"
-import { firaCode, sourceSans } from "@/app/fonts"
+import { firaCode, geistMono, inter, sourceSans } from "@/app/fonts"
 import { cn } from "@/lib/utils"
 
 export default function RootLayout({
@@ -19,6 +19,8 @@ export default function RootLayout({
         "font-sans",
         sourceSans.variable,
         firaCode.variable,
+        inter.variable,
+        geistMono.variable,
       )}
     >
       <head>

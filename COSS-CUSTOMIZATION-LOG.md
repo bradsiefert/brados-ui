@@ -72,7 +72,7 @@ These do not exist in the default COSS theme. Components or utilities may depend
 | `--font-weights-semibold` | `600` | Tailwind `font-semibold` |
 | `--font-weights-bold` | `720` | Tailwind `font-bold` |
 
-Defined in shared `:root` (with `--radius`) so weights apply in both Custom and COSS color presets. `font-medium` (500) remains Tailwind default. Mono (`Fira Code`) uses weight 400 only.
+Defined on shared `:root` for the custom preset. The COSS preset overrides `--font-weights-regular` to `400` and `--font-weights-bold` to `700`, and points `--font-sans`, `--font-heading`, and `--font-mono` at Inter and Geist Mono. `font-medium` (500) and `font-semibold` (600) stay the same in both presets.
 
 ### `@theme inline` font mappings
 
@@ -275,7 +275,7 @@ When something looks wrong compared to stock COSS:
 6. **Confirm primitive** — run `git diff 04292fa -- components/ui/<name>.tsx`; expect diffs in `button.tsx`, height-scaled controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`), and the 17 icon-swapped files.
 7. **Control heights** — desktop `lg` is 48px (stock 36); Button `xl` is 56px (stock 40). Use `#sizes` on the home showcase to verify.
 8. **Icon appearance** — Phosphor stroke/style differs from Lucide; not a token issue.
-9. **Font weights** — custom preset uses 424 / 600 / 720 for normal / semibold / bold; COSS preset does not change fonts.
+9. **Fonts** — custom preset uses Source Sans 3, Fira Code, and weights 424 / 600 / 720. COSS preset restores Inter, Geist Mono, and weights 400 / 600 / 700.
 
 ---
 

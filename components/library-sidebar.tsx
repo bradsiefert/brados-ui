@@ -5,6 +5,7 @@ import {
   CornersOutIcon,
   PaletteIcon,
   TableIcon,
+  TextTIcon,
 } from "@phosphor-icons/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -30,6 +31,7 @@ import {
 
 const foundationIcons = {
   colors: PaletteIcon,
+  typography: TextTIcon,
   "inline-heights": ArrowsVerticalIcon,
   "border-radii": CornersOutIcon,
   sizes: TableIcon,
