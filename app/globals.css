@@ -69,6 +69,8 @@
     --animate-toast-error-odd: toast-error-odd 0.28s cubic-bezier(0.5, 1, 0.89, 1);
     --animate-toast-error-even: toast-error-even 0.28s cubic-bezier(0.5, 1, 0.89, 1);
     --animate-caret-blink: 1s ease-out infinite caret-blink;
+    --animate-marquee: marquee var(--duration) infinite linear;
+    --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
     --font-heading: var(--font-sans);
     --font-mono: var(--font-mono);
     --font-sans: var(--font-sans);
@@ -202,6 +204,22 @@
     opacity: 0;
         }
     }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
 }
 
 :root {
@@ -211,7 +229,8 @@
     --font-weights-bold: 720;
 }
 
-:root:not([data-ui-preset="coss-default"]) {
+:root:not([data-ui-preset="coss-default"]),
+[data-ui-preset="custom"] {
     --destructive-foreground: var(--color-red-700);
     --destructive-outline-border: var(--destructive);
     --destructive-outline-foreground: var(--destructive-foreground);
@@ -260,7 +279,8 @@
     --sidebar-ring: var(--color-neutral-400);
 }
 
-.dark:not([data-ui-preset="coss-default"]) {
+.dark:not([data-ui-preset="coss-default"]),
+.dark [data-ui-preset="custom"] {
     --destructive-foreground: var(--color-red-500);
     --destructive-outline-border: var(--color-red-400);
     --destructive-outline-foreground: var(--color-red-400);

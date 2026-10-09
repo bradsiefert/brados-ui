@@ -41,6 +41,9 @@ export function PlaygroundShell({
             <Button variant="outline" render={<Link href="/todo" />}>
               Tasks
             </Button>
+            <Button variant="outline" render={<Link href="/sandbox/drop-ins" />}>
+              Drop-ins
+            </Button>
             <ThemeSelector />
           </div>
         </header>

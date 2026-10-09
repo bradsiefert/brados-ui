@@ -14,7 +14,8 @@ This project customizes COSS UI on top of the stock scaffold. Act as the **custo
 | [COSS-CUSTOMIZATION-LOG.md](COSS-CUSTOMIZATION-LOG.md) | Human-readable log of all token + component diffs |
 | Git commit `04292fa` | Stock COSS baseline (`feat: initial commit`, post `npx shadcn init @coss/style`) |
 | [app/coss-default-preset.css](app/coss-default-preset.css) | Runtime snapshot of `04292fa` tokens |
-| [app/globals.css](app/globals.css) | Custom tokens (`:root:not([data-ui-preset="coss-default"])`) |
+| [app/globals.css](app/globals.css) | Custom tokens (`:root:not([data-ui-preset="coss-default"])`, `[data-ui-preset="custom"]`) |
+| [components/coss-stock](components/coss-stock) | Frozen COSS primitives (`@/coss-stock/*`). Refresh with `scripts/refresh-coss-stock.mjs`. |
 
 ## What is customized (today)
 
@@ -29,9 +30,11 @@ This project customizes COSS UI on top of the stock scaffold. Act as the **custo
 ## Preset system
 
 - **Custom** (default): your tokens in `globals.css`
-- **COSS**: stock tokens via `data-ui-preset="coss-default"` + `coss-default-preset.css`
-- Toggle in header or press `p`; light/dark is separate (`d`)
+- **COSS**: stock tokens via `data-ui-preset="coss-default"` on `<html>` or on a subtree + `coss-default-preset.css`
+- **Custom subtree**: `data-ui-preset="custom"` pins the local semantic tokens on that element
+- Toggle in header or press `p`; light/dark is separate (`d`). `.dark` stays on `<html>`
 - Component file edits (e.g. button variants) are **not** reverted by the preset — only CSS tokens
+- App imports stay on `@/components/ui`. Stock comparison imports `@/coss-stock`
 
 ## Agent workflow
 
@@ -41,7 +44,7 @@ When the user changes theme tokens, COSS primitives, or asks about stock vs cust
 2. **Diff** against baseline: `git diff 04292fa -- app/globals.css app/layout.tsx components/ui/`
 3. **Update the log** if tokens or `components/ui/*` changed — tables, new tokens, restore commands.
 4. **Update** `app/coss-default-preset.css` only if the stock baseline definition changes (not when adding custom tokens).
-5. **Prefer** updating custom tokens in `globals.css` under `:root:not([data-ui-preset="coss-default"])` — do not put custom values in `coss-default-preset.css`.
+5. **Prefer** updating custom tokens in `globals.css` under `:root:not([data-ui-preset="coss-default"]), [data-ui-preset="custom"]` (and the matching `.dark` selectors). Do not put custom values in `coss-default-preset.css`. Add the same declaration to both selectors.
 
 ## Restore commands (quick reference)
 

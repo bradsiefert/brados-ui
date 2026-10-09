@@ -1,6 +1,7 @@
 "use client"
 
 import { PlusCircleIcon, SlidersIcon, XIcon } from "@phosphor-icons/react"
+import { PlusIcon, SlidersHorizontalIcon, XIcon as LucideXIcon } from "lucide-react"
 import * as React from "react"
 
 import {
@@ -15,15 +16,22 @@ import {
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
-import { Button, type ButtonProps } from "@/components/ui/button"
+import { Button as StockButton, type ButtonProps as StockButtonProps } from "@/coss-stock/button"
+import {
+  Button as CustomButton,
+  type ButtonProps as CustomButtonProps,
+} from "@/components/ui/button"
+import { useUiPreset, type UiPreset } from "@/components/ui-preset-provider"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
-type ButtonVariant = NonNullable<ButtonProps["variant"]>
-type ButtonSize = NonNullable<ButtonProps["size"]>
+type ButtonVariant = NonNullable<CustomButtonProps["variant"]>
+type ButtonSize = NonNullable<CustomButtonProps["size"]>
+type StockVariant = NonNullable<StockButtonProps["variant"]>
 type IconMode = "none" | "leading" | "icon-only"
+type GalleryIcon = React.ComponentType<{ "aria-hidden"?: boolean | "true" }>
 
 const variants: Choice<ButtonVariant>[] = [
   { label: "Default", value: "default" },
@@ -67,6 +75,45 @@ const buttonProps = [
   { name: "render", type: "ReactElement", defaultValue: "—" },
 ]
 
+function asStockVariant(variant: CustomButtonProps["variant"]): StockVariant {
+  if (variant == null || variant === "primary-outline") {
+    return "default"
+  }
+  return variant
+}
+
+function galleryIcons(preset: UiPreset): {
+  Plus: GalleryIcon
+  Sliders: GalleryIcon
+  Close: GalleryIcon
+} {
+  if (preset === "coss-default") {
+    return {
+      Plus: PlusIcon,
+      Sliders: SlidersHorizontalIcon,
+      Close: LucideXIcon,
+    }
+  }
+
+  return {
+    Plus: PlusCircleIcon,
+    Sliders: SlidersIcon,
+    Close: XIcon,
+  }
+}
+
+function PlaygroundButton({
+  preset,
+  variant = "default",
+  ...props
+}: CustomButtonProps & { preset: UiPreset }): React.ReactElement {
+  if (preset === "coss-default") {
+    return <StockButton {...props} variant={asStockVariant(variant)} />
+  }
+
+  return <CustomButton {...props} variant={variant} />
+}
+
 function toIconSize(size: ButtonSize): ButtonSize {
   switch (size) {
     case "xs":
@@ -105,80 +152,106 @@ function toTextSize(size: ButtonSize): ButtonSize {
   }
 }
 
-function ButtonGallery(): React.ReactElement {
+function ButtonGallery({ preset }: { preset: UiPreset }): React.ReactElement {
+  const icons = galleryIcons(preset)
+
   return (
     <Gallery>
       <GalleryGroup label="Variants">
-        <Button>Primary</Button>
-        <Button variant="primary-outline">Primary</Button>
-        <Button variant="outline">Outline</Button>
-        <Button variant="secondary">Secondary</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="link">Link</Button>
-        <Button variant="destructive">Destructive</Button>
-        <Button variant="destructive-outline">Destructive</Button>
+        <PlaygroundButton preset={preset}>Primary</PlaygroundButton>
+        {preset === "custom" ? (
+          <PlaygroundButton preset={preset} variant="primary-outline">
+            Primary
+          </PlaygroundButton>
+        ) : null}
+        <PlaygroundButton preset={preset} variant="outline">
+          Outline
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} variant="secondary">
+          Secondary
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} variant="ghost">
+          Ghost
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} variant="link">
+          Link
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} variant="destructive">
+          Destructive
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} variant="destructive-outline">
+          Destructive
+        </PlaygroundButton>
       </GalleryGroup>
       <GalleryGroup label="Sizes">
-        <Button size="xs" variant="outline">
+        <PlaygroundButton preset={preset} size="xs" variant="outline">
           Extra small
-        </Button>
-        <Button size="sm" variant="outline">
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} size="sm" variant="outline">
           Small
-        </Button>
-        <Button variant="outline">Default</Button>
-        <Button size="lg" variant="outline">
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} variant="outline">
+          Default
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} size="lg" variant="outline">
           Large
-        </Button>
-        <Button size="xl" variant="outline">
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} size="xl" variant="outline">
           Extra large
-        </Button>
+        </PlaygroundButton>
       </GalleryGroup>
       <GalleryGroup label="With icon">
-        <Button>
-          <PlusCircleIcon aria-hidden="true" />
+        <PlaygroundButton preset={preset}>
+          <icons.Plus aria-hidden="true" />
           Add item
-        </Button>
-        <Button variant="outline">
-          <SlidersIcon aria-hidden="true" />
+        </PlaygroundButton>
+        <PlaygroundButton preset={preset} variant="outline">
+          <icons.Sliders aria-hidden="true" />
           Settings
-        </Button>
+        </PlaygroundButton>
       </GalleryGroup>
       <GalleryGroup label="Icon only">
-        <Button aria-label="Settings" size="icon-xs" variant="ghost">
-          <SlidersIcon aria-hidden="true" />
-        </Button>
-        <Button aria-label="Settings" size="icon-sm" variant="outline">
-          <SlidersIcon aria-hidden="true" />
-        </Button>
-        <Button aria-label="Settings" size="icon" variant="outline">
-          <SlidersIcon aria-hidden="true" />
-        </Button>
-        <Button aria-label="Close" size="icon-lg" variant="ghost">
-          <XIcon aria-hidden="true" />
-        </Button>
+        <PlaygroundButton aria-label="Settings" preset={preset} size="icon-xs" variant="ghost">
+          <icons.Sliders aria-hidden="true" />
+        </PlaygroundButton>
+        <PlaygroundButton aria-label="Settings" preset={preset} size="icon-sm" variant="outline">
+          <icons.Sliders aria-hidden="true" />
+        </PlaygroundButton>
+        <PlaygroundButton aria-label="Settings" preset={preset} size="icon" variant="outline">
+          <icons.Sliders aria-hidden="true" />
+        </PlaygroundButton>
+        <PlaygroundButton aria-label="Close" preset={preset} size="icon-lg" variant="ghost">
+          <icons.Close aria-hidden="true" />
+        </PlaygroundButton>
       </GalleryGroup>
       <GalleryGroup label="States">
-        <Button loading>Loading</Button>
-        <Button disabled>Disabled</Button>
-        <Button disabled variant="outline">
+        <PlaygroundButton loading preset={preset}>
+          Loading
+        </PlaygroundButton>
+        <PlaygroundButton disabled preset={preset}>
+          Disabled
+        </PlaygroundButton>
+        <PlaygroundButton disabled preset={preset} variant="outline">
           Disabled outline
-        </Button>
+        </PlaygroundButton>
       </GalleryGroup>
       <GalleryGroup label="As link">
-        <Button
+        <PlaygroundButton
+          preset={preset}
           render={
             <a href="https://coss.com/ui" rel="noreferrer" target="_blank" />
           }
           variant="link"
         >
           Visit docs
-        </Button>
+        </PlaygroundButton>
       </GalleryGroup>
     </Gallery>
   )
 }
 
 export function ButtonPlayground(): React.ReactElement {
+  const { preset } = useUiPreset()
   const [mode, setMode] = React.useState<CanvasMode>("specimen")
   const [variant, setVariant] = React.useState<ButtonVariant>("default")
   const [size, setSize] = React.useState<ButtonSize>("default")
@@ -187,12 +260,20 @@ export function ButtonPlayground(): React.ReactElement {
   const [disabled, setDisabled] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
 
+  const variantOptions =
+    preset === "coss-default"
+      ? variants.filter((option) => option.value !== "primary-outline")
+      : variants
+  const activeVariant: ButtonVariant =
+    preset === "coss-default" && variant === "primary-outline" ? "default" : variant
+
   function setIconMode(next: IconMode) {
     setIcon(next)
     setSize((current) => (next === "icon-only" ? toIconSize(current) : toTextSize(current)))
   }
 
   const sizeOptions = icon === "icon-only" ? iconSizes : textSizes
+  const LeadingIcon = galleryIcons(preset).Plus
 
   return (
     <PlaygroundShell
@@ -203,8 +284,8 @@ export function ButtonPlayground(): React.ReactElement {
             id="button-variant"
             label="Variant"
             onChange={setVariant}
-            options={variants}
-            value={variant}
+            options={variantOptions}
+            value={activeVariant}
           />
           <div className="flex flex-col gap-2">
             <span className="font-medium text-sm" id="button-icon-label">
@@ -259,6 +340,9 @@ export function ButtonPlayground(): React.ReactElement {
           <Separator />
           <PropsList props={buttonProps} />
           <CompositionNote>
+            {preset === "coss-default"
+              ? "Stock COSS button. Primary outline is not in this set. Large and extra large use the scaffold heights."
+              : "Your button. Primary outline, the destructive outline treatment, and the taller large sizes are local."}{" "}
             Pass <span className="font-mono text-foreground">render</span> to turn the
             button into another element, such as a link. An icon-only button needs an
             accessible name.
@@ -267,25 +351,30 @@ export function ButtonPlayground(): React.ReactElement {
       }
     >
       <CanvasIntro
-        description="Variants, sizes, icons, loading, and composition patterns."
+        description={
+          preset === "coss-default"
+            ? "Stock COSS button. Use Custom in the header to see your variants and sizes."
+            : "Your button. Use COSS in the header to see the stock variants and sizes."
+        }
         title="Button"
       >
         <CanvasModeToggle mode={mode} onModeChange={setMode} />
       </CanvasIntro>
       {mode === "gallery" ? (
-        <ButtonGallery />
+        <ButtonGallery preset={preset} />
       ) : (
         <div className="flex min-h-80 flex-1 items-center justify-center p-8">
-          <Button
+          <PlaygroundButton
             aria-label={icon === "icon-only" ? label : undefined}
             disabled={disabled}
             loading={loading}
+            preset={preset}
             size={size}
-            variant={variant}
+            variant={activeVariant}
           >
-            {icon === "none" ? null : <PlusCircleIcon aria-hidden="true" />}
+            {icon === "none" ? null : <LeadingIcon aria-hidden="true" />}
             {icon === "icon-only" ? null : label}
-          </Button>
+          </PlaygroundButton>
         </div>
       )}
     </PlaygroundShell>
