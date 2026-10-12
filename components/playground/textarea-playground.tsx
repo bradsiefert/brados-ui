@@ -38,19 +38,22 @@ function SampleTextarea({
   disabled = false,
   invalid = false,
   placeholder = "Write a note…",
+  label,
 }: {
   size?: FieldSize
   disabled?: boolean
   invalid?: boolean
   placeholder?: string
+  label?: string
 }): React.ReactElement {
   const id = React.useId()
 
   return (
     <div className="grid w-full max-w-sm gap-2">
-      <Label htmlFor={id}>Note</Label>
+      {label ? <Label htmlFor={id}>{label}</Label> : null}
       <Textarea
         aria-invalid={invalid || undefined}
+        aria-label={label ? undefined : placeholder}
         disabled={disabled}
         id={id}
         placeholder={placeholder}
@@ -69,11 +72,14 @@ function TextareaGallery(): React.ReactElement {
         <SampleTextarea placeholder="Default" />
         <SampleTextarea placeholder="Large" size="lg" />
       </GalleryGroup>
+      <GalleryGroup label="Label" layout="stack">
+        <SampleTextarea label="Note" />
+      </GalleryGroup>
       <GalleryGroup label="Disabled" layout="stack">
         <SampleTextarea disabled placeholder="Disabled" />
       </GalleryGroup>
       <GalleryGroup label="Invalid" layout="stack">
-        <SampleTextarea invalid />
+        <SampleTextarea invalid label="Note" />
       </GalleryGroup>
     </Gallery>
   )
@@ -128,7 +134,7 @@ export function TextareaPlayground(): React.ReactElement {
         </div>
       }
     >
-      <CanvasIntro description="Sizes, disabled, and invalid." title="Textarea">
+      <CanvasIntro description="Sizes, a label, disabled, and invalid." title="Textarea">
         <CanvasModeToggle mode={mode} onModeChange={setMode} />
       </CanvasIntro>
       {mode === "gallery" ? (
@@ -138,6 +144,7 @@ export function TextareaPlayground(): React.ReactElement {
           <SampleTextarea
             disabled={disabled}
             invalid={invalid}
+            label="Note"
             placeholder={placeholder}
             size={size}
           />

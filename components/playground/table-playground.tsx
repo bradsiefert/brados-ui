@@ -30,10 +30,10 @@ const rows = [
 
 const tableProps = [{ name: "children", type: "ReactNode", defaultValue: "—" }]
 
-function PeopleTable({ caption }: { caption: boolean }): React.ReactElement {
+function PeopleTable(): React.ReactElement {
   return (
     <Table className="w-full max-w-md">
-      {caption ? <TableCaption>Studio members</TableCaption> : null}
+      <TableCaption>Studio members</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
@@ -74,15 +74,12 @@ export function TablePlayground(): React.ReactElement {
       {mode === "gallery" ? (
         <Gallery>
           <GalleryGroup label="Caption" layout="stack">
-            <PeopleTable caption />
-          </GalleryGroup>
-          <GalleryGroup label="No caption" layout="stack">
-            <PeopleTable caption={false} />
+            <PeopleTable />
           </GalleryGroup>
         </Gallery>
       ) : (
         <div className="flex min-h-80 flex-1 items-center justify-center p-8">
-          <PeopleTable caption />
+          <PeopleTable />
         </div>
       )}
     </PlaygroundShell>

@@ -3,6 +3,7 @@
 import Link from "next/link"
 import type * as React from "react"
 
+import { AppHotkeys } from "@/components/app-hotkeys"
 import { LibrarySidebar } from "@/components/library-sidebar"
 import { ThemeSelector } from "@/components/theme-selector"
 import { Button } from "@/components/ui/button"
@@ -44,6 +45,7 @@ export function PlaygroundShell({
             <Button variant="outline" render={<Link href="/sandbox/drop-ins" />}>
               Drop-ins
             </Button>
+            <AppHotkeys />
             <ThemeSelector />
           </div>
         </header>

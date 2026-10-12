@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 
 type FieldSize = "sm" | "default" | "lg"
@@ -61,13 +62,15 @@ function FruitSelect({
   size = "default",
   disabled = false,
   grouped = false,
-  disabledItem = false,
+  label,
 }: {
   size?: FieldSize
   disabled?: boolean
   grouped?: boolean
-  disabledItem?: boolean
+  label?: string
 }): React.ReactElement {
+  const id = React.useId()
+
   if (grouped) {
     return (
       <Select defaultValue={fruits[0]} items={groups}>
@@ -91,22 +94,21 @@ function FruitSelect({
   }
 
   return (
-    <Select defaultValue={fruits[0]} items={fruits}>
-      <SelectTrigger className="w-56" disabled={disabled} size={size}>
-        <SelectValue />
-      </SelectTrigger>
-      <SelectPopup>
-        {fruits.map((item) => (
-          <SelectItem
-            disabled={disabledItem && item.value === "cherry"}
-            key={item.value}
-            value={item}
-          >
-            {item.label}
-          </SelectItem>
-        ))}
-      </SelectPopup>
-    </Select>
+    <div className="grid w-56 gap-2">
+      {label ? <Label htmlFor={id}>{label}</Label> : null}
+      <Select defaultValue={fruits[0]} items={fruits}>
+        <SelectTrigger className="w-full" disabled={disabled} id={id} size={size}>
+          <SelectValue />
+        </SelectTrigger>
+        <SelectPopup>
+          {fruits.map((item) => (
+            <SelectItem key={item.value} value={item}>
+              {item.label}
+            </SelectItem>
+          ))}
+        </SelectPopup>
+      </Select>
+    </div>
   )
 }
 
@@ -118,11 +120,11 @@ function SelectGallery(): React.ReactElement {
         <FruitSelect />
         <FruitSelect size="lg" />
       </GalleryGroup>
+      <GalleryGroup label="Label">
+        <FruitSelect label="Fruit" />
+      </GalleryGroup>
       <GalleryGroup label="Disabled">
         <FruitSelect disabled />
-      </GalleryGroup>
-      <GalleryGroup label="Disabled item">
-        <FruitSelect disabledItem />
       </GalleryGroup>
       <GalleryGroup label="Grouped">
         <FruitSelect grouped />
@@ -172,7 +174,7 @@ export function SelectPlayground(): React.ReactElement {
       }
     >
       <CanvasIntro
-        description="Sizes, a disabled trigger, a disabled item, and groups."
+        description="Sizes, a label, a disabled trigger, and groups."
         title="Select"
       >
         <CanvasModeToggle mode={mode} onModeChange={setMode} />

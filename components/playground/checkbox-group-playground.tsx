@@ -66,9 +66,6 @@ function CheckboxGroupGallery(): React.ReactElement {
       <GalleryGroup label="Disabled item" layout="stack">
         <FrameworkGroup disabledValue="astro" value={["next", "vite"]} />
       </GalleryGroup>
-      <GalleryGroup label="Disabled group" layout="stack">
-        <FrameworkGroup disabled value={["vite"]} />
-      </GalleryGroup>
     </Gallery>
   )
 }

@@ -91,7 +91,6 @@ function InputGroupGallery(): React.ReactElement {
   return (
     <Gallery>
       <GalleryGroup label="Addons" layout="stack">
-        <SampleGroup addon="icon" placeholder="Search" />
         <SampleGroup addon="prefix" placeholder="example.com" />
         <SampleGroup addon="suffix" placeholder="studio" />
         <SampleGroup addon="button" placeholder="Search" />

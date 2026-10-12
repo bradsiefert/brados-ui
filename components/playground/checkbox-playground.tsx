@@ -56,6 +56,23 @@ function LabeledCheckbox({
   )
 }
 
+const choiceCardClassName =
+  "flex w-full max-w-sm items-start gap-2 rounded-lg border p-3 hover:bg-accent/50 has-data-checked:border-primary/48 has-data-checked:bg-accent/50"
+
+function CardCheckbox(): React.ReactElement {
+  return (
+    <Label className={choiceCardClassName}>
+      <Checkbox defaultChecked />
+      <div className="flex flex-col gap-1">
+        <p>Enable notifications</p>
+        <p className="text-muted-foreground text-xs">
+          You can enable or disable notifications at any time.
+        </p>
+      </div>
+    </Label>
+  )
+}
+
 function CheckboxGallery(): React.ReactElement {
   return (
     <Gallery>
@@ -71,6 +88,9 @@ function CheckboxGallery(): React.ReactElement {
           description="Emails about product updates, not marketing."
           label="Product news"
         />
+      </GalleryGroup>
+      <GalleryGroup label="Card" layout="stack">
+        <CardCheckbox />
       </GalleryGroup>
     </Gallery>
   )
@@ -126,7 +146,7 @@ export function CheckboxPlayground(): React.ReactElement {
       }
     >
       <CanvasIntro
-        description="Checked, mixed, disabled, and a description."
+        description="Checked, mixed, disabled, a description, and a card."
         title="Checkbox"
       >
         <CanvasModeToggle mode={mode} onModeChange={setMode} />

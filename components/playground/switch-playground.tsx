@@ -47,6 +47,23 @@ function LabeledSwitch({
   )
 }
 
+const choiceCardClassName =
+  "flex w-full max-w-sm items-start gap-2 rounded-lg border p-3 hover:bg-accent/50 has-data-checked:border-primary/48 has-data-checked:bg-accent/50"
+
+function CardSwitch(): React.ReactElement {
+  return (
+    <Label className={choiceCardClassName}>
+      <Switch defaultChecked />
+      <div className="flex flex-col gap-1">
+        <p>Enable notifications</p>
+        <p className="text-muted-foreground text-xs">
+          You can enable or disable notifications at any time.
+        </p>
+      </div>
+    </Label>
+  )
+}
+
 function SwitchGallery(): React.ReactElement {
   return (
     <Gallery>
@@ -54,7 +71,9 @@ function SwitchGallery(): React.ReactElement {
         <LabeledSwitch label="Off" />
         <LabeledSwitch checked label="On" />
         <LabeledSwitch disabled label="Disabled" />
-        <LabeledSwitch checked disabled label="Disabled on" />
+      </GalleryGroup>
+      <GalleryGroup label="Card" layout="stack">
+        <CardSwitch />
       </GalleryGroup>
     </Gallery>
   )
@@ -91,7 +110,7 @@ export function SwitchPlayground(): React.ReactElement {
         </div>
       }
     >
-      <CanvasIntro description="Off, on, and disabled." title="Switch">
+      <CanvasIntro description="Off, on, disabled, and a card." title="Switch">
         <CanvasModeToggle mode={mode} onModeChange={setMode} />
       </CanvasIntro>
       {mode === "gallery" ? (

@@ -69,6 +69,51 @@ function PlanGroup({
   )
 }
 
+const choiceCardClassName =
+  "flex items-start gap-2 rounded-lg border p-3 hover:bg-accent/50 has-data-checked:border-primary/48 has-data-checked:bg-accent/50"
+
+function DescriptionGroup(): React.ReactElement {
+  return (
+    <RadioGroup aria-label="Plan details" defaultValue="free">
+      <div className="flex items-start gap-2">
+        <Radio id="plan-free" value="free" />
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="plan-free">Free</Label>
+          <p className="text-muted-foreground text-xs">Basic features for personal use.</p>
+        </div>
+      </div>
+      <div className="flex items-start gap-2">
+        <Radio id="plan-pro" value="pro" />
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="plan-pro">Pro</Label>
+          <p className="text-muted-foreground text-xs">Advanced tools for professionals.</p>
+        </div>
+      </div>
+    </RadioGroup>
+  )
+}
+
+function CardGroup(): React.ReactElement {
+  return (
+    <RadioGroup aria-label="Notification channel" className="w-full max-w-sm" defaultValue="email">
+      <Label className={choiceCardClassName}>
+        <Radio value="email" />
+        <div className="flex flex-col gap-1">
+          <p>Email</p>
+          <p className="text-muted-foreground text-xs">Receive notifications via email.</p>
+        </div>
+      </Label>
+      <Label className={choiceCardClassName}>
+        <Radio value="sms" />
+        <div className="flex flex-col gap-1">
+          <p>SMS</p>
+          <p className="text-muted-foreground text-xs">Receive notifications via text message.</p>
+        </div>
+      </Label>
+    </RadioGroup>
+  )
+}
+
 function RadioGallery(): React.ReactElement {
   return (
     <Gallery>
@@ -78,11 +123,14 @@ function RadioGallery(): React.ReactElement {
       <GalleryGroup label="Horizontal" layout="stack">
         <PlanGroup horizontal value="starter" />
       </GalleryGroup>
+      <GalleryGroup label="Description" layout="stack">
+        <DescriptionGroup />
+      </GalleryGroup>
+      <GalleryGroup label="Card" layout="stack">
+        <CardGroup />
+      </GalleryGroup>
       <GalleryGroup label="Disabled option" layout="stack">
         <PlanGroup disabledValue="enterprise" value="studio" />
-      </GalleryGroup>
-      <GalleryGroup label="Disabled group" layout="stack">
-        <PlanGroup disabled value="starter" />
       </GalleryGroup>
     </Gallery>
   )
@@ -135,7 +183,7 @@ export function RadioPlayground(): React.ReactElement {
       }
     >
       <CanvasIntro
-        description="Vertical, horizontal, and disabled options."
+        description="Vertical, horizontal, a description, a card, and one disabled option."
         title="Radio"
       >
         <CanvasModeToggle mode={mode} onModeChange={setMode} />
