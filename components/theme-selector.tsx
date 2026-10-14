@@ -4,27 +4,51 @@ import { MoonIcon, PaletteIcon, SunIcon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import * as React from "react"
 
+import { usePaletteSource, writePalette } from "@/components/palette-source"
 import { useUiPreset } from "@/components/ui-preset-provider"
 import {
   ToggleGroup,
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
 
+function subscribeToClient() {
+  return () => {}
+}
+
+function useIsClient() {
+  return React.useSyncExternalStore(subscribeToClient, () => true, () => false)
+}
+
 export function ThemeSelector() {
   const { resolvedTheme, setTheme } = useTheme()
   const { preset, setPreset } = useUiPreset()
-  const [mounted, setMounted] = React.useState(false)
+  const palette = usePaletteSource()
+  const isClient = useIsClient()
 
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return <div aria-hidden className="h-9 w-[18.5rem] shrink-0" />
+  if (!isClient) {
+    return <div aria-hidden className="h-9 w-[28rem] shrink-0" />
   }
 
   return (
     <div className="flex flex-wrap items-center justify-end gap-2">
+      <ToggleGroup
+        aria-label="Palette source"
+        variant="outline"
+        value={[palette]}
+        onValueChange={(value) => {
+          const next = value[0]
+          if (next === "gds" || next === "tailwind") {
+            writePalette(next)
+          }
+        }}
+      >
+        <ToggleGroupItem value="gds" aria-label="GDS standard palette">
+          GDS
+        </ToggleGroupItem>
+        <ToggleGroupItem value="tailwind" aria-label="Tailwind palette">
+          Tailwind
+        </ToggleGroupItem>
+      </ToggleGroup>
       <ToggleGroup
         variant="outline"
         value={[preset]}

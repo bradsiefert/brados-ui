@@ -3,6 +3,7 @@
 import * as React from "react"
 import { useTheme } from "next-themes"
 
+import { usePaletteSource } from "@/components/palette-source"
 import { useUiPreset } from "@/components/ui-preset-provider"
 import {
   Card,
@@ -14,7 +15,6 @@ import {
 } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import {
   gdsFamilies,
   gdsNeutralEnds,
@@ -23,62 +23,10 @@ import {
 } from "@/lib/gds-palette"
 import { cn } from "@/lib/utils"
 
-const PALETTE_STORAGE_KEY = "colors-palette-source"
-
-type PaletteSource = "gds" | "tailwind"
-
-const paletteCopy: Record<PaletteSource, string> = {
+const paletteCopy = {
   gds: "GDS standard scale. Steps run from 100 to 1000. Primary is the blue ramp, shared with info. Neutral also has lightest and darkest. This view does not restyle components.",
   tailwind:
     "Tailwind color families the theme tokens are built from. Steps run from 50 to 950.",
-}
-
-function isPaletteSource(value: string | null): value is PaletteSource {
-  return value === "gds" || value === "tailwind"
-}
-
-function readStoredPalette(): PaletteSource {
-  try {
-    const stored = window.localStorage.getItem(PALETTE_STORAGE_KEY)
-    return isPaletteSource(stored) ? stored : "tailwind"
-  } catch {
-    return "tailwind"
-  }
-}
-
-let currentPalette: PaletteSource = "tailwind"
-let paletteLoaded = false
-const paletteListeners = new Set<() => void>()
-
-function subscribePalette(listener: () => void) {
-  paletteListeners.add(listener)
-  return () => {
-    paletteListeners.delete(listener)
-  }
-}
-
-function getPaletteSnapshot(): PaletteSource {
-  if (!paletteLoaded) {
-    paletteLoaded = true
-    currentPalette = readStoredPalette()
-  }
-
-  return currentPalette
-}
-
-function writePalette(next: PaletteSource) {
-  currentPalette = next
-  paletteLoaded = true
-
-  try {
-    window.localStorage.setItem(PALETTE_STORAGE_KEY, next)
-  } catch {
-    // The choice still applies for this page load.
-  }
-
-  for (const listener of paletteListeners) {
-    listener()
-  }
 }
 
 const paletteFamilies = [
@@ -325,11 +273,7 @@ const CHART_GROUP_LABEL = "Charts"
 export function ColorScale() {
   const deps = useResolvedDeps()
   const [showChartColors, setShowChartColors] = React.useState(false)
-  const palette = React.useSyncExternalStore(
-    subscribePalette,
-    getPaletteSnapshot,
-    () => "tailwind" as const
-  )
+  const palette = usePaletteSource()
 
   const visibleGroups = semanticGroups.filter(
     (group) => group.label !== CHART_GROUP_LABEL || showChartColors
@@ -341,27 +285,6 @@ export function ColorScale() {
         <CardHeader>
           <CardTitle>Palette</CardTitle>
           <CardDescription>{paletteCopy[palette]}</CardDescription>
-          <CardAction>
-            <ToggleGroup
-              aria-label="Palette source"
-              size="sm"
-              variant="outline"
-              value={[palette]}
-              onValueChange={(value) => {
-                const next = value[0]
-                if (next === "gds" || next === "tailwind") {
-                  writePalette(next)
-                }
-              }}
-            >
-              <ToggleGroupItem value="gds" aria-label="GDS standard palette">
-                GDS
-              </ToggleGroupItem>
-              <ToggleGroupItem value="tailwind" aria-label="Tailwind palette">
-                Tailwind
-              </ToggleGroupItem>
-            </ToggleGroup>
-          </CardAction>
         </CardHeader>
         <CardPanel className="space-y-3">
           {palette === "gds" ? <GdsPalette /> : <TailwindPalette />}
