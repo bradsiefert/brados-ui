@@ -13,7 +13,7 @@ export const foundationEntries: PlaygroundEntry[] = [
     slug: "colors",
     title: "Colors",
     description:
-      "Palette and semantic tokens in use. Press p to switch preset and d for light or dark.",
+      "GDS standard or Tailwind palette. Role tokens follow the header preset. Press p to switch preset and d for light or dark.",
     href: "/foundations/colors",
     status: "ready",
   },
