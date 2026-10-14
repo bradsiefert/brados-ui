@@ -29,6 +29,14 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
+const examplePages = [
+  { title: "Dashboard", href: "/dashboard" },
+  { title: "Relationships", href: "/relationships" },
+  { title: "Tasks", href: "/todo" },
+  { title: "Create Issue", href: "/sandbox/create-issue" },
+  { title: "Drop-ins", href: "/sandbox/drop-ins" },
+] as const
+
 const foundationIcons = {
   colors: PaletteIcon,
   typography: TextTIcon,
@@ -67,6 +75,23 @@ export function LibrarySidebar(): React.ReactElement {
         </Link>
       </SidebarHeader>
       <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Examples</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {examplePages.map((item) => (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    isActive={pathname === item.href}
+                    render={<Link href={item.href} onClick={handleNavigate} />}
+                  >
+                    <span>{item.title}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupLabel>Foundations</SidebarGroupLabel>
           <SidebarGroupContent>

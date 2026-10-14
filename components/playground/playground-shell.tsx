@@ -1,12 +1,10 @@
 "use client"
 
-import Link from "next/link"
 import type * as React from "react"
 
 import { AppHotkeys } from "@/components/app-hotkeys"
 import { LibrarySidebar } from "@/components/library-sidebar"
 import { ThemeSelector } from "@/components/theme-selector"
-import { Button } from "@/components/ui/button"
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
 export function PlaygroundShell({
@@ -33,21 +31,6 @@ export function PlaygroundShell({
             </div>
           </div>
           <div className="flex flex-wrap items-center justify-end gap-2">
-            <Button variant="outline" render={<Link href="/dashboard" />}>
-              Dashboard
-            </Button>
-            <Button variant="outline" render={<Link href="/relationships" />}>
-              Relationships
-            </Button>
-            <Button variant="outline" render={<Link href="/todo" />}>
-              Tasks
-            </Button>
-            <Button variant="outline" render={<Link href="/sandbox/create-issue" />}>
-              Create Issue
-            </Button>
-            <Button variant="outline" render={<Link href="/sandbox/drop-ins" />}>
-              Drop-ins
-            </Button>
             <AppHotkeys />
             <ThemeSelector />
           </div>

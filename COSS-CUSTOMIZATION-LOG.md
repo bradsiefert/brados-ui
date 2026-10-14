@@ -237,7 +237,7 @@ These were added for local development and do not change COSS primitives:
 | `components/app-sidebar.tsx` | App sidebar; Phosphor nav icons |
 | `app/page.tsx` | Showcase page; Phosphor icons; `"use client"` for Phosphor SSR |
 | `app/dashboard/page.tsx`, etc. | Other app pages (not part of COSS registry) |
-| `app/sandbox/drop-ins/page.tsx` | Sandbox for the Marquee and Dropzone drop-ins. Header link in `components/playground/playground-shell.tsx`. The marquee sample button counts on `onPointerDown` so a moving row does not drop the press. |
+| `app/sandbox/drop-ins/page.tsx` | Sandbox for the Marquee and Dropzone drop-ins. Linked from the Examples group in `components/library-sidebar.tsx`, above Foundations. The marquee sample button counts on `onPointerDown` so a moving row does not drop the press. |
 | `components/playground/button-playground.tsx` | Button gallery and specimen follow the header Custom / COSS toggle. COSS renders `components/coss-stock/button`. Custom renders `components/ui/button`. |
 
 ---
