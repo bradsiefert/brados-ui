@@ -3,6 +3,7 @@
 import * as React from "react"
 import { useTheme } from "next-themes"
 
+import { usePaletteSource } from "@/components/palette-source"
 import { useUiPreset } from "@/components/ui-preset-provider"
 import {
   Card,
@@ -14,7 +15,19 @@ import {
 } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
+import {
+  gdsFamilies,
+  gdsNeutralEnds,
+  gdsSteps,
+  gdsSwatches,
+} from "@/lib/gds-palette"
 import { cn } from "@/lib/utils"
+
+const paletteCopy = {
+  gds: "GDS standard scale. Steps run from 100 to 1000. Primary is the blue ramp, shared with info. Neutral also has lightest and darkest. This view does not restyle components.",
+  tailwind:
+    "Tailwind color families the theme tokens are built from. Steps run from 50 to 950.",
+}
 
 const paletteFamilies = [
   "neutral",
@@ -124,11 +137,11 @@ function useComputedColor(cssVar: string, deps: string) {
 }
 
 function PaletteSwatch({
-  cssVar,
+  color,
   title,
   className,
 }: {
-  cssVar: string
+  color: string
   title: string
   className?: string
 }) {
@@ -137,9 +150,9 @@ function PaletteSwatch({
       title={title}
       className={cn(
         "block h-8 flex-1 border-y border-border first:rounded-l-md first:border-l last:rounded-r-md last:border-r",
-        className,
+        className
       )}
-      style={{ backgroundColor: `var(${cssVar})` }}
+      style={{ backgroundColor: color }}
     />
   )
 }
@@ -156,7 +169,7 @@ function TokenSwatch({ token, deps }: { token: string; deps: string }) {
         style={{ backgroundColor: `var(${cssVar})` }}
       />
       <div className="space-y-0.5">
-        <p className="font-mono text-foreground text-xs">{cssVar}</p>
+        <p className="font-mono text-xs text-foreground">{cssVar}</p>
         <p className="truncate font-mono text-[10px] text-muted-foreground">
           {value || "—"}
         </p>
@@ -165,14 +178,105 @@ function TokenSwatch({ token, deps }: { token: string; deps: string }) {
   )
 }
 
+function PaletteLabels({
+  steps,
+  labelClassName,
+}: {
+  steps: readonly (string | number)[]
+  labelClassName: string
+}) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className={labelClassName} />
+      {steps.map((step) => (
+        <span
+          key={step}
+          className="flex-1 text-center font-mono text-[10px] text-muted-foreground"
+        >
+          {step}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function TailwindPalette() {
+  return (
+    <>
+      <PaletteLabels labelClassName="w-16 shrink-0" steps={paletteSteps} />
+      {paletteFamilies.map((family) => (
+        <div key={family} className="flex items-center gap-3">
+          <span className="w-16 shrink-0 font-mono text-xs text-foreground capitalize">
+            {family}
+          </span>
+          <div className="flex flex-1">
+            {paletteSteps.map((step) => (
+              <PaletteSwatch
+                key={step}
+                color={`var(--color-${family}-${step})`}
+                title={`--color-${family}-${step}`}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </>
+  )
+}
+
+function GdsPalette() {
+  return (
+    <>
+      <PaletteLabels labelClassName="w-20 shrink-0" steps={gdsSteps} />
+      {gdsFamilies.map((family) => (
+        <div key={family.name} className="flex items-center gap-3">
+          <span className="w-20 shrink-0 font-mono text-xs text-foreground capitalize">
+            {family.name}
+          </span>
+          <div className="flex flex-1">
+            {gdsSwatches(family).map((swatch) => (
+              <PaletteSwatch
+                key={swatch.step}
+                color={swatch.hex}
+                title={`${swatch.token} ${swatch.hex}`}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+      <div className="flex items-center gap-3">
+        <span className="w-20 shrink-0" />
+        <div className="flex flex-1 gap-3">
+          {gdsNeutralEnds.map((end) => (
+            <div
+              key={end.name}
+              className="flex min-w-0 flex-1 items-center gap-2"
+            >
+              <span
+                title={`${end.token} ${end.hex}`}
+                className="block h-8 w-16 shrink-0 rounded-md border border-border"
+                style={{ backgroundColor: end.hex }}
+              />
+              <span className="truncate font-mono text-xs text-muted-foreground">
+                {end.name}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
+
 const CHART_GROUP_LABEL = "Charts"
 
 export function ColorScale() {
   const deps = useResolvedDeps()
   const [showChartColors, setShowChartColors] = React.useState(false)
+  const palette = usePaletteSource()
 
   const visibleGroups = semanticGroups.filter(
-    (group) => group.label !== CHART_GROUP_LABEL || showChartColors,
+    (group) => group.label !== CHART_GROUP_LABEL || showChartColors
   )
 
   return (
@@ -180,38 +284,10 @@ export function ColorScale() {
       <Card>
         <CardHeader>
           <CardTitle>Palette</CardTitle>
-          <CardDescription>
-            Tailwind color families the theme tokens are built from. Steps run
-            from 50 to 950.
-          </CardDescription>
+          <CardDescription>{paletteCopy[palette]}</CardDescription>
         </CardHeader>
         <CardPanel className="space-y-3">
-          <div className="flex items-center gap-3 ps-16">
-            {paletteSteps.map((step) => (
-              <span
-                key={step}
-                className="flex-1 text-center font-mono text-[10px] text-muted-foreground"
-              >
-                {step}
-              </span>
-            ))}
-          </div>
-          {paletteFamilies.map((family) => (
-            <div key={family} className="flex items-center gap-3">
-              <span className="w-16 shrink-0 font-mono text-foreground text-xs capitalize">
-                {family}
-              </span>
-              <div className="flex flex-1">
-                {paletteSteps.map((step) => (
-                  <PaletteSwatch
-                    key={step}
-                    cssVar={`--color-${family}-${step}`}
-                    title={`--color-${family}-${step}`}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
+          {palette === "gds" ? <GdsPalette /> : <TailwindPalette />}
         </CardPanel>
       </Card>
 
@@ -235,7 +311,7 @@ export function ColorScale() {
         <CardPanel className="space-y-6">
           {visibleGroups.map((group) => (
             <div key={group.label} className="space-y-3">
-              <p className="font-medium text-muted-foreground text-xs">
+              <p className="text-xs font-medium text-muted-foreground">
                 {group.label}
               </p>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
