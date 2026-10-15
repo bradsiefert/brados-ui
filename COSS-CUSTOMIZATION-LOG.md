@@ -21,7 +21,7 @@ Reference for every change made to the default COSS UI scaffold in this project.
 | Preset tooling | `app/coss-default-preset.css`, `components/ui-preset-provider.tsx`, `components/theme-selector.tsx` | Restores baseline tokens at runtime (not part of COSS library). The same attribute also scopes a subtree. |
 | Frozen original | `components/coss-stock/`, `scripts/refresh-coss-stock.mjs` | Stock primitives from `04292fa`. App still imports `components/ui`. |
 | Third-party drop-ins | `components/ui/marquee.tsx`, `components/kibo-ui/dropzone/index.tsx` | Magic UI Marquee and Kibo UI Dropzone. Not COSS primitives. See below. |
-| Colors page | `components/color-scale.tsx`, `components/palette-source.ts`, `components/theme-selector.tsx`, `lib/gds-palette.ts` | Header GDS / Tailwind switch on the colors page. Does not change theme tokens or the Custom / COSS toggle. |
+| Colors page | `components/color-scale.tsx`, `components/palette-source.ts`, `components/theme-selector.tsx`, `lib/gds-palette.ts`, `app/globals.css`, `app/layout.tsx` | Header GDS / Tailwind switch sets `data-palette` on `<html>` and remaps Tailwind color ramps site wide. Custom / COSS and light / dark stay separate. |
 
 All other files under `components/ui/` match the scaffold except `button.tsx`, the height-scaled controls listed below, the icon-swapped primitives, and `marquee.tsx` (third-party drop-in, not a COSS primitive edit).
 
@@ -98,6 +98,23 @@ Tailwind color aliases wired to the new outline tokens:
 --color-primary-outline-border: var(--primary-outline-border);
 --color-primary-outline-foreground: var(--primary-outline-foreground);
 ```
+
+### Palette source (`data-palette`)
+
+The header GDS / Tailwind control sets `data-palette="gds"` on `<html>` (stored as `colors-palette-source`). Absent attribute means Tailwind. A blocking script in `app/layout.tsx` applies the stored choice before paint.
+
+`html[data-palette="gds"]` in `app/globals.css` rewrites the Tailwind ramps that semantic tokens reference. Role tokens (`--primary`, `--background`, and the rest) stay written as `var(--color-…)` and pick up the new ramps in both presets and in light and dark. White and black are unchanged.
+
+| Tailwind family | GDS family |
+|-----------------|------------|
+| neutral | neutral |
+| blue, cyan | primary / info |
+| red, rose | danger |
+| emerald, teal | success |
+| amber | warning |
+| orange, purple | highlight |
+
+Steps `50` and `100` share GDS `100`. Step `950` uses GDS `1000`. The other steps match by number (`200`→`200` … `900`→`900`). Hex values live in `lib/gds-palette.ts` and are copied into that CSS block.
 
 ### Base layer / global CSS
 
