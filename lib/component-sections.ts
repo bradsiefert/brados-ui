@@ -37,7 +37,7 @@ export const foundationEntries: PlaygroundEntry[] = [
     slug: "border-radii",
     title: "Border Radii",
     description:
-      "Columns are radius steps. Each control sits in the column it uses. Empty cells stay empty.",
+      "Columns are radius steps. Every size of a sized control sits in the column it uses. Empty cells stay empty.",
     href: "/foundations/border-radii",
     status: "ready",
   },

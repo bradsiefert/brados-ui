@@ -76,8 +76,12 @@ type RadiusSample = {
 
 type RadiusRow = {
   name: string
-  samples: Partial<Record<RadiusColumn, RadiusSample>>
+  samples: Partial<Record<RadiusColumn, RadiusSample[]>>
 }
+
+const fieldSizes = ["sm", "default", "lg"] as const
+const buttonSizes = ["sm", "default", "lg", "xl"] as const
+const iconSizes = ["icon-sm", "icon", "icon-lg", "icon-xl"] as const
 
 const fruitItems = [
   { label: "Apple", value: "apple" },
@@ -204,69 +208,109 @@ function getRadiusRows(): RadiusRow[] {
       samples: Object.fromEntries(
         COLUMNS.map((column) => [
           column,
-          {
-            token: column,
-            node: (
-              <div
-                data-height-target
-                className={`size-14 border border-border bg-muted ${tokenSquares[column]}`}
-              />
-            ),
-          },
+          [
+            {
+              token: column,
+              node: (
+                <div
+                  data-height-target
+                  className={`size-14 border border-border bg-muted ${tokenSquares[column]}`}
+                />
+              ),
+            },
+          ],
         ]),
       ) as RadiusRow["samples"],
     },
     {
       name: "Button",
       samples: {
-        md: {
-          token: "xs",
+        md: [
+          {
+            token: "xs",
+            node: (
+              <Button data-height-target size="xs" variant="outline">
+                Button
+              </Button>
+            ),
+          },
+        ],
+        lg: buttonSizes.map((size) => ({
+          token: size,
           node: (
-            <Button data-height-target size="xs" variant="outline">
+            <Button data-height-target size={size} variant="outline">
               Button
             </Button>
           ),
-        },
-        lg: {
-          token: "default",
+        })),
+      },
+    },
+    {
+      name: "Button icon",
+      samples: {
+        md: [
+          {
+            token: "icon-xs",
+            node: (
+              <Button
+                aria-label="Search"
+                data-height-target
+                size="icon-xs"
+                variant="outline"
+              >
+                <MagnifyingGlassIcon />
+              </Button>
+            ),
+          },
+        ],
+        lg: iconSizes.map((size) => ({
+          token: size,
           node: (
-            <Button data-height-target variant="outline">
-              Button
+            <Button
+              aria-label="Search"
+              data-height-target
+              size={size}
+              variant="outline"
+            >
+              <MagnifyingGlassIcon />
             </Button>
           ),
-        },
+        })),
       },
     },
     {
       name: "Input",
       samples: {
-        lg: { token: "default", node: <Input placeholder="Input" /> },
+        lg: fieldSizes.map((size) => ({
+          token: size,
+          node: <Input className="w-28" placeholder="Input" size={size} />,
+        })),
       },
     },
     {
       name: "InputGroup",
       samples: {
-        lg: {
-          token: "default",
+        lg: fieldSizes.map((size) => ({
+          token: size,
           node: (
             <InputGroup data-height-target className="w-28">
               <InputGroupAddon>
                 <MagnifyingGlassIcon />
               </InputGroupAddon>
-              <InputGroupInput placeholder="Search" type="search" />
+              <InputGroupInput placeholder="Search" size={size} type="search" />
             </InputGroup>
           ),
-        },
+        })),
       },
     },
     {
       name: "Select",
       samples: {
-        lg: {
-          token: "default",
+        lg: fieldSizes.map((size) => ({
+          token: size,
           node: (
             <Select items={fruitItems} defaultValue={fruitItems[0]}>
-              <SelectTrigger data-height-target className="w-28">
+              <SelectTrigger data-height-target className="w-28" size={size}>
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
               <SelectPopup>
@@ -278,20 +322,21 @@ function getRadiusRows(): RadiusRow[] {
               </SelectPopup>
             </Select>
           ),
-        },
+        })),
       },
     },
     {
       name: "Combobox",
       samples: {
-        lg: {
-          token: "default",
+        lg: fieldSizes.map((size) => ({
+          token: size,
           node: (
             <Combobox items={fruitItems}>
               <ComboboxInput
                 aria-label="Fruit"
                 className="w-28"
                 placeholder="Combobox"
+                size={size}
               />
               <ComboboxPopup>
                 <ComboboxEmpty>No fruits found.</ComboboxEmpty>
@@ -305,20 +350,21 @@ function getRadiusRows(): RadiusRow[] {
               </ComboboxPopup>
             </Combobox>
           ),
-        },
+        })),
       },
     },
     {
       name: "Autocomplete",
       samples: {
-        lg: {
-          token: "default",
+        lg: fieldSizes.map((size) => ({
+          token: size,
           node: (
             <Autocomplete items={fruitItems}>
               <AutocompleteInput
                 aria-label="Fruit"
                 className="w-28"
                 placeholder="Auto"
+                size={size}
               />
               <AutocompletePopup>
                 <AutocompleteEmpty>No fruits found.</AutocompleteEmpty>
@@ -332,16 +378,22 @@ function getRadiusRows(): RadiusRow[] {
               </AutocompletePopup>
             </Autocomplete>
           ),
-        },
+        })),
       },
     },
     {
       name: "NumberField",
       samples: {
-        lg: {
-          token: "default",
+        lg: fieldSizes.map((size) => ({
+          token: size,
           node: (
-            <NumberField defaultValue={3} min={0} max={99} className="w-28">
+            <NumberField
+              defaultValue={3}
+              min={0}
+              max={99}
+              className="w-28"
+              size={size}
+            >
               <NumberFieldGroup data-height-target>
                 <NumberFieldDecrement />
                 <NumberFieldInput />
@@ -349,105 +401,121 @@ function getRadiusRows(): RadiusRow[] {
               </NumberFieldGroup>
             </NumberField>
           ),
-        },
+        })),
       },
     },
     {
       name: "Toggle",
       samples: {
-        lg: {
-          token: "default",
-          node: <Toggle data-height-target>Toggle</Toggle>,
-        },
+        lg: fieldSizes.map((size) => ({
+          token: size,
+          node: (
+            <Toggle data-height-target size={size}>
+              Toggle
+            </Toggle>
+          ),
+        })),
       },
     },
     {
       name: "Badge",
       samples: {
-        "4": {
-          token: "sm",
+        "4": [
+          {
+            token: "sm",
+            node: (
+              <Badge data-height-target size="sm" variant="outline">
+                Badge
+              </Badge>
+            ),
+          },
+        ],
+        sm: (["default", "lg"] as const).map((size) => ({
+          token: size,
           node: (
-            <Badge data-height-target size="sm" variant="outline">
+            <Badge data-height-target size={size} variant="outline">
               Badge
             </Badge>
           ),
-        },
-        sm: {
-          token: "default",
-          node: (
-            <Badge data-height-target variant="outline">
-              Badge
-            </Badge>
-          ),
-        },
+        })),
       },
     },
     {
       name: "Switch",
       samples: {
-        full: {
-          token: "full",
-          node: (
-            <Switch data-height-target defaultChecked aria-label="Switch" />
-          ),
-        },
+        full: [
+          {
+            token: "full",
+            node: (
+              <Switch data-height-target defaultChecked aria-label="Switch" />
+            ),
+          },
+        ],
       },
     },
     {
       name: "Checkbox",
       samples: {
-        "4": {
-          token: "default",
-          node: (
-            <Checkbox
-              data-height-target
-              defaultChecked
-              aria-label="Checkbox"
-            />
-          ),
-        },
+        "4": [
+          {
+            token: "default",
+            node: (
+              <Checkbox
+                data-height-target
+                defaultChecked
+                aria-label="Checkbox"
+              />
+            ),
+          },
+        ],
       },
     },
     {
       name: "Radio",
       samples: {
-        full: {
-          token: "full",
-          node: (
-            <RadioGroup
-              defaultValue="on"
-              className="flex-row"
-              aria-label="Radio"
-            >
-              <Radio data-height-target value="on" />
-            </RadioGroup>
-          ),
-        },
+        full: [
+          {
+            token: "full",
+            node: (
+              <RadioGroup
+                defaultValue="on"
+                className="flex-row"
+                aria-label="Radio"
+              >
+                <Radio data-height-target value="on" />
+              </RadioGroup>
+            ),
+          },
+        ],
       },
     },
     {
       name: "Kbd",
       samples: {
-        "4": {
-          token: "default",
-          node: <Kbd data-height-target>⌘K</Kbd>,
-        },
+        "4": [
+          {
+            token: "default",
+            node: <Kbd data-height-target>⌘K</Kbd>,
+          },
+        ],
       },
     },
     {
       name: "TabsList",
       samples: {
-        lg: {
-          token: "default",
-          node: (
-            <Tabs defaultValue="one">
-              <TabsList data-height-target>
-                <TabsTrigger value="one">One</TabsTrigger>
-                <TabsTrigger value="two">Two</TabsTrigger>
-              </TabsList>
-            </Tabs>
-          ),
-        },
+        lg: [
+          {
+            token: "default",
+            node: (
+              <Tabs defaultValue="one">
+                <TabsList data-height-target>
+                  <TabsTrigger value="one">One</TabsTrigger>
+                  <TabsTrigger value="two">Two</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            ),
+          },
+        ],
       },
     },
   ]
@@ -465,8 +533,8 @@ export function BorderRadii(): React.ReactElement {
       <CardHeader>
         <CardTitle>Border Radii</CardTitle>
         <CardDescription>
-          Columns are radius steps. Each control sits in the column it uses.
-          Empty cells stay empty.
+          Columns are radius steps. Every size of a sized control sits in the
+          column it uses. Empty cells stay empty.
         </CardDescription>
       </CardHeader>
       <CardPanel>
@@ -488,16 +556,24 @@ export function BorderRadii(): React.ReactElement {
                   {row.name}
                 </TableCell>
                 {COLUMNS.map((column) => {
-                  const sample = row.samples[column]
+                  const samples = row.samples[column]
                   return (
                     <TableCell
                       key={column}
                       className="text-center align-middle"
                     >
-                      {sample ? (
-                        <RadiusCellSample deps={deps} token={sample.token}>
-                          {sample.node}
-                        </RadiusCellSample>
+                      {samples ? (
+                        <div className="flex flex-col items-center gap-3">
+                          {samples.map((sample) => (
+                            <RadiusCellSample
+                              key={sample.token}
+                              deps={deps}
+                              token={sample.token}
+                            >
+                              {sample.node}
+                            </RadiusCellSample>
+                          ))}
+                        </div>
                       ) : null}
                     </TableCell>
                   )
