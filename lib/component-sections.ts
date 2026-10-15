@@ -21,7 +21,7 @@ export const foundationEntries: PlaygroundEntry[] = [
     slug: "typography",
     title: "Typography",
     description:
-      "Full Tailwind type scale, smallest to biggest. Each size step is marked used or not used.",
+      "Full Tailwind type scale, smallest to biggest. Each size step is marked used or included.",
     href: "/foundations/typography",
     status: "ready",
   },

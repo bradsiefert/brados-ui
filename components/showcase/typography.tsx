@@ -142,7 +142,7 @@ const SIZE_ROWS: TypeRowData[] = [
     className: "text-5xl",
     sample: "Typography",
     token: "text-5xl",
-    note: "",
+    note: "Display",
     measure: "size",
     used: false,
   },
@@ -151,7 +151,7 @@ const SIZE_ROWS: TypeRowData[] = [
     className: "text-6xl",
     sample: "Typography",
     token: "text-6xl",
-    note: "",
+    note: "Display",
     measure: "size",
     used: false,
   },
@@ -160,7 +160,7 @@ const SIZE_ROWS: TypeRowData[] = [
     className: "text-7xl",
     sample: "Typography",
     token: "text-7xl",
-    note: "",
+    note: "Display",
     measure: "size",
     used: false,
   },
@@ -169,7 +169,7 @@ const SIZE_ROWS: TypeRowData[] = [
     className: "text-8xl",
     sample: "Typography",
     token: "text-8xl",
-    note: "",
+    note: "Display",
     measure: "size",
     used: false,
   },
@@ -178,7 +178,7 @@ const SIZE_ROWS: TypeRowData[] = [
     className: "text-9xl",
     sample: "Typography",
     token: "text-9xl",
-    note: "",
+    note: "Display",
     measure: "size",
     used: false,
   },
@@ -386,9 +386,9 @@ function TypeRow({ row }: { row: TypeRowData }): React.ReactElement {
             <span
               className={row.used ? "text-foreground" : "text-muted-foreground"}
             >
-              {row.used ? "Used" : "Not used"}
+              {row.used ? "Used" : "Included"}
             </span>
-            {row.used && row.note ? (
+            {row.note ? (
               <span className="text-muted-foreground"> · {row.note}</span>
             ) : null}
           </p>
@@ -443,7 +443,7 @@ export function Typography(): React.ReactElement {
         title="Families"
       />
       <TypeCard
-        description="Tailwind type scale, smallest to biggest, plus the off-scale badge size. Used means this site sets that step."
+        description="Tailwind type scale, smallest to biggest, plus the off-scale badge size. Used means this site sets that step. text-5xl through text-9xl are included as display sizes."
         rows={SIZE_ROWS}
         title="Size"
       />
