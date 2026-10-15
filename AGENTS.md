@@ -14,3 +14,11 @@ This repo tracks local changes on top of stock COSS UI. See [COSS-CUSTOMIZATION-
 - **Custom primitives:** `components/ui` (`@/components/ui`). The app imports these.
 - **Frozen original:** `components/coss-stock` (`@/coss-stock/*`). Refresh with `node scripts/refresh-coss-stock.mjs`. Do not retarget the `ui` alias.
 - **Only modified primitives (beyond icons):** `components/ui/button.tsx` (+ height scale on toggle/input/select/number-field/otp-field/combobox)
+
+## UI copy
+
+Headers, buttons, and other short UI labels use Title Case. This is a strongly held design belief. That includes page titles, section headers, dialog titles, nav items, tabs, menu labels, and button labels.
+
+Sentence case stays for body copy, descriptions, helper text, and placeholders that are full sentences. Proper names stay as names.
+
+Do not rewrite Title Case labels into sentence case.

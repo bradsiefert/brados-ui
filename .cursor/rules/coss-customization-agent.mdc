@@ -46,6 +46,10 @@ When the user changes theme tokens, COSS primitives, or asks about stock vs cust
 4. **Update** `app/coss-default-preset.css` only if the stock baseline definition changes (not when adding custom tokens).
 5. **Prefer** updating custom tokens in `globals.css` under `:root:not([data-ui-preset="coss-default"]), [data-ui-preset="custom"]` (and the matching `.dark` selectors). Do not put custom values in `coss-default-preset.css`. Add the same declaration to both selectors.
 
+## UI copy
+
+- Short UI labels use Title Case. Follow **UI copy** in [AGENTS.md](AGENTS.md). Do not rewrite Title Case labels into sentence case.
+
 ## Restore commands (quick reference)
 
 ```bash
