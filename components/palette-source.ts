@@ -34,14 +34,25 @@ function getPaletteSnapshot(): PaletteSource {
   if (!paletteLoaded) {
     paletteLoaded = true
     currentPalette = readStoredPalette()
+    applyPalette(currentPalette)
   }
 
   return currentPalette
 }
 
+function applyPalette(next: PaletteSource) {
+  if (next === "gds") {
+    document.documentElement.dataset.palette = "gds"
+    return
+  }
+
+  delete document.documentElement.dataset.palette
+}
+
 export function writePalette(next: PaletteSource) {
   currentPalette = next
   paletteLoaded = true
+  applyPalette(next)
 
   try {
     window.localStorage.setItem(PALETTE_STORAGE_KEY, next)

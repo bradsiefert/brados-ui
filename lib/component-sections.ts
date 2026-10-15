@@ -13,7 +13,7 @@ export const foundationEntries: PlaygroundEntry[] = [
     slug: "colors",
     title: "Colors",
     description:
-      "Header switches the GDS or Tailwind palette. Role tokens follow the preset. Press p to switch preset and d for light or dark.",
+      "Header switches the GDS or Tailwind palette for the whole site. Role tokens follow that palette and the preset. Press p to switch preset and d for light or dark.",
     href: "/foundations/colors",
     status: "ready",
   },
@@ -21,7 +21,7 @@ export const foundationEntries: PlaygroundEntry[] = [
     slug: "typography",
     title: "Typography",
     description:
-      "Desktop type COSS primitives use, smallest to biggest. Stock COSS faces and weights sit beside the rendered sample.",
+      "Full Tailwind type scale, smallest to biggest. Each size step is marked used or not used.",
     href: "/foundations/typography",
     status: "ready",
   },

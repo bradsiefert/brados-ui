@@ -22,6 +22,7 @@ type TypeRowData = {
   stock?: string
   note: string
   measure: Measure
+  used?: boolean
 }
 
 const FAMILY_ROWS: TypeRowData[] = [
@@ -60,8 +61,9 @@ const SIZE_ROWS: TypeRowData[] = [
     className: "text-[.625rem]",
     sample: "Typography",
     token: "text-[.625rem]",
-    note: "Badge sm",
+    note: "Off the scale. Badge sm",
     measure: "size",
+    used: true,
   },
   {
     id: "xs",
@@ -70,6 +72,7 @@ const SIZE_ROWS: TypeRowData[] = [
     token: "text-xs",
     note: "Captions, shortcuts, badge, button xs",
     measure: "size",
+    used: true,
   },
   {
     id: "sm",
@@ -78,6 +81,7 @@ const SIZE_ROWS: TypeRowData[] = [
     token: "text-sm",
     note: "Body, menus, buttons, labels, inputs",
     measure: "size",
+    used: true,
   },
   {
     id: "base",
@@ -86,6 +90,7 @@ const SIZE_ROWS: TypeRowData[] = [
     token: "text-base",
     note: "Button xl, OTP lg",
     measure: "size",
+    used: true,
   },
   {
     id: "lg",
@@ -94,6 +99,7 @@ const SIZE_ROWS: TypeRowData[] = [
     token: "text-lg",
     note: "Card title, popover title",
     measure: "size",
+    used: true,
   },
   {
     id: "xl",
@@ -102,6 +108,79 @@ const SIZE_ROWS: TypeRowData[] = [
     token: "text-xl",
     note: "Dialog, alert dialog, sheet, drawer, empty titles",
     measure: "size",
+    used: true,
+  },
+  {
+    id: "2xl",
+    className: "text-2xl",
+    sample: "Typography",
+    token: "text-2xl",
+    note: "Page titles",
+    measure: "size",
+    used: true,
+  },
+  {
+    id: "3xl",
+    className: "text-3xl",
+    sample: "Typography",
+    token: "text-3xl",
+    note: "Page titles, dashboard stat",
+    measure: "size",
+    used: true,
+  },
+  {
+    id: "4xl",
+    className: "text-4xl",
+    sample: "Typography",
+    token: "text-4xl",
+    note: "Relationship stat",
+    measure: "size",
+    used: true,
+  },
+  {
+    id: "5xl",
+    className: "text-5xl",
+    sample: "Typography",
+    token: "text-5xl",
+    note: "",
+    measure: "size",
+    used: false,
+  },
+  {
+    id: "6xl",
+    className: "text-6xl",
+    sample: "Typography",
+    token: "text-6xl",
+    note: "",
+    measure: "size",
+    used: false,
+  },
+  {
+    id: "7xl",
+    className: "text-7xl",
+    sample: "Typography",
+    token: "text-7xl",
+    note: "",
+    measure: "size",
+    used: false,
+  },
+  {
+    id: "8xl",
+    className: "text-8xl",
+    sample: "Typography",
+    token: "text-8xl",
+    note: "",
+    measure: "size",
+    used: false,
+  },
+  {
+    id: "9xl",
+    className: "text-9xl",
+    sample: "Typography",
+    token: "text-9xl",
+    note: "",
+    measure: "size",
+    used: false,
   },
 ]
 
@@ -270,7 +349,9 @@ function readMetrics(element: HTMLElement, measure: Measure): string {
     return style.fontWeight
   }
   if (measure === "tracking") {
-    return style.letterSpacing === "normal" ? "0" : formatPx(style.letterSpacing)
+    return style.letterSpacing === "normal"
+      ? "0"
+      : formatPx(style.letterSpacing)
   }
   if (measure === "leading") {
     return formatPx(style.lineHeight)
@@ -293,16 +374,35 @@ function TypeRow({ row }: { row: TypeRowData }): React.ReactElement {
   return (
     <div className="grid items-baseline gap-x-4 gap-y-1 border-b border-border py-3 last:border-b-0 sm:grid-cols-[192px_minmax(0,1fr)]">
       <div className="max-w-[192px] space-y-0.5 text-right">
-        <p className="font-mono text-foreground text-xs">{row.token}</p>
+        <p className="font-mono text-xs text-foreground">{row.token}</p>
         <p className="font-mono text-[10px] text-muted-foreground">
           {metrics}
           {row.stock ? ` · stock ${row.stock}` : ""}
         </p>
-        <p className="text-muted-foreground text-xs">{row.note}</p>
+        {row.used === undefined ? (
+          <p className="text-xs text-muted-foreground">{row.note}</p>
+        ) : (
+          <p className="text-xs">
+            <span
+              className={row.used ? "text-foreground" : "text-muted-foreground"}
+            >
+              {row.used ? "Used" : "Not used"}
+            </span>
+            {row.used && row.note ? (
+              <span className="text-muted-foreground"> · {row.note}</span>
+            ) : null}
+          </p>
+        )}
       </div>
       <p
         ref={ref}
-        className={cn("min-w-0 text-wrap text-foreground wrap-break-word", row.className)}
+        className={cn(
+          "min-w-0 text-foreground",
+          row.measure === "size"
+            ? "overflow-x-auto whitespace-nowrap"
+            : "text-wrap wrap-break-word",
+          row.className
+        )}
       >
         {row.sample}
       </p>
@@ -343,7 +443,7 @@ export function Typography(): React.ReactElement {
         title="Families"
       />
       <TypeCard
-        description="Desktop sizes COSS primitives set, smallest to biggest."
+        description="Tailwind type scale, smallest to biggest, plus the off-scale badge size. Used means this site sets that step."
         rows={SIZE_ROWS}
         title="Size"
       />

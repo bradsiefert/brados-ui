@@ -24,9 +24,9 @@ import {
 import { cn } from "@/lib/utils"
 
 const paletteCopy = {
-  gds: "GDS standard scale. Steps run from 100 to 1000. Primary is the blue ramp, shared with info. Neutral also has lightest and darkest. This view does not restyle components.",
+  gds: "GDS standard scale, applied site wide. Steps run from 100 to 1000. Primary is the blue ramp, shared with info. Neutral also has lightest and darkest.",
   tailwind:
-    "Tailwind color families the theme tokens are built from. Steps run from 50 to 950.",
+    "Tailwind color families, applied site wide. Steps run from 50 to 950.",
 }
 
 const paletteFamilies = [
@@ -119,8 +119,9 @@ const semanticGroups: TokenGroup[] = [
 function useResolvedDeps(): string {
   const { resolvedTheme } = useTheme()
   const { preset } = useUiPreset()
+  const palette = usePaletteSource()
 
-  return `${preset}:${resolvedTheme ?? "light"}`
+  return `${preset}:${resolvedTheme ?? "light"}:${palette}`
 }
 
 function useComputedColor(cssVar: string, deps: string) {
@@ -295,8 +296,8 @@ export function ColorScale() {
         <CardHeader>
           <CardTitle>Semantic Tokens</CardTitle>
           <CardDescription>
-            Role-based tokens that components consume. Values update with the
-            active preset and light/dark mode.
+            Role-based tokens that components consume. Values follow the
+            palette, the preset, and light or dark mode.
           </CardDescription>
           <CardAction>
             <Label className="flex items-center gap-2">
