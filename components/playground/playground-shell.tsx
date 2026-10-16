@@ -18,7 +18,7 @@ export function PlaygroundShell({
     <SidebarProvider>
       <LibrarySidebar />
       <SidebarInset className="lg:h-svh lg:overflow-hidden">
-        <header className="sticky top-0 z-20 flex shrink-0 items-center justify-between gap-4 border-b bg-background/85 px-4 py-3 backdrop-blur md:px-6">
+        <header className="sticky top-0 z-20 flex shrink-0 items-center justify-between gap-4 border-b bg-neutral-lightest px-4 py-3 md:px-6 dark:bg-neutral-darkest">
           <div className="flex items-center gap-3">
             <SidebarTrigger />
             <div>
@@ -42,7 +42,7 @@ export function PlaygroundShell({
           {inspector ? (
             <aside
               aria-label="Inspector"
-              className="border-t lg:w-80 lg:shrink-0 lg:overflow-y-auto lg:border-s lg:border-t-0"
+              className="border-t bg-neutral-lightest lg:w-80 lg:shrink-0 lg:overflow-y-auto lg:border-s lg:border-t-0 dark:bg-neutral-darkest"
             >
               {inspector}
             </aside>
@@ -63,7 +63,7 @@ export function CanvasIntro({
   children?: React.ReactNode
 }): React.ReactElement {
   return (
-    <div className="flex flex-col gap-4 border-b px-4 py-4 md:px-6">
+    <div className="flex flex-col gap-4 border-b bg-neutral-lightest px-4 py-4 md:px-6 dark:bg-neutral-darkest">
       <div className="space-y-1">
         <h2 className="font-heading text-2xl font-semibold tracking-tight">{title}</h2>
         <p className="max-w-2xl text-muted-foreground text-sm">{description}</p>

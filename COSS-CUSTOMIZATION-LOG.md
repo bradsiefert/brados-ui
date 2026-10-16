@@ -37,7 +37,11 @@ That snapshot **must** be `@import`ed from `app/globals.css` (after `@import "ta
 
 | Token | COSS default | Your custom |
 |-------|-------------|-------------|
-| `--background` | `var(--color-white)` | `var(--color-neutral-50)` |
+| `--background` | `var(--color-white)` | `var(--color-neutral-100)` |
+| `--sidebar` | `var(--color-neutral-50)` | `var(--color-neutral-lightest)` |
+| `--sidebar-foreground` | `color-mix(in srgb, var(--color-neutral-800) 64%, var(--sidebar))` | `var(--color-neutral-800)` |
+| `--sidebar-primary-foreground` | `var(--color-neutral-50)` | `var(--color-neutral-100)` |
+| `--muted-foreground` | `color-mix(in srgb, var(--color-neutral-500) 90%, var(--color-black))` | `var(--color-neutral-500)` |
 | `--primary` | `var(--color-neutral-800)` | `var(--color-blue-600)` |
 | `--primary-foreground` | `var(--color-neutral-50)` | `var(--color-white)` |
 | `--destructive` | `var(--color-red-500)` | `var(--color-red-600)` |
@@ -48,10 +52,14 @@ That snapshot **must** be `@import`ed from `app/globals.css` (after `@import "ta
 
 | Token | COSS default | Your custom |
 |-------|-------------|-------------|
-| `--background` | `color-mix(in srgb, var(--color-neutral-950) 95%, var(--color-white))` | `color-mix(in srgb, var(--color-neutral-950) 88%, var(--color-black))` |
+| `--background` | `color-mix(in srgb, var(--color-neutral-950) 95%, var(--color-white))` | `var(--color-neutral-950)` (GDS 1000) |
+| `--sidebar` | `color-mix(in srgb, var(--color-neutral-950) 97%, var(--color-white))` | `var(--color-neutral-darkest)` |
+| `--sidebar-foreground` | `color-mix(in srgb, var(--color-neutral-100) 64%, var(--sidebar))` | `var(--color-neutral-100)` |
+| `--card`, `--popover`, `--code` | `color-mix(in srgb, var(--background) 98%, var(--color-white))` | `var(--color-neutral-900)` |
+| `--muted-foreground` | `color-mix(in srgb, var(--color-neutral-500) 90%, var(--color-white))` | `var(--color-neutral-500)` |
 | `--primary` | `var(--color-neutral-100)` | `var(--color-blue-600)` |
 | `--primary-foreground` | `var(--color-neutral-800)` | `var(--color-white)` |
-| `--destructive` | `color-mix(in srgb, var(--color-red-500) 90%, var(--color-white))` | `color-mix(in srgb, var(--color-red-600) 90%, var(--color-white))` |
+| `--destructive` | `color-mix(in srgb, var(--color-red-500) 90%, var(--color-white))` | `var(--color-red-600)` |
 | `--destructive-foreground` | `var(--color-red-400)` | `var(--color-red-500)` |
 | `--info-foreground` | `var(--color-blue-400)` | `var(--color-blue-600)` |
 | `--input` | `--alpha(var(--color-white) / 8%)` | `--alpha(var(--color-white) / 24%)` |
@@ -103,7 +111,11 @@ Tailwind color aliases wired to the new outline tokens:
 
 The header GDS / Tailwind control sets `data-palette="gds"` on `<html>` (stored as `colors-palette-source`). Absent attribute means Tailwind. A blocking script in `app/layout.tsx` applies the stored choice before paint.
 
-`html[data-palette="gds"]` in `app/globals.css` rewrites the Tailwind ramps that semantic tokens reference. Role tokens (`--primary`, `--background`, and the rest) stay written as `var(--color-…)` and pick up the new ramps in both presets and in light and dark. White and black are unchanged.
+`html[data-palette="gds"]` in `app/globals.css` rewrites `--palette-*`. `@theme static inline` points each `--color-*` ramp at the matching `--palette-*` variable, and utilities inline that same variable. Role tokens (`--primary`, `--background`, and the rest) stay written as `var(--color-…)` and pick up the new ramps in both presets and in light and dark. White and black are unchanged.
+
+Custom role tokens use a raw step. No `color-mix`. Light page background is `neutral-100`. Dark page background is `neutral-950` (GDS 1000). Sidebar is `neutral-lightest` in light and `neutral-darkest` in dark. Those two ends are not numbered steps: Tailwind lightest is `#ffffff` and darkest is `#000000`; GDS lightest is `#ffffff` and darkest is `#121212`.
+
+Tailwind drops `--color-*` declarations that sit outside `@theme`, so the switch cannot write those names directly. `--palette-*` is a normal custom property, which is why the override survives the build.
 
 | Tailwind family | GDS family |
 |-----------------|------------|
@@ -371,7 +383,7 @@ When something looks wrong compared to stock COSS:
 1. **Toggle COSS preset** — if it fixes the issue, a token in the tables above is the cause.
 2. **COSS preset missing borders/washes** — inspect computed `--border` / `--input` / `--muted` on `<html>`. If they are empty or still `--alpha(...)`, the snapshot is not going through Tailwind. Keep `@import "./coss-default-preset.css"` in `globals.css` after `@import "tailwindcss"`.
 3. **Check button variants** — `primary-outline` and customized `destructive-outline` only exist in your `button.tsx`.
-4. **Check page background** — custom `--background: neutral-50` makes white cards pop; scaffold uses white-on-white (border/shadow only).
+4. **Check page background** — custom light `--background` is `neutral-100`; dark is `neutral-950` (GDS 1000). Sidebar is lightest / darkest. Scaffold page is white (light) or a mix of `neutral-950` (dark), and its sidebar stays on `neutral-50` / a `neutral-950` mix.
 5. **Check input/muted opacity** — custom uses 24% / 8%; scaffold uses 10% / 4% (light) and 8% / 4% (dark).
 6. **Confirm primitive** — run `git diff 04292fa -- components/ui/<name>.tsx`; expect diffs in `button.tsx`, height-scaled controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`), and the 17 icon-swapped files.
 7. **Control heights** — desktop `lg` is 48px (stock 36); Button `xl` is 56px (stock 40). Use `#sizes` on the home showcase to verify.

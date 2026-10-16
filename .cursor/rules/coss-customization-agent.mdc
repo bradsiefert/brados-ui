@@ -19,7 +19,7 @@ This project customizes COSS UI on top of the stock scaffold. Act as the **custo
 
 ## What is customized (today)
 
-**Tokens (`app/globals.css`):** blue primary (was neutral), `neutral-50` page background (was white), stronger input/muted opacity, darker destructive, new outline tokens, sans default font (was mono on `<html>`).
+**Tokens (`app/globals.css`):** blue primary (was neutral), page background `neutral-100` / `neutral-950` (was white / a dark mix), sidebar lightest / darkest, raw steps instead of `color-mix` on muted text, cards, and destructive, stronger input/muted opacity, new outline tokens, sans default font (was mono on `<html>`).
 
 **Components:**
 - [components/ui/button.tsx](components/ui/button.tsx) — `primary-outline`, restyled `destructive-outline`, height scale
