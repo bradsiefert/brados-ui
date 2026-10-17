@@ -18,12 +18,13 @@ Reference for every change made to the default COSS UI scaffold in this project.
 | UI primitives | `components/ui/button.tsx` | Custom variants + control height scale |
 | UI primitives | height scale (see below) | `sm`/`default`/`lg`/`xl` desktop heights: 28 / 32 / 48 / 56 |
 | UI primitives | 17 icon-swapped files (see below) | `lucide-react` → `@phosphor-icons/react` imports only |
+| UI primitives | overlay backdrops | Dialog, alert dialog, sheet, drawer, and command: `backdrop-blur-sm` removed. Scrim is `bg-black/48` (stock `bg-black/32`). |
 | Preset tooling | `app/coss-default-preset.css`, `components/ui-preset-provider.tsx`, `components/theme-selector.tsx` | Restores baseline tokens at runtime (not part of COSS library). The same attribute also scopes a subtree. |
 | Frozen original | `components/coss-stock/`, `scripts/refresh-coss-stock.mjs` | Stock primitives from `04292fa`. App still imports `components/ui`. |
 | Third-party drop-ins | `components/ui/marquee.tsx`, `components/kibo-ui/dropzone/index.tsx` | Magic UI Marquee and Kibo UI Dropzone. Not COSS primitives. See below. |
 | Colors page | `components/color-scale.tsx`, `components/palette-source.ts`, `components/theme-selector.tsx`, `lib/gds-palette.ts`, `app/globals.css`, `app/layout.tsx` | Header GDS / Tailwind switch sets `data-palette` on `<html>` and remaps Tailwind color ramps site wide. Custom / COSS and light / dark stay separate. |
 
-All other files under `components/ui/` match the scaffold except `button.tsx`, the height-scaled controls listed below, the icon-swapped primitives, and `marquee.tsx` (third-party drop-in, not a COSS primitive edit).
+All other files under `components/ui/` match the scaffold except `button.tsx`, the height-scaled controls listed below, the overlay backdrops, the icon-swapped primitives, and `marquee.tsx` (third-party drop-in, not a COSS primitive edit).
 
 ---
 
@@ -212,6 +213,10 @@ Usage in this project: `app/page.tsx` (`<Button variant="primary-outline">`).
 
 `default` and `destructive` use a 1px white inset. Stock is 16%. Custom is 10%. Pressed and disabled still clear it.
 
+### Overlay backdrops
+
+Stock `DialogBackdrop`, `AlertDialogBackdrop`, `SheetBackdrop`, `DrawerBackdrop`, and `CommandDialogBackdrop` use `bg-black/32 backdrop-blur-sm`. Custom drops the blur and uses `bg-black/48` in light and dark. The slash is black opacity: 48% black is darker than 32%. Frozen originals in `components/coss-stock` still blur at 32%.
+
 #### Unchanged button variants
 
 `ghost`, `link`, `outline`, `secondary`, and all `size` options match the scaffold.
@@ -242,9 +247,9 @@ Import and icon component names only — no styling or behavior changes. Reinsta
 
 ### Unmodified primitives
 
-Identical to commit `04292fa` except `button.tsx`, the height-scaled controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`), and the icon-swapped files above:
+Identical to commit `04292fa` except `button.tsx`, the height-scaled controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`), the overlay backdrops (`dialog`, `alert-dialog`, `sheet`, `drawer`, `command`), and the icon-swapped files above:
 
-`alert`, `alert-dialog`, `avatar`, `badge`, `card`, `checkbox`, `checkbox-group`, `collapsible`, `empty`, `field`, `fieldset`, `form`, `frame`, `group`, `input-group`, `kbd`, `label`, `meter`, `popover`, `preview-card`, `progress`, `radio-group`, `scroll-area`, `separator`, `skeleton`, `slider`, `switch`, `table`, `tabs`, `textarea`, `toggle-group`, `toolbar`, `tooltip`.
+`alert`, `avatar`, `badge`, `card`, `checkbox`, `checkbox-group`, `collapsible`, `empty`, `field`, `fieldset`, `form`, `frame`, `group`, `input-group`, `kbd`, `label`, `meter`, `popover`, `preview-card`, `progress`, `radio-group`, `scroll-area`, `separator`, `skeleton`, `slider`, `switch`, `table`, `tabs`, `textarea`, `toggle-group`, `toolbar`, `tooltip`.
 
 The showcase page uses stock `Card`, `CardHeader`, `CardTitle`, `CardDescription`, and `CardPanel` with no component-level edits.
 
@@ -304,7 +309,7 @@ Button comparison is the component page (`/components/button`), not a second col
 
 ### Prop rule
 
-Do not add, remove, or change public props on either copy as part of a refresh. A future COSS release may change props; that upstream change is applied to both copies so they stay aligned. Keep local visual diffs: `primary-outline`, restyled `destructive-outline`, the control height scale, Phosphor icon imports, and the semantic token values in `app/globals.css`. Do not port the 100–1000 color scale. Do not change semantic token values while refreshing components.
+Do not add, remove, or change public props on either copy as part of a refresh. A future COSS release may change props; that upstream change is applied to both copies so they stay aligned. Keep local visual diffs: `primary-outline`, restyled `destructive-outline`, the control height scale, overlay backdrops without `backdrop-blur-sm`, Phosphor icon imports, and the semantic token values in `app/globals.css`. Do not port the 100–1000 color scale. Do not change semantic token values while refreshing components.
 
 ### Refresh command
 
