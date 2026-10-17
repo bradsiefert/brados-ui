@@ -371,7 +371,7 @@ export function SalesCrm(): React.ReactElement {
         onView={setView}
       />
       <SidebarInset className="min-h-0 overflow-hidden">
-        <header className="flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b px-4 py-3">
+        <header className="flex shrink-0 flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b bg-header px-4 py-3">
           <div className="flex shrink-0 items-center gap-2">
             <SidebarTrigger />
             <h1 className="font-heading text-xl font-semibold tracking-tight">

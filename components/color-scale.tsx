@@ -46,6 +46,58 @@ const paletteSteps = [
   50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
 ] as const
 
+const neutralDarkest = "#121212"
+
+/** Same OKLCH lightness as the current neutral ramp through 900.
+    Hue held at 264°. 1000 is darker so it sits closer to Darkest. */
+const neutralOptions = [
+  {
+    name: "Current",
+    hexes: [
+      "#f7f7f7",
+      "#edeeef",
+      "#d5d7db",
+      "#b7bcc3",
+      "#818791",
+      "#6b7280",
+      "#4f5562",
+      "#343944",
+      "#242831",
+      "#191b22",
+    ],
+  },
+  {
+    name: "Half Tint",
+    hexes: [
+      "#f7f7f7",
+      "#eeeeee",
+      "#d6d7d9",
+      "#babcbf",
+      "#84878c",
+      "#6e7279",
+      "#52555b",
+      "#36393f",
+      "#26282d",
+      "#181a1d",
+    ],
+  },
+  {
+    name: "Light Tint",
+    hexes: [
+      "#f7f7f7",
+      "#eeeeee",
+      "#d6d7d8",
+      "#bbbbbd",
+      "#858789",
+      "#707275",
+      "#535558",
+      "#38393c",
+      "#27282a",
+      "#191a1c",
+    ],
+  },
+] as const
+
 type TokenGroup = {
   label: string
   tokens: string[]
@@ -57,6 +109,7 @@ const semanticGroups: TokenGroup[] = [
     tokens: [
       "background",
       "foreground",
+      "header",
       "card",
       "card-foreground",
       "popover",
@@ -269,6 +322,84 @@ function GdsPalette() {
   )
 }
 
+function NeutralOptions() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Neutral Options</CardTitle>
+        <CardDescription>
+          Same lightness from 100 through 900. 1000 is darker so it sits closer
+          to Darkest. Half Tint keeps about half the blue. Light Tint keeps
+          about a quarter.
+        </CardDescription>
+      </CardHeader>
+      <CardPanel className="space-y-6">
+        <div className="space-y-3">
+          <PaletteLabels labelClassName="w-20 shrink-0" steps={gdsSteps} />
+          {neutralOptions.map((option) => (
+            <div key={option.name} className="flex items-center gap-3">
+              <span className="w-20 shrink-0 font-mono text-xs text-foreground">
+                {option.name}
+              </span>
+              <div className="flex flex-1">
+                {option.hexes.map((hex, index) => (
+                  <PaletteSwatch
+                    key={gdsSteps[index]}
+                    color={hex}
+                    title={`${option.name} ${gdsSteps[index]} ${hex}`}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+          <div className="flex items-center gap-3">
+            <span className="w-20 shrink-0 font-mono text-xs text-muted-foreground">
+              Darkest
+            </span>
+            <span
+              title={`Darkest ${neutralDarkest}`}
+              className="block h-8 w-16 rounded-md border border-border"
+              style={{ backgroundColor: neutralDarkest }}
+            />
+          </div>
+        </div>
+        <div className="grid gap-3 lg:grid-cols-3">
+          {neutralOptions.map((option) => (
+            <div
+              key={option.name}
+              className="rounded-lg p-3"
+              style={{ backgroundColor: neutralDarkest }}
+            >
+              <div
+                className="rounded-md p-3"
+                style={{ backgroundColor: option.hexes[9] }}
+              >
+                <p
+                  className="font-mono text-xs"
+                  style={{ color: option.hexes[3] }}
+                >
+                  {option.name}
+                </p>
+                <div
+                  className="mbs-3 rounded-md px-3 py-4"
+                  style={{ backgroundColor: option.hexes[8] }}
+                >
+                  <p
+                    className="font-mono text-xs"
+                    style={{ color: option.hexes[0] }}
+                  >
+                    900 on 1000
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </CardPanel>
+    </Card>
+  )
+}
+
 const CHART_GROUP_LABEL = "Charts"
 
 export function ColorScale() {
@@ -291,6 +422,8 @@ export function ColorScale() {
           {palette === "gds" ? <GdsPalette /> : <TailwindPalette />}
         </CardPanel>
       </Card>
+
+      <NeutralOptions />
 
       <Card>
         <CardHeader>

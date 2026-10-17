@@ -4,6 +4,7 @@ import { MoonIcon, PaletteIcon, SunIcon } from "@phosphor-icons/react"
 import { useTheme } from "next-themes"
 import * as React from "react"
 
+import { useNeutralTint, writeNeutralTint } from "@/components/neutral-tint"
 import { usePaletteSource, writePalette } from "@/components/palette-source"
 import { useUiPreset } from "@/components/ui-preset-provider"
 import {
@@ -23,14 +24,39 @@ export function ThemeSelector() {
   const { resolvedTheme, setTheme } = useTheme()
   const { preset, setPreset } = useUiPreset()
   const palette = usePaletteSource()
+  const neutralTint = useNeutralTint()
   const isClient = useIsClient()
 
   if (!isClient) {
-    return <div aria-hidden className="h-9 w-[28rem] shrink-0" />
+    return <div aria-hidden className="h-9 w-[40rem] shrink-0" />
   }
 
   return (
-    <div className="flex flex-wrap items-center justify-end gap-2">
+    <div className="flex flex-nowrap items-center justify-end gap-2">
+      <ToggleGroup
+        aria-label="Neutral tint"
+        variant="outline"
+        value={[neutralTint]}
+        onValueChange={(value) => {
+          const next = value[0]
+          if (next === "current" || next === "half" || next === "light") {
+            writeNeutralTint(next)
+            if (next !== "current" && palette !== "gds") {
+              writePalette("gds")
+            }
+          }
+        }}
+      >
+        <ToggleGroupItem value="current" aria-label="Current neutral">
+          Current
+        </ToggleGroupItem>
+        <ToggleGroupItem value="half" aria-label="Half tint neutral">
+          Half Tint
+        </ToggleGroupItem>
+        <ToggleGroupItem value="light" aria-label="Light tint neutral">
+          Light Tint
+        </ToggleGroupItem>
+      </ToggleGroup>
       <ToggleGroup
         aria-label="Palette source"
         variant="outline"

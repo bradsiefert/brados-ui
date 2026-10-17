@@ -38,13 +38,14 @@ That snapshot **must** be `@import`ed from `app/globals.css` (after `@import "ta
 | Token | COSS default | Your custom |
 |-------|-------------|-------------|
 | `--background` | `var(--color-white)` | `var(--color-neutral-100)` |
-| `--sidebar` | `var(--color-neutral-50)` | `var(--color-neutral-lightest)` |
+| `--sidebar` | `var(--color-neutral-50)` | `var(--neutral-lightest)` (`#ffffff`) |
 | `--sidebar-foreground` | `color-mix(in srgb, var(--color-neutral-800) 64%, var(--sidebar))` | `var(--color-neutral-800)` |
 | `--sidebar-primary-foreground` | `var(--color-neutral-50)` | `var(--color-neutral-100)` |
 | `--muted-foreground` | `color-mix(in srgb, var(--color-neutral-500) 90%, var(--color-black))` | `var(--color-neutral-500)` |
 | `--primary` | `var(--color-neutral-800)` | `var(--color-blue-600)` |
 | `--primary-foreground` | `var(--color-neutral-50)` | `var(--color-white)` |
 | `--destructive` | `var(--color-red-500)` | `var(--color-red-600)` |
+| `--border` | `--alpha(var(--color-black) / 8%)` | `--alpha(var(--color-black) / 10%)` |
 | `--input` | `--alpha(var(--color-black) / 10%)` | `--alpha(var(--color-black) / 24%)` |
 | `--muted` | `--alpha(var(--color-black) / 4%)` | `--alpha(var(--color-black) / 8%)` |
 
@@ -52,14 +53,17 @@ That snapshot **must** be `@import`ed from `app/globals.css` (after `@import "ta
 
 | Token | COSS default | Your custom |
 |-------|-------------|-------------|
-| `--background` | `color-mix(in srgb, var(--color-neutral-950) 95%, var(--color-white))` | `var(--color-neutral-950)` (GDS 1000) |
-| `--sidebar` | `color-mix(in srgb, var(--color-neutral-950) 97%, var(--color-white))` | `var(--color-neutral-darkest)` |
+| `--background` | `color-mix(in srgb, var(--color-neutral-950) 95%, var(--color-white))` | `var(--color-neutral-950)`. The page is the darker ground. |
+| `--sidebar` | `color-mix(in srgb, var(--color-neutral-950) 97%, var(--color-white))` | `var(--neutral-darkest)`. Light mode is `var(--neutral-lightest)`. |
+| `--header` | — | Same pairing as the sidebar: lightest in light, darkest in dark. |
 | `--sidebar-foreground` | `color-mix(in srgb, var(--color-neutral-100) 64%, var(--sidebar))` | `var(--color-neutral-100)` |
-| `--card`, `--popover`, `--code` | `color-mix(in srgb, var(--background) 98%, var(--color-white))` | `var(--color-neutral-900)` |
+| `--card`, `--code` | `color-mix(in srgb, var(--background) 98%, var(--color-white))` | `var(--color-neutral-900)`. One step lighter than the page. |
+| `--popover` | `color-mix(in srgb, var(--background) 98%, var(--color-white))` | `var(--color-neutral-800)`. Third level, for a layer that sits on a card. Light mode has no lighter step than white, so popover matches card there. |
 | `--muted-foreground` | `color-mix(in srgb, var(--color-neutral-500) 90%, var(--color-white))` | `var(--color-neutral-500)` |
 | `--primary` | `var(--color-neutral-100)` | `var(--color-blue-600)` |
 | `--primary-foreground` | `var(--color-neutral-800)` | `var(--color-white)` |
 | `--destructive` | `color-mix(in srgb, var(--color-red-500) 90%, var(--color-white))` | `var(--color-red-600)` |
+| `--border` | `--alpha(var(--color-white) / 6%)` | `--alpha(var(--color-white) / 10%)` |
 | `--destructive-foreground` | `var(--color-red-400)` | `var(--color-red-500)` |
 | `--info-foreground` | `var(--color-blue-400)` | `var(--color-blue-600)` |
 | `--input` | `--alpha(var(--color-white) / 8%)` | `--alpha(var(--color-white) / 24%)` |
@@ -76,6 +80,9 @@ These do not exist in the default COSS theme. Components or utilities may depend
 | `--destructive-outline-foreground` | `var(--destructive-foreground)` | `var(--color-red-400)` |
 | `--primary-outline-border` | `var(--primary)` | `var(--color-blue-400)` |
 | `--primary-outline-foreground` | `var(--primary)` | `var(--color-blue-300)` |
+| `--header` | `var(--neutral-lightest)` | `var(--neutral-darkest)` |
+| `--neutral-lightest` | — | `#ffffff` |
+| `--neutral-darkest` | — | Tailwind `neutral-950` (`oklch(14.5% 0 0)`). GDS `#121212` |
 
 ### Font weight tokens added (shared `:root`)
 
@@ -113,7 +120,9 @@ The header GDS / Tailwind control sets `data-palette="gds"` on `<html>` (stored 
 
 `html[data-palette="gds"]` in `app/globals.css` rewrites `--palette-*`. `@theme static inline` points each `--color-*` ramp at the matching `--palette-*` variable, and utilities inline that same variable. Role tokens (`--primary`, `--background`, and the rest) stay written as `var(--color-…)` and pick up the new ramps in both presets and in light and dark. White and black are unchanged.
 
-Custom role tokens use a raw step. No `color-mix`. Light page background is `neutral-100`. Dark page background is `neutral-950` (GDS 1000). Sidebar is `neutral-lightest` in light and `neutral-darkest` in dark. Those two ends are not numbered steps: Tailwind lightest is `#ffffff` and darkest is `#000000`; GDS lightest is `#ffffff` and darkest is `#121212`.
+The header neutral control sits in the same row as the other switchers. It sets `data-neutral="half"` or `data-neutral="light"` on `<html>` (stored as `colors-neutral-tint`). Absent attribute means the current GDS neutral. Those two rules rewrite only the neutral ramp, and only while GDS is active. Half Tint and Light Tint keep the current lightness from 100 through 900, cut the blue, and darken 1000. Picking either one also switches the palette source to GDS.
+
+Custom role tokens use a raw step. No `color-mix`. Light page background is `neutral-100`, with cards on white. Dark page background is `neutral-950`, with cards on `neutral-900`. The sidebar and header use lightest in light and darkest in dark. Popovers use `neutral-800` in dark mode. Those two ends are not numbered steps: Tailwind lightest is `#ffffff` and darkest is `neutral-950`. GDS lightest is `#ffffff` and darkest is `#121212`.
 
 Tailwind drops `--color-*` declarations that sit outside `@theme`, so the switch cannot write those names directly. `--palette-*` is a normal custom property, which is why the override survives the build.
 
@@ -179,6 +188,8 @@ Mobile stays ~4px taller than desktop (`h-13`/`sm:h-12` for `lg`, etc.). Input /
 
 **Files:** `button.tsx`, `toggle.tsx`, `input.tsx`, `select.tsx`, `number-field.tsx`, `otp-field.tsx`, `combobox.tsx` (chips). Combobox / Autocomplete single-line inputs inherit via `Input`. Showcase `#sizes` columns updated to 48 / 56.
 
+Field chrome (`input`, `textarea`, `select`, `combobox`, `number-field`, `otp-field`, `input-group`) uses `neutral-lightest` in light mode and `neutral-darkest` in dark mode. Stock used the page background, then a translucent `input` wash in dark mode.
+
 ### `components/ui/button.tsx` (variant customizations)
 
 #### New variant: `primary-outline`
@@ -197,9 +208,13 @@ Usage in this project: `app/page.tsx` (`<Button variant="primary-outline">`).
 | Dark background | `dark:bg-input/32` | `dark:bg-destructive/16` |
 | Dark hover/pressed | (none) | `dark:hover:bg-destructive/24`, `dark:data-pressed:bg-destructive/24` |
 
+#### Filled top highlight
+
+`default` and `destructive` use a 1px white inset. Stock is 16%. Custom is 10%. Pressed and disabled still clear it.
+
 #### Unchanged button variants
 
-`default`, `destructive`, `ghost`, `link`, `outline`, `secondary`, and all `size` options match the scaffold.
+`ghost`, `link`, `outline`, `secondary`, and all `size` options match the scaffold.
 
 ### Icon swap primitives (`lucide-react` → `@phosphor-icons/react`)
 
@@ -383,7 +398,7 @@ When something looks wrong compared to stock COSS:
 1. **Toggle COSS preset** — if it fixes the issue, a token in the tables above is the cause.
 2. **COSS preset missing borders/washes** — inspect computed `--border` / `--input` / `--muted` on `<html>`. If they are empty or still `--alpha(...)`, the snapshot is not going through Tailwind. Keep `@import "./coss-default-preset.css"` in `globals.css` after `@import "tailwindcss"`.
 3. **Check button variants** — `primary-outline` and customized `destructive-outline` only exist in your `button.tsx`.
-4. **Check page background** — custom light `--background` is `neutral-100`; dark is `neutral-950` (GDS 1000). Sidebar is lightest / darkest. Scaffold page is white (light) or a mix of `neutral-950` (dark), and its sidebar stays on `neutral-50` / a `neutral-950` mix.
+4. **Check page background** — custom light `--background` is `neutral-100`; dark `--background` is `neutral-950`. Cards and the sidebar are white in light and `neutral-900` in dark. Popover is white in light and `neutral-800` in dark. Scaffold page is white (light) or a mix of `neutral-950` (dark), and its sidebar stays on `neutral-50` / a `neutral-950` mix.
 5. **Check input/muted opacity** — custom uses 24% / 8%; scaffold uses 10% / 4% (light) and 8% / 4% (dark).
 6. **Confirm primitive** — run `git diff 04292fa -- components/ui/<name>.tsx`; expect diffs in `button.tsx`, height-scaled controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`), and the 17 icon-swapped files.
 7. **Control heights** — desktop `lg` is 48px (stock 36); Button `xl` is 56px (stock 40). Use `#sizes` on the home showcase to verify.

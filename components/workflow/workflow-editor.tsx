@@ -304,7 +304,7 @@ export function WorkflowEditor(): React.ReactElement {
 
       <SidebarInset className="min-h-0 overflow-hidden bg-muted/40">
         <div className="m-2 flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border bg-background shadow-xs/5">
-          <header className="flex shrink-0 flex-wrap items-center gap-2 border-b px-4 py-3">
+          <header className="flex shrink-0 flex-wrap items-center gap-2 border-b bg-header px-4 py-3">
             <SidebarTrigger />
             <div className="min-w-0">
               <div className="flex items-center gap-2">

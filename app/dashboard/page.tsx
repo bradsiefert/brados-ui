@@ -41,7 +41,7 @@ function statusVariant(
 export default function DashboardPage() {
   return (
     <DashboardShell>
-      <header className="flex items-center justify-between gap-4 border-b px-4 py-3 md:px-6">
+      <header className="flex items-center justify-between gap-4 border-b bg-header px-4 py-3 md:px-6">
         <div className="flex items-center gap-3">
           <SidebarTrigger />
           <div>

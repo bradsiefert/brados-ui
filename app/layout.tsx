@@ -26,7 +26,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=localStorage.getItem("coss-ui-preset");if(p==="coss-default"){document.documentElement.dataset.uiPreset="coss-default"}var c=localStorage.getItem("colors-palette-source");if(c==="gds"){document.documentElement.dataset.palette="gds"}}catch(e){}})();`,
+            __html: `(function(){try{var p=localStorage.getItem("coss-ui-preset");if(p==="coss-default"){document.documentElement.dataset.uiPreset="coss-default"}var c=localStorage.getItem("colors-palette-source");if(c==="gds"){document.documentElement.dataset.palette="gds"}var n=localStorage.getItem("colors-neutral-tint");if(n==="half"||n==="light"){document.documentElement.dataset.neutral=n}}catch(e){}})();`,
           }}
         />
       </head>

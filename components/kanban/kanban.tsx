@@ -380,7 +380,7 @@ export function Kanban(): React.ReactElement {
       </Sidebar>
 
       <SidebarInset className="min-h-0 overflow-hidden">
-        <header className="flex shrink-0 flex-wrap items-center gap-2 border-b px-4 py-3">
+        <header className="flex shrink-0 flex-wrap items-center gap-2 border-b bg-header px-4 py-3">
           <SidebarTrigger />
           <Breadcrumb className="min-w-0 flex-1">
             <BreadcrumbList>
