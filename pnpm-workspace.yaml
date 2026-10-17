@@ -1,3 +1,5 @@
 allowBuilds:
-  sharp: true
+  # Homebrew libvips is newer than the prebuild, so the install script
+  # compiles and fails. The published binary is the one Next.js loads.
+  sharp: false
   unrs-resolver: true
