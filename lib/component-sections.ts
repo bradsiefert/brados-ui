@@ -26,14 +26,6 @@ export const foundationEntries: PlaygroundEntry[] = [
     status: "ready",
   },
   {
-    slug: "inline-heights",
-    title: "Inline heights",
-    description:
-      "Default-size controls that can sit on the same row. Measured height is shown under each sample.",
-    href: "/foundations/inline-heights",
-    status: "ready",
-  },
-  {
     slug: "border-radii",
     title: "Border Radii",
     description:

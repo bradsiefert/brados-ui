@@ -4,7 +4,6 @@ import type * as React from "react"
 import { ColorScale } from "@/components/color-scale"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { BorderRadii } from "@/components/showcase/border-radii"
-import { InlineHeights } from "@/components/showcase/inline-heights"
 import { InlineSizes } from "@/components/showcase/inline-sizes"
 import { Typography } from "@/components/showcase/typography"
 import { findFoundation, foundationEntries } from "@/lib/component-sections"
@@ -20,10 +19,6 @@ function FoundationBoard({ slug }: { slug: string }): React.ReactElement | null 
 
   if (slug === "typography") {
     return <Typography />
-  }
-
-  if (slug === "inline-heights") {
-    return <InlineHeights />
   }
 
   if (slug === "border-radii") {

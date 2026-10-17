@@ -1,7 +1,6 @@
 "use client"
 
 import {
-  ArrowsVerticalIcon,
   CornersOutIcon,
   PaletteIcon,
   TableIcon,
@@ -43,7 +42,6 @@ const examplePages = [
 const foundationIcons = {
   colors: PaletteIcon,
   typography: TextTIcon,
-  "inline-heights": ArrowsVerticalIcon,
   "border-radii": CornersOutIcon,
   sizes: TableIcon,
 } as const
