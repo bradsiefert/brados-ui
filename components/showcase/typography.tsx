@@ -399,7 +399,7 @@ function TypeRow({ row }: { row: TypeRowData }): React.ReactElement {
         className={cn(
           "min-w-0 text-foreground",
           row.measure === "size"
-            ? "overflow-x-auto whitespace-nowrap"
+            ? "overflow-x-auto overflow-y-clip whitespace-nowrap [padding-block:0.35em]"
             : "text-wrap wrap-break-word",
           row.className
         )}
