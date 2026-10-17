@@ -16,6 +16,54 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 export type CanvasMode = "gallery" | "specimen"
 export type Choice<T extends string> = { label: string; value: T }
 
+const CANVAS_MODE_COOKIE = "canvas-mode"
+
+type CanvasModeContextValue = {
+  mode: CanvasMode
+  setMode: (mode: CanvasMode) => void
+}
+
+const CanvasModeContext = React.createContext<CanvasModeContextValue | null>(null)
+
+function writeCanvasModeCookie(mode: CanvasMode) {
+  document.cookie = `${CANVAS_MODE_COOKIE}=${mode}; Path=/; Max-Age=31536000; SameSite=Lax`
+}
+
+export function CanvasModeProvider({
+  initialMode,
+  children,
+}: {
+  initialMode: CanvasMode
+  children: React.ReactNode
+}): React.ReactElement {
+  const [mode, setModeState] = React.useState(initialMode)
+
+  const setMode = React.useCallback((next: CanvasMode) => {
+    setModeState(next)
+    writeCanvasModeCookie(next)
+  }, [])
+
+  const value = React.useMemo(
+    () => ({
+      mode,
+      setMode,
+    }),
+    [mode, setMode],
+  )
+
+  return <CanvasModeContext.Provider value={value}>{children}</CanvasModeContext.Provider>
+}
+
+export function useCanvasMode(): [CanvasMode, (mode: CanvasMode) => void] {
+  const context = React.useContext(CanvasModeContext)
+
+  if (!context) {
+    throw new Error("useCanvasMode must be used within a CanvasModeProvider")
+  }
+
+  return [context.mode, context.setMode]
+}
+
 export function Gallery({
   children,
 }: {

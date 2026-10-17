@@ -3,13 +3,13 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -46,7 +46,7 @@ function SampleSeparator({ orientation }: { orientation: Orientation }): React.R
 }
 
 export function SeparatorPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [orientation, setOrientation] = React.useState<Orientation>("horizontal")
 
   return (

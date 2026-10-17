@@ -3,13 +3,13 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -71,7 +71,7 @@ function CheckboxGroupGallery(): React.ReactElement {
 }
 
 export function CheckboxGroupPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [value, setValue] = React.useState<string[]>(["next"])
   const [disabled, setDisabled] = React.useState(false)
   const [disableAstro, setDisableAstro] = React.useState(false)

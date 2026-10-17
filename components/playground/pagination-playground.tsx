@@ -3,12 +3,12 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import {
@@ -58,7 +58,7 @@ function Pages({ compact }: { compact: boolean }): React.ReactElement {
 }
 
 export function PaginationPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
 
   return (
     <PlaygroundShell

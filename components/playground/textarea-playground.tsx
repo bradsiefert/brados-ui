@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -10,7 +11,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -86,7 +86,7 @@ function TextareaGallery(): React.ReactElement {
 }
 
 export function TextareaPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [size, setSize] = React.useState<FieldSize>("default")
   const [placeholder, setPlaceholder] = React.useState("Write a note…")
   const [disabled, setDisabled] = React.useState(false)

@@ -4,13 +4,13 @@ import { FolderOpenIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { Button } from "@/components/ui/button"
@@ -48,7 +48,7 @@ function EmptyState({ actions }: { actions: boolean }): React.ReactElement {
 }
 
 export function EmptyPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [actions, setActions] = React.useState(true)
 
   return (

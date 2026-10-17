@@ -4,6 +4,7 @@ import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -11,7 +12,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -109,7 +109,7 @@ function InputGroupGallery(): React.ReactElement {
 }
 
 export function InputGroupPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [addon, setAddon] = React.useState<AddonKind>("icon")
   const [size, setSize] = React.useState<FieldSize>("default")
   const [disabled, setDisabled] = React.useState(false)

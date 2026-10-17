@@ -3,13 +3,13 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { Button } from "@/components/ui/button"
@@ -95,7 +95,7 @@ function CardGallery(): React.ReactElement {
 }
 
 export function CardPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [header, setHeader] = React.useState(true)
   const [description, setDescription] = React.useState(true)
   const [footer, setFooter] = React.useState(true)

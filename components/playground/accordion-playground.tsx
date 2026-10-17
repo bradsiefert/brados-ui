@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -10,7 +11,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -118,7 +118,7 @@ function openChoiceFromValue(value: string[]): OpenChoice {
 }
 
 export function AccordionPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [multiple, setMultiple] = React.useState(false)
   const [open, setOpen] = React.useState<string[]>(["shipping"])
   const [disableBilling, setDisableBilling] = React.useState(false)

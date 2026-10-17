@@ -3,12 +3,12 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
@@ -17,7 +17,7 @@ import { Separator } from "@/components/ui/separator"
 const kbdProps = [{ name: "children", type: "ReactNode", defaultValue: "—" }]
 
 export function KbdPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
 
   return (
     <PlaygroundShell

@@ -4,6 +4,7 @@ import { CheckIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -11,7 +12,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -109,7 +109,7 @@ function BadgeGallery(): React.ReactElement {
 }
 
 export function BadgePlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [variant, setVariant] = React.useState<BadgeVariant>("default")
   const [size, setSize] = React.useState<BadgeSize>("default")
   const [label, setLabel] = React.useState("Badge")

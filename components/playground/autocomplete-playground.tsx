@@ -4,6 +4,7 @@ import { MagnifyingGlassIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -11,7 +12,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -200,7 +200,7 @@ function AutocompleteGallery(): React.ReactElement {
 }
 
 export function AutocompletePlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [size, setSize] = React.useState<AutocompleteSize>("default")
   const [showClear, setShowClear] = React.useState(false)
   const [showTrigger, setShowTrigger] = React.useState(true)

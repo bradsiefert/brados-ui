@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -10,7 +11,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -62,7 +62,7 @@ function CalendarGallery(): React.ReactElement {
 }
 
 export function CalendarPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [selection, setSelection] = React.useState<CalendarMode>("single")
   const [outside, setOutside] = React.useState(true)
   const [months, setMonths] = React.useState(false)

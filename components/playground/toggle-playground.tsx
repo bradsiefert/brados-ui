@@ -4,6 +4,7 @@ import { BookmarkSimpleIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -11,7 +12,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -40,7 +40,7 @@ const toggleProps = [
 ]
 
 export function TogglePlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [variant, setVariant] = React.useState<ToggleVariant>("outline")
   const [size, setSize] = React.useState<ToggleSize>("default")
   const [pressed, setPressed] = React.useState(true)

@@ -3,13 +3,13 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { Slider, SliderValue } from "@/components/ui/slider"
@@ -71,7 +71,7 @@ function SliderGallery(): React.ReactElement {
 }
 
 export function SliderPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [value, setValue] = React.useState<number | number[]>(40)
   const [range, setRange] = React.useState(false)
   const [vertical, setVertical] = React.useState(false)

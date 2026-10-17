@@ -3,12 +3,12 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { Input } from "@/components/ui/input"
@@ -27,7 +27,7 @@ function Labeled({ id, text }: { id: string; text: string }): React.ReactElement
 }
 
 export function LabelPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const id = React.useId()
 
   return (

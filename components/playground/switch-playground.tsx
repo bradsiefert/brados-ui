@@ -3,13 +3,13 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { Label } from "@/components/ui/label"
@@ -80,7 +80,7 @@ function SwitchGallery(): React.ReactElement {
 }
 
 export function SwitchPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [checked, setChecked] = React.useState(true)
   const [disabled, setDisabled] = React.useState(false)
 

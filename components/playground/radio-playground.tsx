@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -10,7 +11,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -137,7 +137,7 @@ function RadioGallery(): React.ReactElement {
 }
 
 export function RadioPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [value, setValue] = React.useState<Plan>("studio")
   const [horizontal, setHorizontal] = React.useState(false)
   const [disabled, setDisabled] = React.useState(false)

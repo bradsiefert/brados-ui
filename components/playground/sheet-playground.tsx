@@ -3,13 +3,13 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -74,7 +74,7 @@ function SampleSheet({
 }
 
 export function SheetPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [side, setSide] = React.useState<Side>("right")
   const [variant, setVariant] = React.useState<SheetVariant>("default")
 

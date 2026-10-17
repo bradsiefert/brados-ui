@@ -4,12 +4,12 @@ import { HouseIcon, MagnifyingGlassIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import {
@@ -62,7 +62,7 @@ function DemoSidebar(): React.ReactElement {
 }
 
 export function SidebarPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
 
   return (
     <PlaygroundShell

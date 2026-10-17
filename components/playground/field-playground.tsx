@@ -3,13 +3,13 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field"
@@ -39,7 +39,7 @@ function SampleField({
 }
 
 export function FieldPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [description, setDescription] = React.useState(true)
   const [error, setError] = React.useState(false)
 

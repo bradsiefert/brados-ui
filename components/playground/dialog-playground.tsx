@@ -3,13 +3,13 @@
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
   Gallery,
   GalleryGroup,
   PropsList,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -98,7 +98,7 @@ function DialogGallery(): React.ReactElement {
 }
 
 export function DialogPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [footer, setFooter] = React.useState<FooterVariant>("default")
   const [title, setTitle] = React.useState("Save draft")
   const [description, setDescription] = React.useState(

@@ -4,6 +4,7 @@ import { DotIcon, FileIcon, FolderIcon, HouseIcon } from "@phosphor-icons/react"
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -11,7 +12,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -141,7 +141,7 @@ function BreadcrumbGallery(): React.ReactElement {
 }
 
 export function BreadcrumbPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [separator, setSeparator] = React.useState<SeparatorKind>("chevron")
   const [homeIcon, setHomeIcon] = React.useState(false)
   const [collapse, setCollapse] = React.useState(false)

@@ -4,6 +4,7 @@ import { TextAlignCenterIcon, TextAlignLeftIcon, TextAlignRightIcon } from "@pho
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -11,7 +12,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -73,7 +73,7 @@ function AlignGroup({
 }
 
 export function ToggleGroupPlayground(): React.ReactElement {
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [variant, setVariant] = React.useState<GroupVariant>("outline")
   const [orientation, setOrientation] = React.useState<Orientation>("horizontal")
   const [multiple, setMultiple] = React.useState(false)

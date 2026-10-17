@@ -5,6 +5,7 @@ import { PlusIcon, SlidersHorizontalIcon } from "lucide-react"
 import * as React from "react"
 
 import {
+  useCanvasMode,
   CanvasModeToggle,
   ChoiceField,
   CompositionNote,
@@ -12,7 +13,6 @@ import {
   GalleryGroup,
   PropsList,
   SwitchField,
-  type CanvasMode,
   type Choice,
 } from "@/components/playground/canvas-parts"
 import { CanvasIntro, PlaygroundShell } from "@/components/playground/playground-shell"
@@ -245,7 +245,7 @@ function ButtonGallery({ preset }: { preset: UiPreset }): React.ReactElement {
 
 export function ButtonPlayground(): React.ReactElement {
   const { preset } = useUiPreset()
-  const [mode, setMode] = React.useState<CanvasMode>("specimen")
+  const [mode, setMode] = useCanvasMode()
   const [variant, setVariant] = React.useState<ButtonVariant>("default")
   const [size, setSize] = React.useState<ButtonSize>("default")
   const [icon, setIcon] = React.useState<IconMode>("none")
