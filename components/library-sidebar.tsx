@@ -31,6 +31,7 @@ import {
 
 const examplePages = [
   { title: "Dashboard", href: "/dashboard" },
+  { title: "Sales CRM", href: "/sales-crm" },
   { title: "Relationships", href: "/relationships" },
   { title: "Tasks", href: "/todo" },
   { title: "Create Issue", href: "/sandbox/create-issue" },
