@@ -33,6 +33,7 @@ const examplePages = [
   { title: "Dashboard", href: "/dashboard" },
   { title: "Sales CRM", href: "/sales-crm" },
   { title: "Kanban", href: "/kanban" },
+  { title: "Workflow Editor", href: "/workflow-editor" },
   { title: "Relationships", href: "/relationships" },
   { title: "Tasks", href: "/todo" },
   { title: "Create Issue", href: "/sandbox/create-issue" },
