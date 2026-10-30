@@ -1,10 +1,17 @@
 import localFont from "next/font/local"
-import { Fira_Code, Source_Sans_3 } from "next/font/google"
+import { Fira_Code, Source_Sans_3, Source_Serif_4 } from "next/font/google"
 
 export const sourceSans = Source_Sans_3({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
+})
+
+export const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-serif",
+  preload: false,
 })
 
 export const firaCode = Fira_Code({

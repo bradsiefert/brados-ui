@@ -2,7 +2,13 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { UiPresetProvider } from "@/components/ui-preset-provider"
 import { AnchoredToastProvider, ToastProvider } from "@/components/ui/toast"
-import { calSans, firaCode, paperMono, sourceSans } from "@/app/fonts"
+import {
+  calSans,
+  firaCode,
+  paperMono,
+  sourceSans,
+  sourceSerif,
+} from "@/app/fonts"
 import { cn } from "@/lib/utils"
 
 export default function RootLayout({
@@ -18,6 +24,7 @@ export default function RootLayout({
         "antialiased",
         "font-sans",
         sourceSans.variable,
+        sourceSerif.variable,
         firaCode.variable,
         calSans.variable,
         paperMono.variable,

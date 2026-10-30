@@ -132,6 +132,7 @@
     --font-heading: var(--font-sans);
     --font-mono: var(--font-mono);
     --font-sans: var(--font-sans);
+    --font-serif: var(--font-serif);
     --font-weight-normal: var(--font-weights-regular);
     --font-weight-semibold: var(--font-weights-semibold);
     --font-weight-bold: var(--font-weights-bold);

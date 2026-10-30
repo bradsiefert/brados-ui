@@ -13,7 +13,7 @@ Reference for every change made to the default COSS UI scaffold in this project.
 | Area | Files changed | Notes |
 |------|---------------|-------|
 | Design tokens | `app/globals.css` | 20+ semantic token overrides (light + dark); font weight tokens |
-| Typography | `app/fonts.ts`, `app/layout.tsx`, `app/globals.css`, `app/coss-default-preset.css` | Custom: Source Sans 3, Fira Code, weights 424 / 600 / 720. COSS preset uses Cal Sans and Paper Mono (the faces coss.com ships) and weights 400 / 700. |
+| Typography | `app/fonts.ts`, `app/layout.tsx`, `app/globals.css`, `app/coss-default-preset.css` | Custom: Source Sans 3, Source Serif 4, Fira Code, weights 424 / 600 / 720. COSS preset uses Cal Sans and Paper Mono (the faces coss.com ships) and weights 400 / 700. Serif stays Source Serif 4 in both presets. |
 | Dependencies | `package.json` | Custom primitives use `@phosphor-icons/react`. `lucide-react` is installed again for `components/coss-stock` only. |
 | UI primitives | `components/ui/button.tsx` | Custom variants + control height scale |
 | UI primitives | height scale (see below) | `sm`/`default`/`lg`/`xl` desktop heights: 28 / 32 / 48 / 56 |
@@ -100,6 +100,7 @@ Defined on shared `:root` for the custom preset. The COSS preset overrides `--fo
 | Token | COSS default | Your custom |
 |-------|-------------|-------------|
 | `--font-heading` | separate `--font-heading` variable | `var(--font-sans)` (single Source Sans 3 instance) |
+| `--font-serif` | — | `var(--font-serif)` (Source Serif 4) |
 | `--font-weight-normal` | `400` | `var(--font-weights-regular)` (`424`) |
 | `--font-weight-semibold` | `600` | `var(--font-weights-semibold)` |
 | `--font-weight-bold` | `700` | `var(--font-weights-bold)` (`720`) |
@@ -153,13 +154,14 @@ Steps `50` and `100` share GDS `100`. Step `950` uses GDS `1000`. The other step
 | Change | COSS default (`04292fa`) | Your custom |
 |--------|--------------------------|-------------|
 | Sans font | Inter (`--font-sans`) | Source Sans 3 via `next/font/google` |
+| Serif font | — | Source Serif 4 via `next/font/google` (`preload: false`) |
 | Heading font | Inter (`--font-heading`, second instance) | Same Source Sans 3 instance; `--font-heading: var(--font-sans)` in `@theme` |
 | Mono font | Geist Mono (`--font-mono`) | Fira Code (`preload: false`) |
 | Font definitions | Inline in `layout.tsx` | Centralized in `app/fonts.ts` |
-| `<html className>` | `"antialiased", "font-mono", …` then `"font-sans", …` | `"antialiased", "font-sans"` plus Source Sans 3, Fira Code, Cal Sans, and Paper Mono variables |
-| Display | (default) | `display: "swap"` on all four fonts |
+| `<html className>` | `"antialiased", "font-mono", …` then `"font-sans", …` | `"antialiased", "font-sans"` plus Source Sans 3, Source Serif 4, Fira Code, Cal Sans, and Paper Mono variables |
+| Display | (default) | `display: "swap"` on all five fonts |
 
-One `Source_Sans_3()` call only (not two) — avoids duplicate hosted font instances per Next.js docs. The `04292fa` scaffold loaded Inter and Geist Mono. The COSS preset instead loads the faces coss.com ships, Cal Sans and Paper Mono, from `app/coss-fonts`. Those overrides sit on the same `data-ui-preset="coss-default"` selectors as the stock color tokens, including a subtree.
+One `Source_Sans_3()` call only (not two) — avoids duplicate hosted font instances per Next.js docs. One `Source_Serif_4()` call sets `--font-serif`. The `04292fa` scaffold loaded Inter and Geist Mono. The COSS preset instead loads the faces coss.com ships, Cal Sans and Paper Mono, from `app/coss-fonts`. Those overrides sit on the same `data-ui-preset="coss-default"` selectors as the stock color tokens, including a subtree. The preset does not override `--font-serif`.
 
 ---
 
@@ -373,7 +375,7 @@ git show 04292fa:components/ui/button.tsx > components/ui/button.tsx
 ```bash
 git show 04292fa:app/layout.tsx > app/layout.tsx
 rm -f app/fonts.ts
-# Restore Inter + Geist Mono imports; remove Source Sans 3 / Fira Code
+# Restore Inter + Geist Mono imports; remove Source Sans 3 / Source Serif 4 / Fira Code
 ```
 
 Revert font weight tokens and `--font-heading` alias in `app/globals.css` manually or from git.
@@ -408,7 +410,7 @@ When something looks wrong compared to stock COSS:
 6. **Confirm primitive** — run `git diff 04292fa -- components/ui/<name>.tsx`; expect diffs in `button.tsx`, height-scaled controls (`toggle`, `input`, `select`, `number-field`, `otp-field`, `combobox`), and the 17 icon-swapped files.
 7. **Control heights** — desktop `lg` is 48px (stock 36); Button `xl` is 56px (stock 40). Use `#sizes` on the home showcase to verify.
 8. **Icon appearance** — Phosphor stroke/style differs from Lucide; not a token issue.
-9. **Fonts** — custom preset uses Source Sans 3, Fira Code, and weights 424 / 600 / 720. COSS preset uses Cal Sans, Paper Mono, and weights 400 / 700.
+9. **Fonts** — custom preset uses Source Sans 3, Source Serif 4, Fira Code, and weights 424 / 600 / 720. COSS preset uses Cal Sans, Paper Mono, and weights 400 / 700. Serif stays Source Serif 4 when the preset is COSS.
 
 ---
 
