@@ -36,6 +36,14 @@ const FAMILY_ROWS: TypeRowData[] = [
     measure: "family",
   },
   {
+    id: "serif",
+    className: "font-serif text-base",
+    sample: "The quick brown fox",
+    token: "font-serif",
+    note: "Long Reading",
+    measure: "family",
+  },
+  {
     id: "heading",
     className: "font-heading text-base",
     sample: "The quick brown fox",
