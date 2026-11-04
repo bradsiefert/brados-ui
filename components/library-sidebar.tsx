@@ -61,7 +61,7 @@ export function LibrarySidebar(): React.ReactElement {
       <SidebarHeader>
         <Link
           href="/"
-          className="flex items-center gap-2 rounded-lg px-2 py-1 outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className="flex items-center gap-2 rounded-lg px-2 py-1 group-data-[collapsible=icon]:px-0 outline-none focus-visible:ring-2 focus-visible:ring-ring"
           onClick={handleNavigate}
         >
           <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sidebar-primary font-semibold text-sidebar-primary-foreground text-sm">
